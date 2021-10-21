@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  schedule:
+    - cron: "0 7 * * 0" # UTC
+
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        platform:
+          - { name: "android", profile: "preview" }
+          - { name: "ios", profile: "ios-simulator" }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: ${{ vars.EXPO_EAS_VERSION || 'latest' }}
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install node modules
+        run: npm install
+
+      - name: Trigger EAS build
+        run:  eas build --non-interactive --platform ${{ matrix.platform.name }} --profile ${{ matrix.platform.profile }}

@@ -10,7 +10,7 @@ export class UserApi implements IUserRepository {
           id: userId,
           name: 'John Doe',
         });
-      }, 1000);
+      }, 500);
     });
   };
 }

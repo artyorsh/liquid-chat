@@ -7,6 +7,7 @@
 - [![expo](https://img.shields.io/badge/expo-53.0-blue)](https://github.com/expo/expo/blob/main/packages/expo/CHANGELOG.md)
 - [![react-native](https://img.shields.io/badge/react--native-0.79-blue)](https://github.com/facebook/react-native/releases)
 - [![react-navigation](https://img.shields.io/badge/react--navigation-7.0-blue)](https://github.com/react-navigation/react-navigation/releases)
+- [![react-native-unistyles](https://img.shields.io/badge/react--native--unistyles-3.0-blue)](https://github.com/vitalets/react-native-unistyles/releases)
 - [![mobx-react](https://img.shields.io/badge/mobx--react-9.2-blue)](https://github.com/mobxjs/mobx/releases)
 - [![inversifyjs](https://img.shields.io/badge/inversifyjs-6.0-blue)](https://github.com/inversify/InversifyJS/releases)
 - [![jest](https://img.shields.io/badge/jest-29.7-blue)](https://github.com/jestjs/jest/releases)
@@ -45,3 +46,12 @@ yarn start
   - `npx eas build -p ios -e ios-simulator`
   - [EAS > Builds](https://expo.dev/accounts/[OWNER]/projects/[SLUG]/builds) > review
 - [Credentials > Access Tokens](https://expo.dev/accounts/[OWNER]/settings/access-tokens) > create a token > add EXPO_TOKEN to GitHub repository secrets.
+
+## Branding
+
+- [src/uilib](./src/uilib/index.ts) > update palette (use generators like [Material](https://materialui.co/colors) or [Eva](https://colors.eva.design))
+- [Icon Generator](https://www.figma.com/community/file/938712838317973976) > update ic-launcher-*.png in assets/images
+- [app.config.ts](./app.config.ts) > update the icon and expo-splash-screen#backgroundColor
+- Test the themes:
+  - iOS: Search > Dark Mode
+  - Android: Settings > Display > Dark Theme

@@ -53,8 +53,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       [
         'expo-splash-screen',
         {
-          'backgroundColor': '#fbfbfb',
+          'backgroundColor': '#F5F5F5', // uilib > colors.background
           'image': './assets/images/ic-splash.png', // no-image
+          'dark': {
+            'backgroundColor': '#212121',
+            'image': './assets/images/ic-splash.png',
+          },
         },
       ],
       'expo-secure-store',

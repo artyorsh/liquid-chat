@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
 
-import { Button } from '@/components/button.component';
-import { Text } from '@/components/text.component';
+import { IconButton } from '@/uilib/icon-button.component';
+import { Text } from '@/uilib/text.component';
 
 interface Props extends ViewProps {
   vm: IWelcomeHeaderVM;
@@ -20,14 +20,14 @@ export const WelcomeHeader: React.FC<Props> = ({ vm, ...props }) => (
       {vm.title}
     </Text>
     <View style={styles.actionsContainer}>
-      <Button
+      <IconButton
         testID='notifications-button'
-        title='Notifications'
+        icon='Bell'
         onPress={vm.viewNotifications}
       />
-      <Button
+      <IconButton
         testID='logout-button'
-        title='Logout'
+        icon='Logout'
         onPress={vm.logout}
       />
     </View>
@@ -44,5 +44,7 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     flexDirection: 'row',
+    gap: 8,
+    marginHorizontal: 8,
   },
 });

@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Button } from '@/components/button.component';
-import { SafeArea } from '@/components/safe-area.component';
-import { Text } from '@/components/text.component';
+import { Button } from '@/uilib/button.component';
+import { SafeArea } from '@/uilib/safe-area.component';
+import { Text } from '@/uilib/text.component';
 
 export interface IWelcomeVM {
   title: string;
@@ -12,37 +12,39 @@ export interface IWelcomeVM {
   register(): void;
 }
 
-export const Welcome: React.FC<{ vm: IWelcomeVM }> = observer(({ vm }) => {
+export const Welcome: React.FC<{ vm: IWelcomeVM }> = observer(({ vm }) => (
+  <SafeArea style={styles.container}>
+    <Text
+      style={styles.title}
+      category='heading'>
+      {vm.title}
+    </Text>
+    <Button
+      testID='register-button'
+      title='Register'
+      onPress={() => vm.register()}
+    />
+    <Button
+      style={styles.loginButton}
+      testID='login-button'
+      type='secondary'
+      onPress={() => vm.login()}
+      title='Login'
+    />
+  </SafeArea>
+));
 
-  return (
-    <SafeArea>
-      <View style={styles.container}>
-        <Text
-          style={styles.title}
-          category='heading'>
-          {vm.title}
-        </Text>
-        <Button
-          testID='register-button'
-          title='Register'
-          onPress={() => vm.register()}
-        />
-        <Button
-          testID='login-button'
-          title='Login'
-          onPress={() => vm.login()}
-        />
-      </View>
-    </SafeArea>
-  );
-});
-
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme, rt) => ({
   container: {
-    padding: 16,
+    paddingHorizontal: theme.gap(4),
   },
   title: {
+    flex: 1,
     textAlign: 'center',
-    marginBottom: 16,
+    marginTop: theme.gap(10),
   },
-});
+  loginButton: {
+    marginTop: theme.gap(3),
+    marginBottom: rt.insets.bottom + theme.gap(6),
+  },
+}));

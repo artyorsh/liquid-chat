@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, ViewProps } from 'react-native';
+import { View, ViewProps } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Button } from '@/components/button.component';
-import { Input } from '@/components/input.component';
+import { Button } from '@/uilib/button.component';
+import { Input } from '@/uilib/input.component';
 
 export interface IRegisterFormValues {
   email: string;
@@ -19,38 +20,54 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
   const [password, setPassword] = React.useState('');
 
   return (
-    <View {...props}>
-      <Input
-        testID='email-input'
-        style={styles.input}
-        value={email}
-        placeholder='Email'
-        keyboardType='email-address'
-        onChangeText={setEmail}
-      />
-      <Input
-        testID='password-input'
-        style={styles.input}
-        value={password}
-        placeholder='Password'
-        secureTextEntry={true}
-        onChangeText={setPassword}
-      />
-      <Button
-        testID='submit-button'
-        style={styles.submitButton}
-        title='Register'
-        onPress={() => onSubmit({ email, password })}
-      />
+    <View
+      {...props}
+      style={[styles.container, props.style]}>
+      <View style={styles.inputs}>
+        <Input
+          testID='email-input'
+          style={styles.input}
+          value={email}
+          placeholder='Email'
+          keyboardType='email-address'
+          onChangeText={setEmail}
+          autoFocus={true}
+        />
+        <Input
+          testID='password-input'
+          style={styles.input}
+          value={password}
+          placeholder='Password'
+          secureTextEntry={true}
+          onChangeText={setPassword}
+        />
+      </View>
+      <View style={styles.submitButtonWrapper}>
+        <Button
+          testID='submit-button'
+          title='Register'
+          onPress={() => onSubmit({ email, password })}
+        />
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme, rt) => ({
+  container: {
+    flex: 1,
+  },
+  inputs: {
+    flex: 1,
+  },
   input: {
-    marginTop: 12,
+    marginTop: theme.gap(3),
   },
-  submitButton: {
-    marginTop: 12,
+  submitButtonWrapper: {
+    transform: [
+      {
+        translateY: rt.insets.ime * -1,
+      },
+    ],
   },
-});
+}));

@@ -22,8 +22,8 @@ const createSplashVM = (context: interfaces.Context): ISplashVM => {
   const sessionRestoreTask: ISplashScreenTask = new SessionRestoreTask(sessionService);
 
   const expoSplashConfig: IExpoSplashConfig = {
-    backgroundColor: '#fbfbfb',
-    image: require('../../../assets/images/ic-launcher-foreground.png'),
+    backgroundColor: theme => theme.colors.background,
+    image: _theme => require('../../../assets/images/ic-launcher-foreground.png'),
     imageWidth: 256,
   };
 

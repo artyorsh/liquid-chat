@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, ImageSourcePropType, StyleSheet, View, ViewProps } from 'react-native';
 
-import { Card } from '@/components/card.component';
-import { Text } from '@/components/text.component';
+import { Card } from '@/uilib/card.component';
+import { Text } from '@/uilib/text.component';
 
 interface Props extends ViewProps {
   vm: IPostVM;
@@ -19,7 +19,6 @@ export const PostItem: React.FC<Props> = ({ vm, ...props }) => {
   return (
     <Card
       {...props}
-      style={[styles.container, props.style]}
       onPress={() => vm.viewDetails()}>
       <Image
         style={styles.image}
@@ -38,9 +37,6 @@ export const PostItem: React.FC<Props> = ({ vm, ...props }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    overflow: 'hidden',
-  },
   image: {
     height: 192,
   },

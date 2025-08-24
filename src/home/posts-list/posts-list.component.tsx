@@ -1,8 +1,7 @@
 import React from 'react';
-import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import { observer } from 'mobx-react';
-
-import { getBottomSpace } from '@/components/safe-area.component';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { IPostVM, PostItem } from './post-item.component';
 
@@ -33,12 +32,12 @@ export const PostsList: React.FC<Props> = observer(({ vm }) => {
   );
 });
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme, rt) => ({
   contentContainer: {
-    paddingHorizontal: 16,
-    paddingBottom: getBottomSpace(16),
+    paddingHorizontal: theme.gap(4),
+    paddingBottom: rt.insets.bottom + theme.gap(4),
   },
   item: {
-    marginTop: 16,
+    marginTop: theme.gap(4),
   },
-});
+}));

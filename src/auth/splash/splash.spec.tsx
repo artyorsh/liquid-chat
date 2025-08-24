@@ -14,8 +14,8 @@ describe('Splash', () => {
   beforeEach(() => {
     router = jest.requireMock('@/router/react-navigation/react-navigation-router').RouterService();
     config = {
-      image: { uri: 'http://' },
-      backgroundColor: '#000000',
+      image: () => ({ uri: 'http://' }),
+      backgroundColor: () => '#000000',
       imageWidth: 100,
       task: {
         run: jest.fn(() => Promise.resolve()),

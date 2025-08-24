@@ -9218,6 +9218,11 @@ react-native-is-edge-to-edge@^1.1.7:
   resolved "https://registry.yarnpkg.com/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.2.1.tgz#64e10851abd9d176cbf2b40562f751622bde3358"
   integrity sha512-FLbPWl/MyYQWz+KwqOZsSyj2JmLKglHatd3xLZWskXOpRaio4LfEDEz8E/A6uD8QoTHW6Aobw1jbEwK7KMgR7Q==
 
+react-native-nitro-modules@^0.28.1:
+  version "0.28.1"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.28.1.tgz#888d777c761f2627b943833ab347b912d12f3b21"
+  integrity sha512-+H9ORJ2WIF17ytQS3MmXJnZnGjp/cSFNFgVkX+6f+uGGrCebFzPyyoks3mPIQ0C4rYuI4sv4ltuR0jQCnPjlqw==
+
 react-native-paper@^5.12.0:
   version "5.12.3"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.12.3.tgz#d583119722ebbfbb7fe40400181d63748cca3683"
@@ -9240,6 +9245,11 @@ react-native-screens@~4.11.1:
     react-freeze "^1.0.0"
     react-native-is-edge-to-edge "^1.1.7"
     warn-once "^0.1.0"
+
+react-native-unistyles@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/react-native-unistyles/-/react-native-unistyles-3.0.10.tgz#25ef419b9a5a27c1e30507f16ac56dd04acd5207"
+  integrity sha512-fghOtFK4oHyGX4sfKrmP5Q3GCxIldmJ3sUPeVuN2oy1tUDVD3qF2Djd+081DmSSmy/8NLKDIWgqhjSX5DUR9DA==
 
 react-native@~0.79.0:
   version "0.79.5"

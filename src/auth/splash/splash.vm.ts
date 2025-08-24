@@ -1,4 +1,5 @@
 import { ImageSourcePropType, ImageStyle, ViewStyle } from 'react-native';
+import { UnistylesTheme } from 'react-native-unistyles';
 
 import { INavigationLifecycleListener, IRouter } from '@/router';
 
@@ -19,8 +20,8 @@ export interface ISplashAnimation {
  * @see https://docs.expo.dev/versions/latest/sdk/splash-screen/#configurable-properties
  */
 export interface IExpoSplashConfig {
-  backgroundColor: string;
-  image: ImageSourcePropType;
+  backgroundColor(theme: UnistylesTheme): string;
+  image(theme: UnistylesTheme): ImageSourcePropType;
   imageWidth: number;
 }
 
@@ -67,8 +68,8 @@ export class SplashVM implements ISplashVM, INavigationLifecycleListener {
     /* no-op */
   };
 
-  public getImage(): ImageSourcePropType {
-    return this.config.image;
+  public getImage(theme: UnistylesTheme): ImageSourcePropType {
+    return this.config.image(theme);
   }
 
   public getImageStyle(): ImageStyle {
@@ -79,9 +80,9 @@ export class SplashVM implements ISplashVM, INavigationLifecycleListener {
     };
   }
 
-  public getBackgroundStyle(): ViewStyle {
+  public getBackgroundStyle(theme: UnistylesTheme): ViewStyle {
     return {
-      backgroundColor: this.config.backgroundColor,
+      backgroundColor: this.config.backgroundColor(theme),
     };
   }
 }

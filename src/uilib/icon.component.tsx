@@ -12,6 +12,8 @@ const IconComponent = MaterialIcons;
  */
 export const Icons = {
   Back: (props: IconProps) => React.createElement(IconComponent, { ...props, name: 'arrow-back' }),
+  Bell: (props: IconProps) => React.createElement(IconComponent, { ...props, name: 'notifications' }),
   Close: (props: IconProps) => React.createElement(IconComponent, { ...props, name: 'close' }),
+  Logout: (props: IconProps) => React.createElement(IconComponent, { ...props, name: 'logout' }),
   Share: (props: IconProps) => React.createElement(IconComponent, { ...props, name: 'share' }),
 };

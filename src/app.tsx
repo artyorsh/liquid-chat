@@ -1,4 +1,5 @@
 import React from 'react';
+import '@/uilib';
 
 import { AppModule } from '@/di/model';
 import { IRouter } from '@/router';

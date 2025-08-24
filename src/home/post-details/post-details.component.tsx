@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Button } from '@/components/button.component';
-import { IconButton } from '@/components/icon-button.component';
-import { Text } from '@/components/text.component';
+import { Button } from '@/uilib/button.component';
+import { IconButton } from '@/uilib/icon-button.component';
+import { Text } from '@/uilib/text.component';
 
 import { IPost } from '../posts-list/model';
 
@@ -20,39 +21,37 @@ export const PostDetails: React.FC<Props> = ({ post, markHidden, close: onReques
       icon='Close'
       onPress={() => onRequestClose()}
     />
-    <Text
-      style={styles.text}
-      category='heading'>
+    <Text category='heading'>
       {post.title}
     </Text>
-    <Text style={[styles.text, styles.body]}>
+    <Text style={styles.body}>
       {post.body}
     </Text>
     <Button
       style={styles.removeButton}
+      type='tertiary'
       title='Remove from Feed'
       onPress={() => markHidden()}
     />
   </View>
 );
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create(theme => ({
   container: {
-    padding: 32,
-    backgroundColor: 'black',
+    padding: theme.gap(8),
+    backgroundColor: theme.colors.surface,
+    borderTopColor: theme.colors.outline,
+    borderTopWidth: 1,
   },
   closeButton: {
     position: 'absolute',
-    top: 12,
-    right: 12,
-  },
-  removeButton: {
-    marginTop: 24,
-  },
-  text: {
-    color: 'white',
+    top: theme.gap(3),
+    right: theme.gap(3),
   },
   body: {
-    marginTop: 12,
+    marginTop: theme.gap(3),
   },
-});
+  removeButton: {
+    marginTop: theme.gap(10),
+  },
+}));

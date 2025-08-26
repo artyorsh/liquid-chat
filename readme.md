@@ -1,6 +1,6 @@
-# rnapp
+# expo-template
 
-[![Build](https://github.com/artyorsh/rn-playground/actions/workflows/build.yml/badge.svg?event=push&branch=main)](https://github.com/artyorsh/rn-playground/actions?query=branch%3Amain)
+[![Build](https://github.com/artyorsh/expo-template/actions/workflows/build.yml/badge.svg?event=push&branch=main)](https://github.com/artyorsh/expo-template/actions?query=branch%3Amain)
 
 ## Stack
 

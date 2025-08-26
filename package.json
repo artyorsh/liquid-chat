@@ -12,6 +12,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.4.1",
     "@expo/vector-icons": "^14.1.0",
     "@react-native-firebase/app": "^22.0.0",
     "@react-native-firebase/messaging": "^22.0.0",
@@ -26,6 +27,7 @@
     "expo-dev-client": "~5.2.4",
     "expo-device": "~7.1.4",
     "expo-file-system": "^18.1.11",
+    "expo-font": "~13.3.2",
     "expo-network": "~7.1.5",
     "expo-secure-store": "~14.2.3",
     "expo-splash-screen": "~0.30.10",

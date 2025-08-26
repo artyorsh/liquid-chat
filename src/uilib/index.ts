@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native-unistyles';
 
+import { fontFamilyService } from './font-family.service';
+
 type AppThemes = typeof config.themes;
 
 type AppTheme = AppThemes[keyof AppThemes];
@@ -64,6 +66,24 @@ interface ThemeColors {
 }
 
 /**
+ * Matches the fonts families loaded in app.config.ts > plugins > expo-font
+ */
+export type FontFamily =
+  | 'Inter/300Light'
+  | 'Inter/400Regular'
+  | 'Inter/500Medium'
+  | 'Inter/600SemiBold';
+
+export interface IFontFamilyService {
+  /**
+   * @returns platform-specific fontFamily name for the given family and style
+   * @example (Android): Inter_500Medium, (iOS): Inter-Medium
+   * @see https://docs.expo.dev/develop/user-interface/fonts/#with-expo-font-config-plugin-1
+   */
+  getFontName(family: FontFamily): string;
+}
+
+/**
  * @see https://materialui.co/colors
  * @see https://colors.eva.design
  */
@@ -104,6 +124,28 @@ const lightTheme = {
     surfaceVariant: palette.basic200,
     hint: palette.basic600,
     outline: palette.basic300,
+  },
+  typography: {
+    heading: (fontScale: number) => ({
+      fontFamily: fontFamilyService.getFontName('Inter/600SemiBold'),
+      fontSize: fontScale * 26,
+      lineHeight: 36,
+    }),
+    subheading: (fontScale: number) => ({
+      fontFamily: fontFamilyService.getFontName('Inter/500Medium'),
+      fontSize: fontScale * 20,
+      lineHeight: 30,
+    }),
+    paragraph: (fontScale: number) => ({
+      fontFamily: fontFamilyService.getFontName('Inter/400Regular'),
+      fontSize: fontScale * 15,
+      lineHeight: 20,
+    }),
+    control: (fontScale: number) => ({
+      fontFamily: fontFamilyService.getFontName('Inter/500Medium'),
+      fontSize: fontScale * 15,
+      lineHeight: 20,
+    }),
   },
 };
 

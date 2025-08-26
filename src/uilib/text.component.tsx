@@ -37,20 +37,9 @@ const styles = StyleSheet.create((theme, rt) => ({
         },
       },
       category: {
-        heading: {
-          fontSize: rt.fontScale * 26,
-          fontWeight: '500',
-          lineHeight: 36,
-        },
-        subheading: {
-          fontSize: rt.fontScale * 20,
-          fontWeight: '500',
-        },
-        paragraph: {
-          fontSize: rt.fontScale * 15,
-          fontWeight: '400',
-          lineHeight: 20,
-        },
+        heading: theme.typography.heading(rt.fontScale),
+        subheading: theme.typography.subheading(rt.fontScale),
+        paragraph: theme.typography.paragraph(rt.fontScale),
       },
     },
   },

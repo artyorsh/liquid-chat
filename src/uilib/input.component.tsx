@@ -21,11 +21,11 @@ export const Input: React.FC<InputProps> = (props) => {
 
 const styles = StyleSheet.create((theme, rt) => ({
   container: {
+    ...theme.typography.control(rt.fontScale),
+    lineHeight: undefined,
     padding: theme.gap(3),
     borderRadius: theme.radius,
     borderWidth: 1,
-    fontSize: rt.fontScale * 15,
-    fontWeight: '600',
     variants: {
       focused: {
         false: {

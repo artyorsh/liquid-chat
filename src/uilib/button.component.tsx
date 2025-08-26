@@ -78,9 +78,8 @@ const styles = StyleSheet.create((theme, rt) => ({
     },
   }),
   text: state => ({
+    ...theme.typography.control(rt.fontScale),
     textAlign: 'center',
-    fontSize: rt.fontScale * 15,
-    fontWeight: '600',
     marginHorizontal: theme.gap(1.5),
     variants: {
       type: {

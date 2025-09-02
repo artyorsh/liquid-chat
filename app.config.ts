@@ -64,7 +64,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         'fonts': fontFamilies.map(f => {
           const [family, weightStyle] = f.split('/');
-          const dirName: string = f;
+          const dirName: string = `${family.toLowerCase()}/${weightStyle}`;
           const fileName: string = `${family}_${weightStyle}.ttf`;
 
           return `node_modules/@expo-google-fonts/${dirName}/${fileName}`;

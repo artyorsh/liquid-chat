@@ -29,7 +29,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install node modules
-        run: yarn
+        run: npm install
 
       - name: Trigger EAS build
         run:  eas build --non-interactive --platform ${{ matrix.platform.name }} --profile ${{ matrix.platform.profile }}

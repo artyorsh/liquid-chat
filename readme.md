@@ -30,7 +30,7 @@ React Native template with built-in modules, automation workflows and customisat
 ## Setup
 
 ```bash
-yarn
+npm i
 ```
 
 ```bash
@@ -42,7 +42,7 @@ cp .env.example .env
 Start the Metro bundler and follow the instructions in the terminal to run the app on your device or emulator.
 
 ```bash
-yarn start
+npm start
 ```
 
 ## Documentation

@@ -55,4 +55,4 @@ See [docs](./docs/readme.md).
 
 ## Author
 
-[Artur Yersh](https://github.com/artyorsh)
+[Artur Yersh](https://artyorsh.me)

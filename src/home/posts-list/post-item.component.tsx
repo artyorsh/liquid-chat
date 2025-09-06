@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image, ImageSourcePropType, StyleSheet, View, ViewProps } from 'react-native';
+import { ImageSourcePropType, StyleSheet, View, ViewProps } from 'react-native';
 
 import { Card } from '@/uilib/card.component';
+import { Image } from '@/uilib/image.component';
 import { Text } from '@/uilib/text.component';
 
 interface Props extends ViewProps {

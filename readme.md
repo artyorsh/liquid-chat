@@ -39,7 +39,7 @@ cp .env.example .env
 
 ## Running
 
-Start the Metro bundler and follow the instructions in the terminal to run the app on your device or emulator.
+Start Metro bundler and follow the instructions in terminal to run the app.
 
 ```bash
 npm start

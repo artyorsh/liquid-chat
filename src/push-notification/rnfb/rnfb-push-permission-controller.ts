@@ -1,6 +1,6 @@
 import { Linking } from 'react-native';
 import { getApp } from '@react-native-firebase/app';
-import { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
+import { FirebaseMessagingTypes, hasPermission, requestPermission } from '@react-native-firebase/messaging';
 
 import { IPushPermissionController } from '../push-notification.service';
 
@@ -39,7 +39,7 @@ export class RNFBPushPermissionController implements IPushPermissionController {
   };
 
   private requestSystem = (): Promise<void> => {
-    return this.rnfb.requestPermission(this.requestOptions).then(() => {
+    return requestPermission(this.rnfb, this.requestOptions).then(() => {
       return this.getStatus().then(result => {
         if (result !== 'granted') {
           throw new Error('User did not grant permission');
@@ -49,7 +49,7 @@ export class RNFBPushPermissionController implements IPushPermissionController {
   };
 
   private getStatus = (): Promise<IPermissionRequestStatus> => {
-    return this.rnfb.hasPermission().then(result => {
+    return hasPermission(this.rnfb).then(result => {
       switch (result) {
         // case FirebaseMessagingTypes.AuthorizationStatus.NOT_DETERMINED:
         case -1:

@@ -1,6 +1,6 @@
 import '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
-import { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
+import { FirebaseMessagingTypes, getInitialNotification, onMessage, onNotificationOpenedApp, setBackgroundMessageHandler } from '@react-native-firebase/messaging';
 
 import { IPushNotification, IPushNotificationHandler, IPushNotificationToken, IPushServiceProvider } from '../push-notification.service';
 
@@ -26,22 +26,22 @@ export class RNFBPushServiceProvider implements IPushServiceProvider {
   }
 
   constructor(private options: RNFBPushServiceProviderOptions) {
-    this.rnfb.onMessage(m => {
+    onMessage(this.rnfb, m => {
       const notification: IPushNotification = this.createPushNotification(m);
       this.subscribers.forEach(h => h.handleForeground(notification));
     });
 
-    this.rnfb.setBackgroundMessageHandler(async m => {
+    setBackgroundMessageHandler(this.rnfb, async m => {
       const notification: IPushNotification = this.createPushNotification(m);
       this.subscribers.forEach(h => h.handleBackground(notification));
     });
 
-    this.rnfb.onNotificationOpenedApp(m => {
+    onNotificationOpenedApp(this.rnfb, m => {
       const notification: IPushNotification = this.createPushNotification(m);
       this.subscribers.forEach(h => h.handleOpen(notification));
     });
 
-    this.rnfb.getInitialNotification().then((message: FirebaseMessagingTypes.RemoteMessage | null) => {
+    getInitialNotification(this.rnfb).then((message: FirebaseMessagingTypes.RemoteMessage | null) => {
       if (!message) {
         return;
       }

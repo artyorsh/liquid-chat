@@ -1,9 +1,8 @@
 import Constants from 'expo-constants';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { AppModule } from '@/di/model';
-import { ILogService } from '@/log';
-import { IRouter } from '@/router';
+import { ILogService, LOG_SERVICE_ID } from '@/log';
+import { IRouter, ROUTER_SERVICE_ID } from '@/router';
 
 import { MockPushPermissionController } from './expo-go-compat/mock-push-permission-controller';
 import { MockPushServiceProvider } from './expo-go-compat/mock-push-service-provider';
@@ -19,8 +18,10 @@ export interface IPushNotificationService {
   authorize(): Promise<void>;
 }
 
+export const PUSH_NOTIFICATION_SERVICE_ID: symbol = Symbol.for('PushNotificationService');
+
 export const PushNotificationModule = new ContainerModule(bind => {
-  bind<IPushNotificationService>(AppModule.PUSH_NOTIFICATION)
+  bind<IPushNotificationService>(PUSH_NOTIFICATION_SERVICE_ID)
     .toDynamicValue(context => createPushNotificationService(context))
     .inSingletonScope();
 });
@@ -28,8 +29,8 @@ export const PushNotificationModule = new ContainerModule(bind => {
 const createPushNotificationService = (context: interfaces.Context): IPushNotificationService => {
   const isExpoGo: boolean = Constants.executionEnvironment === 'storeClient';
 
-  const router: IRouter = context.container.get(AppModule.ROUTER);
-  const logService: ILogService = context.container.get(AppModule.LOG);
+  const router: IRouter = context.container.get(ROUTER_SERVICE_ID);
+  const logService: ILogService = context.container.get(LOG_SERVICE_ID);
 
   let pushServiceProvider: IPushServiceProvider = new MockPushServiceProvider();
   let pushPermissionController: IPushPermissionController = new MockPushPermissionController();

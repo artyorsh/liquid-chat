@@ -4,8 +4,6 @@ import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { AppModule } from '@/di/model';
-
 import { ILogTransporter, LogService } from './log.service';
 import { ConsoleLogTransporter } from './transporters/console-log-transporter';
 import { GrafanaLogTransporter } from './transporters/grafana-log-transporter';
@@ -29,8 +27,10 @@ export interface ILogService {
   flush(): void;
 }
 
+export const LOG_SERVICE_ID: symbol = Symbol.for('LogService');
+
 export const LogModule = new ContainerModule(bind => {
-  bind<ILogService>(AppModule.LOG)
+  bind<ILogService>(LOG_SERVICE_ID)
     .toDynamicValue(context => createLogger(context))
     .inSingletonScope();
 });

@@ -1,8 +1,6 @@
 import React from 'react';
 import { ContainerModule } from 'inversify';
 
-import { AppModule } from '@/di/model';
-
 import { AnimatedAlertLayoutProvider } from './layout-provider/animated-alert-layout-provider';
 import { AnimatedBottomSheetLayoutProvider } from './layout-provider/animated-bottom-sheet-layout-provider';
 import { ILayoutProvider } from './modal.component';
@@ -38,6 +36,8 @@ export interface IModalService {
   subscribe(listener: IWindowSizeListener): Function;
 }
 
+export const MODAL_SERVICE_ID: symbol = Symbol.for('ModalService');
+
 export const ModalModule = new ContainerModule(bind => {
   const useNativeDriver: boolean = true;
   const animationDuration: number = 200;
@@ -60,6 +60,6 @@ export const ModalModule = new ContainerModule(bind => {
     bottom_sheet: bottomSheetLayoutProvider,
   });
 
-  bind<IModalService>(AppModule.MODAL)
+  bind<IModalService>(MODAL_SERVICE_ID)
     .toConstantValue(modalService);
 });

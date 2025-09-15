@@ -2,13 +2,10 @@ import { ReactNavigationRouter } from './react-navigation/react-navigation-route
 import { StackRouteFactory } from './react-navigation/stack-route-factory';
 import { ContainerModule, interfaces } from 'inversify';
 
+import { AppModule } from '@/di/model';
 import { IAuthRoute } from '@/auth';
-import { LOGIN_SCREEN_SERVICE_ID } from '@/auth/login';
-import { REGISTER_SCREEN_SERVICE_ID } from '@/auth/register';
-import { SPLASH_SCREEN_SERVICE_ID } from '@/auth/splash';
-import { WELCOME_SCREEN_SERVICE_ID } from '@/auth/welcome';
-import { HOME_SCREEN_SERVICE_ID, IHomeRoute } from '@/home';
-import { ILogService, LOG_SERVICE_ID } from '@/log';
+import { IHomeRoute } from '@/home';
+import { ILogService } from '@/log';
 
 export type IRoute =
   | IAuthRoute
@@ -32,23 +29,21 @@ export interface IRouter {
   subscribe(route: IRoute, listener: INavigationLifecycleListener): Function;
 }
 
-export const ROUTER_SERVICE_ID: symbol = Symbol.for('RouterService');
-
 export const RouterModule = new ContainerModule(bind => {
-  bind<IRouter>(ROUTER_SERVICE_ID)
+  bind<IRouter>(AppModule.ROUTER)
     .toDynamicValue(context => createRouter(context))
     .inSingletonScope();
 });
 
 const createRouter = (context: interfaces.Context): IRouter => {
-  const logService: ILogService = context.container.get(LOG_SERVICE_ID);
+  const logService: ILogService = context.container.get(AppModule.LOG);
 
   return new ReactNavigationRouter(logService, StackRouteFactory({
-    '/': context.container.get(SPLASH_SCREEN_SERVICE_ID),
-    '/welcome': context.container.get(WELCOME_SCREEN_SERVICE_ID),
-    '/login': context.container.get(LOGIN_SCREEN_SERVICE_ID),
-    '/register': context.container.get(REGISTER_SCREEN_SERVICE_ID),
-    '/home': context.container.get(HOME_SCREEN_SERVICE_ID),
+    '/': context.container.get(AppModule.SPLASH_SCREEN),
+    '/welcome': context.container.get(AppModule.WELCOME_SCREEN),
+    '/login': context.container.get(AppModule.LOGIN_SCREEN),
+    '/register': context.container.get(AppModule.REGISTER_SCREEN),
+    '/home': context.container.get(AppModule.HOME_SCREEN),
   }));
 };
 

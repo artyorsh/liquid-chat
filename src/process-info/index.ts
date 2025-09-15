@@ -1,6 +1,7 @@
 import { ContainerModule, interfaces } from 'inversify';
 
-import { ILogService, LOG_SERVICE_ID } from '@/log';
+import { AppModule } from '@/di/model';
+import { ILogService } from '@/log';
 
 import { AppInfoProvider, AppInfoProviderId } from './app-info-provider';
 import { BatteryInfoProvider, BatteryInfoProviderId } from './battery-info-provider';
@@ -19,16 +20,14 @@ export interface IProcessInfoService {
   getCurrentData<D = any>(providerId: IProviderId): Promise<D>;
 }
 
-export const PROCESS_INFO_SERVICE_ID: symbol = Symbol.for('ProcessInfoService');
-
 export const ProcessInfoModule = new ContainerModule(bind => {
-  bind<IProcessInfoService>(PROCESS_INFO_SERVICE_ID)
+  bind<IProcessInfoService>(AppModule.PROCESS_INFO)
     .toDynamicValue(context => createProcessInfoService(context))
     .inSingletonScope();
 });
 
 const createProcessInfoService = (context: interfaces.Context): IProcessInfoService => {
-  const logService: ILogService = context.container.get(LOG_SERVICE_ID);
+  const logService: ILogService = context.container.get(AppModule.LOG);
 
   const providers: Record<IProviderId, IProcessInfoProvider> = {
     DeviceInfo: new DeviceInfoProvider(),

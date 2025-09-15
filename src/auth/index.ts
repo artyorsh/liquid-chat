@@ -1,11 +1,13 @@
 import React from 'react';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { ILoginRoute, LOGIN_SCREEN_SERVICE_ID, LoginScreenFactory } from './login';
-import { IRegisterRoute, REGISTER_SCREEN_SERVICE_ID, RegisterScreenFactory } from './register';
-import { ISessionService, SESSION_SERVICE_ID, SessionServiceFactory } from './session';
-import { ISplashRoute, SPLASH_SCREEN_SERVICE_ID, SplashScreenFactory } from './splash';
-import { IWelcomeRoute, WELCOME_SCREEN_SERVICE_ID, WelcomeScreenFactory } from './welcome';
+import { AppModule } from '@/di/model';
+
+import { ILoginRoute, LoginScreenFactory } from './login';
+import { IRegisterRoute, RegisterScreenFactory } from './register';
+import { ISessionService, SessionServiceFactory } from './session';
+import { ISplashRoute, SplashScreenFactory } from './splash';
+import { IWelcomeRoute, WelcomeScreenFactory } from './welcome';
 
 export type IAuthRoute =
   | ISplashRoute
@@ -14,19 +16,19 @@ export type IAuthRoute =
   | IRegisterRoute;
 
 export const AuthModule = new ContainerModule(bind => {
-  bind<ISessionService>(SESSION_SERVICE_ID)
+  bind<ISessionService>(AppModule.SESSION)
     .toDynamicValue(context => SessionServiceFactory(context))
     .inSingletonScope();
 
-  bind<interfaces.Factory<React.FC>>(SPLASH_SCREEN_SERVICE_ID)
+  bind<interfaces.Factory<React.FC>>(AppModule.SPLASH_SCREEN)
     .toFactory(context => SplashScreenFactory(context));
 
-  bind<interfaces.Factory<React.FC>>(WELCOME_SCREEN_SERVICE_ID)
+  bind<interfaces.Factory<React.FC>>(AppModule.WELCOME_SCREEN)
     .toFactory(context => WelcomeScreenFactory(context));
 
-  bind<interfaces.Factory<React.FC>>(LOGIN_SCREEN_SERVICE_ID)
+  bind<interfaces.Factory<React.FC>>(AppModule.LOGIN_SCREEN)
     .toFactory(context => LoginScreenFactory(context));
 
-  bind<interfaces.Factory<React.FC>>(REGISTER_SCREEN_SERVICE_ID)
+  bind<interfaces.Factory<React.FC>>(AppModule.REGISTER_SCREEN)
     .toFactory(context => RegisterScreenFactory(context));
 });

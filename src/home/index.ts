@@ -1,12 +1,13 @@
 import React from 'react';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { ISessionService, SESSION_SERVICE_ID } from '@/auth/session';
-import { ILogService, LOG_SERVICE_ID } from '@/log';
-import { IModalService, MODAL_SERVICE_ID } from '@/modal';
-import { IPushNotificationService, PUSH_NOTIFICATION_SERVICE_ID } from '@/push-notification';
-import { IRouter, ROUTER_SERVICE_ID } from '@/router';
-import { IUserService, USER_SERVICE_ID } from '@/user';
+import { AppModule } from '@/di/model';
+import { ISessionService } from '@/auth/session';
+import { ILogService } from '@/log';
+import { IModalService } from '@/modal';
+import { IPushNotificationService } from '@/push-notification';
+import { IRouter } from '@/router';
+import { IUserService } from '@/user';
 
 import { HomeAPI } from './home.api';
 import { Home, IHomeVM } from './home.component';
@@ -18,18 +19,16 @@ import { IPostDetailsPresenter, PostsListVM } from './posts-list/posts-list.vm';
 
 export type IHomeRoute = '/home';
 
-export const HOME_SCREEN_SERVICE_ID: symbol = Symbol.for('HomeScreen');
-
 export const HomeScreenModule = new ContainerModule(bind => {
-  bind<interfaces.Factory<React.FC>>(HOME_SCREEN_SERVICE_ID)
+  bind<interfaces.Factory<React.FC>>(AppModule.HOME_SCREEN)
     .toFactory(context => () => React.createElement(Home, { vm: createHomeVM(context) }));
 });
 
 const createHomeVM = (context: interfaces.Context): IHomeVM => {
-  const router: IRouter = context.container.get(ROUTER_SERVICE_ID);
-  const sessionService: ISessionService = context.container.get(SESSION_SERVICE_ID);
-  const userService: IUserService = context.container.get(USER_SERVICE_ID);
-  const pushNotificationService: IPushNotificationService = context.container.get(PUSH_NOTIFICATION_SERVICE_ID);
+  const router: IRouter = context.container.get(AppModule.ROUTER);
+  const sessionService: ISessionService = context.container.get(AppModule.SESSION);
+  const userService: IUserService = context.container.get(AppModule.USER);
+  const pushNotificationService: IPushNotificationService = context.container.get(AppModule.PUSH_NOTIFICATION);
 
   const createPostsList = (posts: IPost[]): IPostsListVM => createPostsListVM(context, posts);
 
@@ -44,8 +43,8 @@ const createHomeVM = (context: interfaces.Context): IHomeVM => {
 };
 
 const createPostsListVM = (context: interfaces.Context, posts: IPost[]): IPostsListVM => {
-  const modalService: IModalService = context.container.get(MODAL_SERVICE_ID);
-  const logService: ILogService = context.container.get(LOG_SERVICE_ID);
+  const modalService: IModalService = context.container.get(AppModule.MODAL);
+  const logService: ILogService = context.container.get(AppModule.LOG);
   const presenter: IPostDetailsPresenter = new PostDetailsPresenter(modalService);
 
   return new PostsListVM(

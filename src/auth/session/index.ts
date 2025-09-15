@@ -1,8 +1,7 @@
 import { interfaces } from 'inversify';
 
-import { ILogService, LOG_SERVICE_ID } from '@/log';
-import { PUSH_NOTIFICATION_SERVICE_ID } from '@/push-notification';
-import { USER_SERVICE_ID } from '@/user';
+import { AppModule } from '@/di/model';
+import { ILogService } from '@/log';
 
 import { ISessionModule } from './initialzier';
 import { ParallelModuleInitializer } from './initialzier/parallel-module-initializer';
@@ -23,13 +22,11 @@ export interface ISessionService {
   logout(): Promise<void>;
 }
 
-export const SESSION_SERVICE_ID: symbol = Symbol.for('SessionService');
-
 export const SessionServiceFactory = (context: interfaces.Context): ISessionService => {
-  const logService: ILogService = context.container.get(LOG_SERVICE_ID);
+  const logService: ILogService = context.container.get(AppModule.LOG);
 
-  const userModule: ISessionModule = context.container.get(USER_SERVICE_ID);
-  const pushServiceModule: ISessionModule = context.container.get(PUSH_NOTIFICATION_SERVICE_ID);
+  const userModule: ISessionModule = context.container.get(AppModule.USER);
+  const pushServiceModule: ISessionModule = context.container.get(AppModule.PUSH_NOTIFICATION);
   const sessionModules: ISessionModule[] = [userModule, pushServiceModule];
 
   const sessionInitializer: ISessionInitializer = new ParallelModuleInitializer(sessionModules, logService, {

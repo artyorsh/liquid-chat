@@ -2,7 +2,8 @@ import React from 'react';
 
 import { IModalController, IModalFactory, IModalService, IWindowSizeListener, PresentationType } from '.';
 import { ILayoutProvider, IModalRef, Modal } from './modal.component';
-import { IModalWindowRef, ModalWindow as ModalWindowComponent } from './modal-window.component';
+import { AnimatedBackgroundLayoutProvider } from './window/animated-background-layout-provider';
+import { IModalWindowRef, ModalWindow } from './window/modal-window.component';
 
 export interface IModalPresentationPolicy {
   apply(numberOfActiveModals: number, subscribe: (listener: IWindowSizeListener) => Function): Promise<void>;
@@ -24,8 +25,9 @@ export class ModalService implements IModalService {
   }
 
   public getWindow = (): React.ReactElement => {
-    return React.createElement(ModalWindowComponent, {
+    return React.createElement(ModalWindow, {
       ref: this.windowRef,
+      layoutProvider: new AnimatedBackgroundLayoutProvider(),
       onWindowSizeChange: this.onWindowSizeChange,
     });
   };

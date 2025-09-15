@@ -63,6 +63,10 @@ interface ThemeColors {
    * E.g dividers, card borders.
    */
   outline: string;
+  /*
+   * Background color for overlays (e.g modals).
+   */
+  overlay: string;
 }
 
 /**
@@ -124,6 +128,7 @@ const lightTheme = {
     surfaceVariant: palette.basic200,
     hint: palette.basic600,
     outline: palette.basic300,
+    overlay: 'rgba(0, 0, 0, 0.5)',
   },
   typography: {
     heading: (fontScale: number) => ({

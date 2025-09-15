@@ -31,7 +31,8 @@
     "function-paren-newline": ["error", "multiline"],
  
     "indent": "off",
-    "@typescript-eslint/indent": ["error", 2],
+    // FIXME: https://typescript-eslint.io/rules/indent/
+    // "@typescript-eslint/indent": ["error", 2],
     "react/jsx-indent-props": ["error", 2],
 
     "jest/consistent-test-it": ["error", {

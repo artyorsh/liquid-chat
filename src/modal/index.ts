@@ -10,8 +10,8 @@ import { IModalPresentationPolicy, ModalService } from './modal.service';
 import { OneAtTimePresentationPolicy } from './presentation-policy/one-at-time-presentation-policy';
 
 export interface IModalController<Result = any> {
-  resolve(result?: Result): void;
-  reject(error: Error): void;
+  resolve(result?: Result): Promise<Result>;
+  reject(error: Error): Promise<void>;
 }
 
 export enum PresentationType {

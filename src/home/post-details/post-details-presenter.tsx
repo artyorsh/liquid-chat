@@ -13,8 +13,8 @@ export class PostDetailsPresenter implements IPostDetailsPresenter {
       <PostDetails
         post={post}
         markHidden={() => {
-          controller.resolve();
-          callbacks.markHidden(post);
+          controller.resolve()
+            .then(() => callbacks.markHidden(post));
         }}
         close={() => {
           return controller.resolve();

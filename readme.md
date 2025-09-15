@@ -6,8 +6,8 @@ React Native template with built-in modules, automation workflows and customisat
 
 ## Stack
 
-- [![expo](https://img.shields.io/badge/expo-53.0-blue)](https://github.com/expo/expo/blob/main/packages/expo/CHANGELOG.md)
-- [![react-native](https://img.shields.io/badge/react--native-0.79-blue)](https://github.com/facebook/react-native/releases)
+- [![expo](https://img.shields.io/badge/expo-54.0-blue)](https://github.com/expo/expo/blob/main/packages/expo/CHANGELOG.md)
+- [![react-native](https://img.shields.io/badge/react--native-0.81-blue)](https://github.com/facebook/react-native/releases)
 - [![react-navigation](https://img.shields.io/badge/react--navigation-7.0-blue)](https://github.com/react-navigation/react-navigation/releases)
 - [![react-native-unistyles](https://img.shields.io/badge/react--native--unistyles-3.0-blue)](https://github.com/vitalets/react-native-unistyles/releases)
 - [![mobx-react](https://img.shields.io/badge/mobx--react-9.2-blue)](https://github.com/mobxjs/mobx/releases)

@@ -1,4 +1,4 @@
-import { computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 import { ILogger, ILogService } from '@/log';
 import { IModalService } from '@/modal';
@@ -61,7 +61,7 @@ export class PostsListVM implements IPostsListVM {
     });
   };
 
-  private removePost = (post: IPost): void => {
+  @action private removePost = (post: IPost): void => {
     this.logger.info(`removePost: ${post.id}`);
 
     this.data = this.data.filter(p => p.id !== post.id);

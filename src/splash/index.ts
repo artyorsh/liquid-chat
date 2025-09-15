@@ -1,10 +1,10 @@
 import React from 'react';
-import { interfaces } from 'inversify';
+import { ContainerModule, interfaces } from 'inversify';
 
 import { AppModule } from '@/di/model';
 import { IRouter } from '@/router';
 
-import { ISessionService } from '../session';
+import { ISessionService } from '../auth/session';
 import { ISplashVM, Splash } from './splash.component';
 import { IExpoSplashConfig, ISplashAnimation, ISplashScreenTask, SplashVM } from './splash.vm';
 import { SplashAnimation } from './splash-animation';
@@ -12,9 +12,11 @@ import { SessionRestoreTask } from './tasks/session-restore-task';
 
 export type ISplashRoute = '/';
 
-export const SplashScreenFactory = (context: interfaces.Context): React.FC => {
-  return () => React.createElement(Splash, { vm: createSplashVM(context) });
-};
+export const SplashScreenModule = new ContainerModule(bind => {
+  bind<interfaces.Factory<React.FC>>(AppModule.SPLASH_SCREEN).toFactory(context => {
+    return () => React.createElement(Splash, { vm: createSplashVM(context) });
+  });
+});
 
 const createSplashVM = (context: interfaces.Context): ISplashVM => {
   const router: IRouter = context.container.get(AppModule.ROUTER);
@@ -23,7 +25,7 @@ const createSplashVM = (context: interfaces.Context): ISplashVM => {
 
   const expoSplashConfig: IExpoSplashConfig = {
     backgroundColor: theme => theme.colors.background,
-    image: _theme => require('../../../assets/images/ic-launcher-foreground.png'),
+    image: _theme => require('../../assets/images/ic-launcher-foreground.png'),
     imageWidth: 256,
   };
 

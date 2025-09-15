@@ -6,8 +6,10 @@ import { AppModule } from '@/di/model';
 import { IAuthRoute } from '@/auth';
 import { IHomeRoute } from '@/home';
 import { ILogger, ILogService } from '@/log';
+import { ISplashRoute } from '@/splash';
 
 export type IRoute =
+  | ISplashRoute
   | IAuthRoute
   | IHomeRoute;
 

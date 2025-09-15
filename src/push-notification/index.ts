@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 import { ContainerModule, interfaces } from 'inversify';
 
 import { AppModule } from '@/di/model';
-import { ILogService } from '@/log';
+import { ILogger, ILogService } from '@/log';
 import { IRouter } from '@/router';
 
 import { MockPushPermissionController } from './expo-go-compat/mock-push-permission-controller';
@@ -30,6 +30,7 @@ const createPushNotificationService = (context: interfaces.Context): IPushNotifi
 
   const router: IRouter = context.container.get(AppModule.ROUTER);
   const logService: ILogService = context.container.get(AppModule.LOG);
+  const logger: ILogger = logService.createLogger(PushNotificationService.name);
 
   let pushServiceProvider: IPushServiceProvider = new MockPushServiceProvider();
   let pushPermissionController: IPushPermissionController = new MockPushPermissionController();
@@ -59,6 +60,6 @@ const createPushNotificationService = (context: interfaces.Context): IPushNotifi
     pushServiceProvider,
     pushPermissionController,
     handlers,
-    logService,
+    logger,
   );
 };

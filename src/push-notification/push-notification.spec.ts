@@ -1,4 +1,4 @@
-import { ILogService } from '@/log';
+import { ILogger } from '@/log';
 
 import { IPushNotificationService } from '.';
 import { IPushNotificationHandler, IPushPermissionController, IPushServiceProvider, PushNotificationService } from './push-notification.service';
@@ -10,7 +10,7 @@ describe('PushNotificationService', () => {
   let pushServiceProvider: IPushServiceProvider;
   let permissionController: IPushPermissionController;
   let notificationHandlers: IPushNotificationHandler[] = [];
-  let logService: ILogService;
+  let logger: ILogger;
 
   let pushNotificationService: IPushNotificationService;
 
@@ -46,13 +46,14 @@ describe('PushNotificationService', () => {
       },
     ];
 
-    logService = jest.requireMock('@/log/log.service').LogService();
+    logger = jest.requireMock('@/log/log.service').LogService()
+      .createLogger(`[Test] ${PushNotificationService.name}`);
 
     pushNotificationService = new PushNotificationService(
       pushServiceProvider,
       permissionController,
       notificationHandlers,
-      logService,
+      logger,
     );
   });
 
@@ -73,7 +74,7 @@ describe('PushNotificationService', () => {
       pushServiceProvider,
       permissionController,
       notificationHandlers,
-      logService,
+      logger,
     );
 
     await expect(pushNotificationService.authorize())
@@ -95,7 +96,7 @@ describe('PushNotificationService', () => {
       pushServiceProvider,
       permissionController,
       notificationHandlers,
-      logService,
+      logger,
     );
 
     expect(notificationHandlers[0].handleForeground).toHaveBeenCalled();
@@ -115,7 +116,7 @@ describe('PushNotificationService', () => {
       pushServiceProvider,
       permissionController,
       notificationHandlers,
-      logService,
+      logger,
     );
 
     expect(notificationHandlers[1].handleBackground).toHaveBeenCalled();
@@ -135,7 +136,7 @@ describe('PushNotificationService', () => {
       pushServiceProvider,
       permissionController,
       notificationHandlers,
-      logService,
+      logger,
     );
 
     expect(notificationHandlers[2].handleOpen).toHaveBeenCalled();
@@ -159,7 +160,7 @@ describe('PushNotificationService', () => {
       pushServiceProvider,
       permissionController,
       notificationHandlers,
-      logService,
+      logger,
     );
 
     expect(notificationHandlers[0].handleForeground).toHaveBeenCalled();
@@ -181,12 +182,9 @@ describe('PushNotificationService', () => {
       pushServiceProvider,
       permissionController,
       [],
-      logService,
+      logger,
     );
 
-    expect(logService.error).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.stringContaining('could not handle notification'),
-    );
+    expect(logger.error).toHaveBeenCalledWith(expect.stringContaining('could not handle notification'));
   });
 });

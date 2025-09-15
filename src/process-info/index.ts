@@ -1,7 +1,7 @@
 import { ContainerModule, interfaces } from 'inversify';
 
 import { AppModule } from '@/di/model';
-import { ILogService } from '@/log';
+import { ILogger, ILogService } from '@/log';
 
 import { AppInfoProvider, AppInfoProviderId } from './app-info-provider';
 import { BatteryInfoProvider, BatteryInfoProviderId } from './battery-info-provider';
@@ -28,6 +28,7 @@ export const ProcessInfoModule = new ContainerModule(bind => {
 
 const createProcessInfoService = (context: interfaces.Context): IProcessInfoService => {
   const logService: ILogService = context.container.get(AppModule.LOG);
+  const logger: ILogger = logService.createLogger(ProcessInfoService.name);
 
   const providers: Record<IProviderId, IProcessInfoProvider> = {
     DeviceInfo: new DeviceInfoProvider(),
@@ -36,7 +37,7 @@ const createProcessInfoService = (context: interfaces.Context): IProcessInfoServ
     NetworkInfo: new NetworkInfoProvider(),
   };
 
-  return new ProcessInfoService(logService, {
+  return new ProcessInfoService(logger, {
     providers,
     logLevel: (_providerId: IProviderId) => 'info',
   });

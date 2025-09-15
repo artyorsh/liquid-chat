@@ -1,4 +1,4 @@
-import { ILogService } from '@/log';
+import { ILogger } from '@/log';
 
 import { IProcessInfoService } from '.';
 import { IProcessInfoProviderMap, ProcessInfoService } from './process-info.service';
@@ -27,10 +27,11 @@ describe('ProcessInfoService', () => {
     },
   };
 
-  let logger: ILogService;
+  let logger: ILogger;
 
   beforeEach(() => {
-    logger = jest.requireMock('@/log/log.service').LogService();
+    logger = jest.requireMock('@/log/log.service').LogService()
+      .createLogger(`[Test] ${ProcessInfoService.name}`);
     processInfoService = new ProcessInfoService(logger, { providers });
   });
 
@@ -42,10 +43,10 @@ describe('ProcessInfoService', () => {
     const firstCall = (logger.log as jest.Mock).mock.calls[0];
     const secondCall = (logger.log as jest.Mock).mock.calls[1];
 
-    expect(firstCall[1])
+    expect(firstCall[0])
       .toContain('DeviceInfo data');
 
-    expect(secondCall[1])
+    expect(secondCall[0])
       .toContain('AppInfo data');
   });
 
@@ -55,10 +56,10 @@ describe('ProcessInfoService', () => {
     const thirdCall = (logger.log as jest.Mock).mock.calls[2];
     const fourthCall = (logger.log as jest.Mock).mock.calls[3];
 
-    expect(thirdCall[1])
+    expect(thirdCall[0])
       .toContain('DeviceInfo upd data');
 
-    expect(fourthCall[1])
+    expect(fourthCall[0])
       .toContain('AppInfo upd data');
   });
 

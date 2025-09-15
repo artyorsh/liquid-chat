@@ -1,4 +1,4 @@
-import { ILogService } from '@/log';
+import { ILogger } from '@/log';
 
 import { ISession } from '..';
 import { ISessionInitializer } from '../session.service';
@@ -12,7 +12,7 @@ export class ParallelModuleInitializer implements ISessionInitializer {
 
   constructor(
     private modules: ISessionModule[],
-    private logger: ILogService,
+    private logger: ILogger,
     private options: IParallelModuleInitializerOptions,
   ) {
 
@@ -50,23 +50,23 @@ export class ParallelModuleInitializer implements ISessionInitializer {
     return Promise.all(destroyerPromises || [])
       .then(() => {/** no-op */})
       .catch(error => {
-        this.logger.error('SessionService', `Failed to destroy modules: ${error.message}`);
+        this.logger.error(`Failed to destroy modules: ${error.message}`);
       });
   }
 
   private logModuleInitSuccess(module: ISessionModule): void {
-    this.logger.debug('SessionService', `Initialized ${module.moduleIdentifier}`);
+    this.logger.debug(`Initialized ${module.moduleIdentifier}`);
   }
 
   private logModuleInitFailure(module: ISessionModule, error: Error): void {
-    this.logger.error('SessionService', `Failed to initialize ${module.moduleIdentifier}, failing session init. Error: ${error.message}`);
+    this.logger.error(`Failed to initialize ${module.moduleIdentifier}, failing session init. Error: ${error.message}`);
   }
 
   private logModuleInitFailureIgnored(module: ISessionModule, error: Error): void {
-    this.logger.warn('SessionService', `Failed to initialize ${module.moduleIdentifier}, ignoring. Error: ${error.message}`);
+    this.logger.warn(`Failed to initialize ${module.moduleIdentifier}, ignoring. Error: ${error.message}`);
   }
 
   private logSessionInitFailure(error: Error): void {
-    this.logger.error('SessionService', `Failed to initialize modules: ${error.message}`);
+    this.logger.error(`Failed to initialize modules: ${error.message}`);
   }
 }

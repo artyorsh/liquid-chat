@@ -5,7 +5,7 @@ import { ContainerModule, interfaces } from 'inversify';
 import { AppModule } from '@/di/model';
 import { IAuthRoute } from '@/auth';
 import { IHomeRoute } from '@/home';
-import { ILogService } from '@/log';
+import { ILogger, ILogService } from '@/log';
 
 export type IRoute =
   | IAuthRoute
@@ -37,8 +37,9 @@ export const RouterModule = new ContainerModule(bind => {
 
 const createRouter = (context: interfaces.Context): IRouter => {
   const logService: ILogService = context.container.get(AppModule.LOG);
+  const logger: ILogger = logService.createLogger(ReactNavigationRouter.name);
 
-  return new ReactNavigationRouter(logService, StackRouteFactory({
+  return new ReactNavigationRouter(logger, StackRouteFactory({
     '/': context.container.get(AppModule.SPLASH_SCREEN),
     '/welcome': context.container.get(AppModule.WELCOME_SCREEN),
     '/login': context.container.get(AppModule.LOGIN_SCREEN),

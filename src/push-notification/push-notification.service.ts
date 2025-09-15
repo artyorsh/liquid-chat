@@ -1,6 +1,6 @@
 import { ISession } from '@/auth/session';
 import { ISessionModule } from '@/auth/session/initialzier';
-import { ILogService } from '@/log';
+import { ILogger } from '@/log';
 
 import { IPushNotificationService } from '.';
 
@@ -50,7 +50,7 @@ export class PushNotificationService implements IPushNotificationService, IPushN
     private provider: IPushServiceProvider,
     private permissionController: IPushPermissionController,
     private handlers: IPushNotificationHandler[],
-    private logService: ILogService,
+    private logger: ILogger,
   ) {
     this.provider.subscribe(this);
   }
@@ -58,7 +58,7 @@ export class PushNotificationService implements IPushNotificationService, IPushN
   public authorize = (): Promise<void> => {
     return this.permissionController.request().then(() => {
       return this.provider.getToken().then(token => {
-        this.logService.debug('PushNotificationService', `registered token: ${JSON.stringify(token, null, 2)}`);
+        this.logger.debug(`registered token: ${JSON.stringify(token, null, 2)}`);
       });
     });
   };
@@ -107,9 +107,9 @@ export class PushNotificationService implements IPushNotificationService, IPushN
 
   private logNotificationHandled = (notification: IPushNotification, handlerName?: string): void => {
     if (handlerName) {
-      this.logService.debug('PushNotificationService', `handled notification with ${handlerName}, id: ${notification.id}`);
+      this.logger.debug(`handled notification with ${handlerName}, id: ${notification.id}`);
     } else {
-      this.logService.error('PushNotificationService', `could not handle notification, id: ${notification.id}, payload: ${JSON.stringify(notification.data, null, 2)}`);
+      this.logger.error(`could not handle notification, id: ${notification.id}, payload: ${JSON.stringify(notification.data, null, 2)}`);
     }
   };
 }

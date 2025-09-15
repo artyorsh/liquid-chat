@@ -1,4 +1,4 @@
-import { ILogService } from '.';
+import { ILogger, ILogService } from '.';
 import { ILogTransporter, LogService } from './log.service';
 import { ConsoleLogTransporter } from './transporters/console-log-transporter';
 
@@ -7,6 +7,7 @@ jest.unmock('./log.service');
 describe('Log Service', () => {
 
   let logService: ILogService;
+  let logger: ILogger;
 
   let transporter1: ILogTransporter;
 
@@ -25,9 +26,12 @@ describe('Log Service', () => {
 
   beforeEach(() => {
     transporter1 = new ConsoleLogTransporter();
+
     logService = new LogService({
       transporters: [transporter1, transporter2],
     });
+
+    logger = logService.createLogger(TAG);
   });
 
   afterAll(() => {
@@ -36,29 +40,40 @@ describe('Log Service', () => {
 
   it('logs debug to standard console', () => {
     const spy = jest.spyOn(console, 'log');
-    logService.debug(TAG, testMessage);
+    logger.debug(testMessage);
 
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining(TAG));
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining(testMessage));
+  });
+
+  it('logs info to standard console', () => {
+    const spy = jest.spyOn(console, 'log');
+    logger.debug(testMessage);
+
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining(TAG));
     expect(spy).toHaveBeenCalledWith(expect.stringContaining(testMessage));
   });
 
   it('logs warn to standard console', () => {
     const spy = jest.spyOn(console, 'warn');
-    logService.warn(TAG, testMessage);
+    logger.warn(testMessage);
 
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining(TAG));
     expect(spy).toHaveBeenCalledWith(expect.stringContaining(testMessage));
   });
 
   it('logs error to standard console', () => {
     const spy = jest.spyOn(console, 'error');
-    logService.error(TAG, testMessage);
+    logger.error(testMessage);
 
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining(TAG));
     expect(spy).toHaveBeenCalledWith(expect.stringContaining(testMessage));
   });
 
   it('able to log with custom transporter', () => {
-    logService.debug(TAG, testMessage);
-    logService.warn(TAG, testMessage);
-    logService.error(TAG, testMessage);
+    logger.debug(testMessage);
+    logger.warn(testMessage);
+    logger.error(testMessage);
 
     expect(transporter2.transport).toHaveBeenCalledWith(
       TAG,
@@ -103,10 +118,11 @@ describe('Log Service', () => {
       transporters: [transporter2],
     });
 
-    logService.debug('test', 'test');
+    const testLogger: ILogger = logService.createLogger(TAG);
+    testLogger.debug('test');
 
     expect(transporter2.transport).toHaveBeenCalledWith(
-      'test',
+      TAG,
       'test',
       expect.objectContaining({ app: 'test', version: '1.0.0' }),
     );
@@ -120,10 +136,12 @@ describe('Log Service', () => {
 
     logService.addLabel('user_id', '123');
 
-    logService.debug('test', 'test');
+    const testLogger: ILogger = logService.createLogger(TAG);
+
+    testLogger.debug('test');
 
     expect(transporter2.transport).toHaveBeenCalledWith(
-      'test',
+      TAG,
       'test',
       expect.objectContaining({ user_id: '123' }),
     );
@@ -137,10 +155,12 @@ describe('Log Service', () => {
 
     logService.addLabel('app', 'test2');
 
-    logService.debug('test', 'test');
+    const testLogger: ILogger = logService.createLogger(TAG);
+
+    testLogger.debug('test');
 
     expect(transporter2.transport).toHaveBeenCalledWith(
-      'test',
+      TAG,
       'test',
       expect.objectContaining({ app: 'test' }),
     );
@@ -152,10 +172,11 @@ describe('Log Service', () => {
       transporters: [transporter2],
     });
 
-    logService.debug('test', 'test', { app: 'test2', level: 'warn' });
+    const testLogger: ILogger = logService.createLogger(TAG);
+    testLogger.debug('test', { app: 'test2', level: 'warn' });
 
     expect(transporter2.transport).toHaveBeenCalledWith(
-      'test',
+      TAG,
       'test',
       expect.objectContaining({ app: 'test', level: 'debug' }),
     );
@@ -169,10 +190,12 @@ describe('Log Service', () => {
 
     logService.removeLabel('app');
 
-    logService.debug('test', 'test');
+    const testLogger: ILogger = logService.createLogger(TAG);
+
+    testLogger.debug('test');
 
     expect(transporter2.transport).toHaveBeenCalledWith(
-      'test',
+      TAG,
       'test',
       expect.objectContaining({ app: 'test' }),
     );
@@ -187,10 +210,12 @@ describe('Log Service', () => {
     logService.addLabel('user_id', '123');
     logService.removeLabel('user_id');
 
-    logService.debug('test', 'test');
+    const testLogger: ILogger = logService.createLogger(TAG);
+
+    testLogger.debug('test');
 
     expect(transporter2.transport).toHaveBeenCalledWith(
-      'test',
+      TAG,
       'test',
       expect.not.objectContaining({ user_id: '123' }),
     );

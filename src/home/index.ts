@@ -50,7 +50,7 @@ const createPostsListVM = (context: interfaces.Context, posts: IPost[]): IPostsL
   return new PostsListVM(
     posts,
     presenter,
-    logService,
+    logService.createLogger(PostsListVM.name),
   );
 };
 

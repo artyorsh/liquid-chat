@@ -1,4 +1,4 @@
-import { ILogLevel, ILogPayload, ILogService } from '.';
+import { ILogger, ILogLevel, ILogPayload, ILogService } from '.';
 
 export interface ILogServiceOptions {
   flushInterval?: number;
@@ -34,28 +34,15 @@ export class LogService implements ILogService {
     }
   }
 
-  public log = (tag: string, message: string, level: ILogLevel, payload: ILogPayload = {}): void => {
-    this.transporters.forEach(t => {
-      const labels = { ...this.customLabels, ...payload, ...this.defaultLabels, level };
-      t.transport(tag, message, labels);
-    });
-  };
-
-  public debug = (tag: string, message: string, payload: ILogPayload = {}): void => {
-    this.log(tag, message, 'debug', payload);
-  };
-
-  public info = (tag: string, message: string, payload: ILogPayload = {}): void => {
-    this.log(tag, message, 'info', payload);
-  };
-
-  public warn = (tag: string, message: string, payload: ILogPayload = {}): void => {
-    this.log(tag, message, 'warn', payload);
-  };
-
-  public error = (tag: string, message: string, payload: ILogPayload = {}): void => {
-    this.log(tag, message, 'error', payload);
-  };
+  public createLogger(tag: string): ILogger {
+    return {
+      log: (message, level, payload) => this.log(tag, message, level, payload),
+      debug: (message, payload) => this.log(tag, message, 'debug', payload),
+      info: (message, payload) => this.log(tag, message, 'info', payload),
+      warn: (message, payload) => this.log(tag, message, 'warn', payload),
+      error: (message, payload) => this.log(tag, message, 'error', payload),
+    };
+  }
 
   public addLabel = (key: string, value: string): void => {
     this.customLabels[key] = value;
@@ -68,4 +55,12 @@ export class LogService implements ILogService {
   public flush = (): void => {
     this.transporters.forEach(t => t.flush());
   };
+
+  private log = (tag: string, message: string, level: ILogLevel, payload: ILogPayload = {}): void => {
+    this.transporters.forEach(t => {
+      const labels = { ...this.customLabels, ...payload, ...this.defaultLabels, level };
+      t.transport(tag, message, labels);
+    });
+  };
+
 }

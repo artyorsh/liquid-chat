@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 
 import { ISessionService } from '@/auth/session';
-import { ILogService } from '@/log';
+import { ILogger } from '@/log';
 import { IModalService } from '@/modal';
 import { IPushNotificationService } from '@/push-notification';
 import { IRouter } from '@/router';
@@ -24,7 +24,7 @@ describe('Home', () => {
   let userService: IUserService;
   let pushNotificationService: IPushNotificationService;
   let modalService: IModalService;
-  let logService: ILogService;
+  let logger: ILogger;
 
   const dataProvider: IHomeAPI = {
     getPosts: jest.fn(() => Promise.resolve([])),
@@ -33,7 +33,7 @@ describe('Home', () => {
   const createPostsListVM = (posts: IPost[]): IPostsListVM => new PostsListVM(
     posts,
     new PostDetailsPresenter(modalService),
-    logService,
+    logger,
   );
 
   beforeEach(() => {
@@ -42,7 +42,8 @@ describe('Home', () => {
     userService = jest.requireMock('@/user/user.service').UserService();
     pushNotificationService = jest.requireMock('@/push-notification/push-notification.service').PushNotificationService();
     modalService = jest.requireMock('@/modal/modal.service').ModalService();
-    logService = jest.requireMock('@/log/log.service').LogService();
+    logger = jest.requireMock('@/log/log.service').LogService()
+      .createLogger(`[Test] ${HomeVM.name}`);
 
     vm = new HomeVM(
       sessionService,

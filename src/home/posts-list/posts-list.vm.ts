@@ -1,6 +1,6 @@
 import { computed, makeObservable, observable } from 'mobx';
 
-import { ILogService } from '@/log';
+import { ILogger, ILogService } from '@/log';
 import { IModalService } from '@/modal';
 
 import { IPost } from './model';
@@ -23,14 +23,14 @@ export interface IPostDetailsCallbacks {
 export class PostsListVM implements IPostsListVM {
 
   private detailsPresenter: IPostDetailsPresenter;
-  private logger: ILogService;
+  private logger: ILogger;
 
   @observable private data: IPost[];
 
   constructor(
     data: IPost[],
     detailsPresenter: IPostDetailsPresenter,
-    logger: ILogService,
+    logger: ILogger,
   ) {
     makeObservable(this);
 
@@ -54,7 +54,7 @@ export class PostsListVM implements IPostsListVM {
   };
 
   private viewPostDetails = (post: IPost): void => {
-    this.logger.info('PostsListVM', `viewPostDetails: ${post.id}`);
+    this.logger.info(`viewPostDetails: ${post.id}`);
 
     this.detailsPresenter.viewDetails(post, {
       markHidden: (_post: IPost) => this.removePost(post),
@@ -62,7 +62,7 @@ export class PostsListVM implements IPostsListVM {
   };
 
   private removePost = (post: IPost): void => {
-    this.logger.info('PostsListVM', `removePost: ${post.id}`);
+    this.logger.info(`removePost: ${post.id}`);
 
     this.data = this.data.filter(p => p.id !== post.id);
   };

@@ -1,4 +1,4 @@
-import { ILogService } from '@/log';
+import { ILogger } from '@/log';
 
 import { ISessionModule } from './initialzier';
 import { IParallelModuleInitializerOptions, ParallelModuleInitializer } from './initialzier/parallel-module-initializer';
@@ -244,7 +244,7 @@ describe('ParallelModuleInitializer', () => {
 
   let modules: ISessionModule[];
 
-  let logService: ILogService;
+  let logger: ILogger;
 
   let options: IParallelModuleInitializerOptions;
 
@@ -264,7 +264,8 @@ describe('ParallelModuleInitializer', () => {
       createSessionModule('10ms', 10),
       createSessionModule('30ms', 30),
     ];
-    logService = jest.requireMock('@/log/log.service').LogService();
+    logger = jest.requireMock('@/log/log.service').LogService()
+      .createLogger(`[Test] ${SessionService.name}`);
 
     options = {
       shouldFailOnModuleFailure: (): boolean => false,
@@ -274,7 +275,7 @@ describe('ParallelModuleInitializer', () => {
   });
 
   it('should invoke initialize on all modules', async () => {
-    const initializer = new ParallelModuleInitializer(modules, logService, options);
+    const initializer = new ParallelModuleInitializer(modules, logger, options);
     await initializer.initialize({ userId: '1', secret: '123' });
 
     expect(modules[0].initialize)
@@ -287,7 +288,7 @@ describe('ParallelModuleInitializer', () => {
   it('should initialize modules in parallel, regardless of their order in the array', async () => {
     const startTime = Date.now();
 
-    const initializer = new ParallelModuleInitializer(modules, logService, options);
+    const initializer = new ParallelModuleInitializer(modules, logger, options);
     await initializer.initialize({ userId: '1', secret: '123' });
 
     const endTime = Date.now();
@@ -302,7 +303,7 @@ describe('ParallelModuleInitializer', () => {
     options.shouldFailOnModuleFailure = (): boolean => true;
     modules[0].initialize = jest.fn(() => Promise.reject(new Error('Test error')));
 
-    const initializer = new ParallelModuleInitializer(modules, logService, options);
+    const initializer = new ParallelModuleInitializer(modules, logger, options);
 
     await expect(initializer.initialize({ userId: '1', secret: '123' }))
       .rejects

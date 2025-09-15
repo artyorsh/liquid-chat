@@ -1,7 +1,7 @@
 import { interfaces } from 'inversify';
 
 import { AppModule } from '@/di/model';
-import { ILogService } from '@/log';
+import { ILogger, ILogService } from '@/log';
 
 import { ISessionModule } from './initialzier';
 import { ParallelModuleInitializer } from './initialzier/parallel-module-initializer';
@@ -24,12 +24,13 @@ export interface ISessionService {
 
 export const SessionServiceFactory = (context: interfaces.Context): ISessionService => {
   const logService: ILogService = context.container.get(AppModule.LOG);
+  const logger: ILogger = logService.createLogger(SessionService.name);
 
   const userModule: ISessionModule = context.container.get(AppModule.USER);
   const pushServiceModule: ISessionModule = context.container.get(AppModule.PUSH_NOTIFICATION);
   const sessionModules: ISessionModule[] = [userModule, pushServiceModule];
 
-  const sessionInitializer: ISessionInitializer = new ParallelModuleInitializer(sessionModules, logService, {
+  const sessionInitializer: ISessionInitializer = new ParallelModuleInitializer(sessionModules, logger, {
     shouldFailOnModuleFailure: (module: ISessionModule, _error: Error): boolean => {
       return module.moduleIdentifier === 'UserService';
     },
@@ -40,6 +41,6 @@ export const SessionServiceFactory = (context: interfaces.Context): ISessionServ
     authenticationProvider: new LocalAuthenticationProvider(),
     authenticationStorage: new SecureAuthStorage(),
     initializer: sessionInitializer,
-    logger: logService,
+    logger: logger,
   });
 };

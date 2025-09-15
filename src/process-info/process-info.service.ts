@@ -1,4 +1,4 @@
-import { ILogLevel, ILogService } from '@/log';
+import { ILogger, ILogLevel } from '@/log';
 
 import { IProcessInfoService, IProviderId } from '.';
 
@@ -28,7 +28,7 @@ export class ProcessInfoService implements IProcessInfoService {
   private logLevels: Record<string, ILogLevel>;
 
   constructor(
-    private logger: ILogService,
+    private logger: ILogger,
     options: IProcessInfoServiceOptions,
   ) {
     this.providers = options.providers;
@@ -68,7 +68,7 @@ export class ProcessInfoService implements IProcessInfoService {
 
   private logProviderData = (providerId: string, data: IProcessInfoData): void => {
     const logLevel: ILogLevel = this.logLevels[providerId];
-    this.logger.log('ProcessInfoService', `[${providerId}]: ${data.toString()}`, logLevel);
+    this.logger.log(`[${providerId}]: ${data.toString()}`, logLevel);
   };
 
 }

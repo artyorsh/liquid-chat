@@ -14,7 +14,7 @@ export class UserService implements IUserService, ISessionModule {
 
   private user: IUser | null = null;
 
-  constructor(private userRepository: IUserRepository, private logService: ILogService) {}
+  constructor(private userRepository: IUserRepository, private logger: ILogService) {}
 
   public getUser = (): IUser => {
     if (!this.user) {
@@ -27,7 +27,7 @@ export class UserService implements IUserService, ISessionModule {
   public initialize = (session: ISession): Promise<void> => {
     return this.userRepository.getUser(session.userId).then(user => {
       this.user = user;
-      this.logService.addLabel('user_id', user.id);
+      this.logger.addLabel('user_id', user.id);
     });
   };
 

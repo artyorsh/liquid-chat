@@ -18,12 +18,16 @@ export type ILogLevel =
 
 export type ILogPayload = Record<string, string>;
 
+export interface ILogger {
+  log(message: string, level: ILogLevel, payload?: ILogPayload): void;
+  debug(message: string, payload?: ILogPayload): void;
+  info(message: string, payload?: ILogPayload): void;
+  warn(message: string, payload?: ILogPayload): void;
+  error(message: string, payload?: ILogPayload): void;
+}
+
 export interface ILogService {
-  log(tag: string, message: string, level: ILogLevel, payload?: ILogPayload): void;
-  debug(tag: string, message: string, payload?: ILogPayload): void;
-  info(tag: string, message: string, payload?: ILogPayload): void;
-  warn(tag: string, message: string, payload?: ILogPayload): void;
-  error(tag: string, message: string, payload?: ILogPayload): void;
+  createLogger(tag: string): ILogger;
   addLabel(key: string, value: string): void;
   removeLabel(key: string): void;
   flush(): void;

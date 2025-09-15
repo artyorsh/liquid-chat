@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 
-import { ILogService } from '@/log';
+import { ILogger } from '@/log';
 
 import { PostItem } from './post-item.component';
 import { IPostVM } from './post-item.component';
@@ -47,14 +47,15 @@ describe('PostItem', () => {
 describe('PostsList', () => {
 
   let vm: IPostsListVM;
-  let logger: ILogService;
+  let logger: ILogger;
 
   const presenter: IPostDetailsPresenter = {
     viewDetails: jest.fn(),
   };
 
   beforeEach(() => {
-    logger = jest.requireMock('@/log/log.service').LogService();
+    logger = jest.requireMock('@/log/log.service').LogService()
+      .createLogger(`[Test] ${PostsListVM.name}`);
     vm = new PostsListVM([], presenter, logger);
   });
 

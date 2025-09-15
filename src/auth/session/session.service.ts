@@ -1,4 +1,4 @@
-import { ILogService } from '@/log';
+import { ILogger } from '@/log';
 
 import { ISession, ISessionService } from '.';
 
@@ -38,7 +38,7 @@ export interface ISessionServiceOptions<Provider extends AnyAuthenticationProvid
   authenticationProvider: Provider;
   authenticationStorage: Storage;
   initializer: ISessionInitializer;
-  logger?: ILogService;
+  logger?: ILogger;
 }
 
 export class SessionService implements ISessionService {
@@ -54,7 +54,7 @@ export class SessionService implements ISessionService {
       return this.options.authenticationStorage.setToken(token).then(() => {
         const session: ISession = this.createSession(token);
 
-        this.options.logger?.info('SessionService', `login user ${session.userId}`);
+        this.options.logger?.info(`login user ${session.userId}`);
 
         return this.initializer.initialize(session)
           .then(() => session);
@@ -67,7 +67,7 @@ export class SessionService implements ISessionService {
       return this.options.authenticationStorage.setToken(token).then(() => {
         const session: ISession = this.createSession(token);
 
-        this.options.logger?.info('SessionService', `register user ${session.userId}`);
+        this.options.logger?.info(`register user ${session.userId}`);
 
         return this.initializer.initialize(session)
           .then(() => session);
@@ -79,7 +79,7 @@ export class SessionService implements ISessionService {
     return this.options.authenticationStorage.getToken().then(storedToken => {
       if (!storedToken) {
         const error: string = 'Unable to refresh: no token found';
-        this.options.logger?.error('SessionService', error);
+        this.options.logger?.error(error);
 
         return Promise.reject(new Error(error));
       }
@@ -89,7 +89,7 @@ export class SessionService implements ISessionService {
           const session: ISession = this.createSession(token);
 
           const expiresInMinutes: number = this.getExpiresInMinutes(token);
-          this.options.logger?.info('SessionService', `refresh for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
+          this.options.logger?.info(`refresh for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
 
           return this.initializer.initialize(session)
             .then(() => session);
@@ -102,7 +102,7 @@ export class SessionService implements ISessionService {
     return this.options.authenticationStorage.getToken().then(token => {
       if (!token) {
         const error: string = 'Unable to restore: no token found';
-        this.options.logger?.error('SessionService', error);
+        this.options.logger?.error(error);
 
         return Promise.reject(new Error(error));
       }
@@ -111,14 +111,14 @@ export class SessionService implements ISessionService {
       const isValidEnough: boolean = expiresInMinutes > this.options.tokenRefreshThresholdMinutes;
 
       if (!isValidEnough) {
-        this.options.logger?.warn('SessionService', `token expires in less than ${this.options.tokenRefreshThresholdMinutes} minutes, refreshing`);
+        this.options.logger?.warn(`token expires in less than ${this.options.tokenRefreshThresholdMinutes} minutes, refreshing`);
 
         return this.refresh();
       }
 
       const session: ISession = this.createSession(token);
 
-      this.options.logger?.info('SessionService', `restore for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
+      this.options.logger?.info(`restore for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
 
       return this.initializer.initialize(session)
         .then(() => session);
@@ -127,7 +127,7 @@ export class SessionService implements ISessionService {
 
   public logout = (): Promise<void> => {
     return this.options.authenticationStorage.clear().then(() => {
-      this.options.logger?.info('SessionService', 'logout');
+      this.options.logger?.info('logout');
 
       return this.initializer.destroy();
     });

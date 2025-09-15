@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { ReactNavigationRouter } from './react-navigation-router';
 import { render, waitFor } from '@testing-library/react-native';
 
-import { ILogService } from '@/log';
+import { ILogger } from '@/log';
 
 import { IRouter } from '..';
 import { StackRouteFactory } from './stack-route-factory';
@@ -14,12 +14,14 @@ const NAVIGATION_EVENT_DEBOUNCE_MS = 10;
 
 describe('ReactNavigationRouter', () => {
 
-  let logService: ILogService;
+  let logger: ILogger;
   let router: IRouter;
 
   beforeEach(() => {
-    logService = jest.requireMock('@/log/log.service').LogService();
-    router = new ReactNavigationRouter(logService, StackRouteFactory({
+    logger = jest.requireMock('@/log/log.service').LogService()
+      .createLogger(`[Test] ${ReactNavigationRouter.name}`);
+
+    router = new ReactNavigationRouter(logger, StackRouteFactory({
       '/': () => React.createElement(View, { testID: 'screen-root' }),
       '/home': () => React.createElement(View, { testID: 'screen-home' }),
       '/welcome': () => React.createElement(View, { testID: 'screen-welcome' }),

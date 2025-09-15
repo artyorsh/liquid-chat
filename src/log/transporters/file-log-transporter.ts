@@ -1,4 +1,4 @@
-import { File, Paths } from 'expo-file-system/next';
+import { File, Paths } from 'expo-file-system';
 
 import { ILogOptions, ILogTransporter } from '../log.service';
 

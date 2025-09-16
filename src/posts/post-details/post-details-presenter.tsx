@@ -1,6 +1,6 @@
 import { IModalService, PresentationType } from '@/modal';
 
-import { IPost } from '../posts-list/model';
+import { IPost } from '..';
 import { IPostDetailsCallbacks, IPostDetailsPresenter } from '../posts-list/posts-list.vm';
 import { PostDetails } from './post-details.component';
 

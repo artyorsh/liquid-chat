@@ -3,7 +3,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 import { ILogger, ILogService } from '@/log';
 import { IModalService } from '@/modal';
 
-import { IPost } from './model';
+import { IPost } from '..';
 import { IPostVM } from './post-item.component';
 import { IPostsListVM } from './posts-list.component';
 
@@ -46,9 +46,7 @@ export class PostsListVM implements IPostsListVM {
 
   private createPostVM = (post: IPost): IPostVM => {
     return {
-      title: post.title,
-      body: post.body,
-      image: { uri: post.image_url },
+      post,
       viewDetails: () => this.viewPostDetails(post),
     };
   };

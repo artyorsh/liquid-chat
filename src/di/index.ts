@@ -9,6 +9,9 @@ export const AppModule = {
   SESSION: Symbol.for('SessionService'),
   USER: Symbol.for('UserService'),
 
+  POSTS_VM: Symbol.for('PostsVM'),
+  POSTS_API: Symbol.for('PostsAPI'),
+
   /* Screens */
   SPLASH_SCREEN: Symbol.for('SplashScreen'),
   WELCOME_SCREEN: Symbol.for('WelcomeScreen'),

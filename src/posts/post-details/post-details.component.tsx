@@ -6,7 +6,7 @@ import { Button } from '@/uilib/button.component';
 import { IconButton } from '@/uilib/icon-button.component';
 import { Text } from '@/uilib/text.component';
 
-import { IPost } from '../posts-list/model';
+import { IPost } from '..';
 
 interface Props {
   post: IPost;

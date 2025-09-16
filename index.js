@@ -7,6 +7,7 @@ import { AuthModule } from '@/auth';
 import { HomeScreenModule } from '@/home';
 import { LogModule } from '@/log';
 import { ModalModule } from '@/modal';
+import { PostsModule } from '@/posts';
 import { ProcessInfoModule } from '@/process-info';
 import { PushNotificationModule } from '@/push-notification';
 import { RouterModule } from '@/router';
@@ -25,6 +26,7 @@ container.load(
   PushNotificationModule,
   ModalModule,
   UserModule,
+  PostsModule,
   SplashScreenModule,
   HomeScreenModule,
 );

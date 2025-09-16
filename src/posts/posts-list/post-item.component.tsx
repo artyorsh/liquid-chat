@@ -1,18 +1,18 @@
 import React from 'react';
-import { ImageSourcePropType, StyleSheet, View, ViewProps } from 'react-native';
+import { StyleSheet, View, ViewProps } from 'react-native';
 
 import { Card } from '@/uilib/card.component';
 import { Image } from '@/uilib/image.component';
 import { Text } from '@/uilib/text.component';
+
+import { IPost } from '..';
 
 interface Props extends ViewProps {
   vm: IPostVM;
 }
 
 export interface IPostVM {
-  title: string;
-  body: string;
-  image: ImageSourcePropType;
+  post: IPost;
   viewDetails(): void;
 }
 
@@ -23,14 +23,14 @@ export const PostItem: React.FC<Props> = ({ vm, ...props }) => {
       onPress={() => vm.viewDetails()}>
       <Image
         style={styles.image}
-        source={vm.image}
+        source={{ uri: vm.post.image_url }}
       />
       <View style={styles.content}>
         <Text category='heading'>
-          {vm.title}
+          {vm.post.title}
         </Text>
         <Text category='paragraph'>
-          {vm.body}
+          {vm.post.body}
         </Text>
       </View>
     </Card>

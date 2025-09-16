@@ -1,7 +1,6 @@
-import { IHomeAPI } from './home.vm';
-import { IPost } from './posts-list/model';
+import { IPost, IPostsApi } from '.';
 
-export class HomeAPI implements IHomeAPI {
+export class PostsAPI implements IPostsApi {
 
   public getPosts = async (): Promise<IPost[]> => {
     return this.sleep(1000).then(() => {

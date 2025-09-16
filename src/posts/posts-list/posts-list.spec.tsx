@@ -13,9 +13,12 @@ describe('PostItem', () => {
 
   beforeEach(() => {
     vm = {
-      title: 'Post 1',
-      body: 'Body 1',
-      image: { uri: 'https://' },
+      post: {
+        id: '1',
+        title: 'Post 1',
+        body: 'Body 1',
+        image_url: 'https://',
+      },
       viewDetails: jest.fn(),
     };
   });

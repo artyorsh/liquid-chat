@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
+import { IPostsListVM, PostsList } from '@/posts/posts-list/posts-list.component';
 import { Loading } from '@/uilib/loading.component';
 import { SafeArea } from '@/uilib/safe-area.component';
 
-import { IPostsListVM, PostsList } from './posts-list/posts-list.component';
 import { IWelcomeHeaderVM, WelcomeHeader } from './welcome-header/welcome-header.component';
 
 export interface IHomeVM {

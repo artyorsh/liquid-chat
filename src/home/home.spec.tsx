@@ -4,17 +4,16 @@ import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { ISessionService } from '@/auth/session';
 import { ILogger } from '@/log';
 import { IModalService } from '@/modal';
+import { IPost, IPostsApi } from '@/posts';
+import { PostDetailsPresenter } from '@/posts/post-details/post-details-presenter';
+import { IPostsListVM } from '@/posts/posts-list/posts-list.component';
+import { PostsListVM } from '@/posts/posts-list/posts-list.vm';
 import { IPushNotificationService } from '@/push-notification';
 import { IRouter } from '@/router';
 import { IUserService } from '@/user';
 
 import { Home, IHomeVM } from './home.component';
-import { IHomeAPI } from './home.vm';
 import { HomeVM } from './home.vm';
-import { PostDetailsPresenter } from './post-details/post-details-presenter';
-import { IPost } from './posts-list/model';
-import { IPostsListVM } from './posts-list/posts-list.component';
-import { PostsListVM } from './posts-list/posts-list.vm';
 
 describe('Home', () => {
 
@@ -26,7 +25,7 @@ describe('Home', () => {
   let modalService: IModalService;
   let logger: ILogger;
 
-  const dataProvider: IHomeAPI = {
+  const postsApi: IPostsApi = {
     getPosts: jest.fn(() => Promise.resolve([])),
   };
 
@@ -50,7 +49,7 @@ describe('Home', () => {
       userService,
       pushNotificationService,
       router,
-      dataProvider,
+      postsApi,
       posts => createPostsListVM(posts),
     );
   });
@@ -88,7 +87,7 @@ describe('Home', () => {
       userService,
       pushNotificationService,
       router,
-      dataProvider,
+      postsApi,
       posts => createPostsListVM(posts),
     );
 

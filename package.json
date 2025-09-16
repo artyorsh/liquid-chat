@@ -34,7 +34,6 @@
     "expo-splash-screen": "~31.0.10",
     "expo-updates": "~29.0.10",
     "inversify": "~6.0.0",
-    "inversify-inject-decorators": "~3.1.0",
     "mobx": "^6.13.0",
     "mobx-react": "^9.2.0",
     "react": "19.1.0",

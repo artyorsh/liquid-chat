@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { AppModule } from '@/di/model';
+import { AppModule } from '@/di';
 import { ILogger, ILogService } from '@/log';
 import { IRouter } from '@/router';
 

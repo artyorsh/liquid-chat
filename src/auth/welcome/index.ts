@@ -1,7 +1,7 @@
 import React from 'react';
 import { interfaces } from 'inversify';
 
-import { AppModule } from '@/di/model';
+import { AppModule } from '@/di';
 
 import { IWelcomeVM, Welcome } from './welcome.component';
 import { WelcomeVM } from './welcome.vm';

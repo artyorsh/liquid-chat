@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContainerModule } from 'inversify';
 
-import { AppModule } from '@/di/model';
+import { AppModule } from '@/di';
 
 import { AnimatedAlertLayoutProvider } from './layout-provider/animated-alert-layout-provider';
 import { AnimatedBottomSheetLayoutProvider } from './layout-provider/animated-bottom-sheet-layout-provider';

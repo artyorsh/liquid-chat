@@ -1,6 +1,6 @@
 import { ContainerModule, interfaces } from 'inversify';
 
-import { AppModule } from '@/di/model';
+import { AppModule } from '@/di';
 import { ILogService } from '@/log';
 
 import { IUserRepository, UserService } from './user.service';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { AppModule } from '@/di/model';
+import { AppModule } from '@/di';
 
 import { ILoginRoute, LoginScreenFactory } from './login';
 import { IRegisterRoute, RegisterScreenFactory } from './register';

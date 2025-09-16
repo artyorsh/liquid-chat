@@ -3,7 +3,7 @@ import * as Application from 'expo-application';
 import * as Device from 'expo-device';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { AppModule } from '@/di/model';
+import { AppModule } from '@/di';
 
 import { ILogTransporter, LogService } from './log.service';
 import { ConsoleLogTransporter } from './transporters/console-log-transporter';

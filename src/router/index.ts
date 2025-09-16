@@ -2,7 +2,7 @@ import { ReactNavigationRouter } from './react-navigation/react-navigation-route
 import { StackRouteFactory } from './react-navigation/stack-route-factory';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { AppModule } from '@/di/model';
+import { AppModule } from '@/di';
 import { IAuthRoute } from '@/auth';
 import { IHomeRoute } from '@/home';
 import { ILogger, ILogService } from '@/log';

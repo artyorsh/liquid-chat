@@ -10,6 +10,8 @@ import { IUserService } from '@/user';
 
 import { Home, IHomeVM } from './home.component';
 import { HomeVM } from './home.vm';
+import { IWelcomeHeaderVM } from './welcome-header/welcome-header.component';
+import { WelcomeHeaderVM } from './welcome-header/welcome-header.vm';
 
 export type IHomeRoute = '/home';
 
@@ -20,19 +22,28 @@ export const HomeScreenModule = new ContainerModule(bind => {
 
 const createHomeVM = (context: interfaces.Context): IHomeVM => {
   const router: IRouter = context.container.get(AppModule.ROUTER);
-  const sessionService: ISessionService = context.container.get(AppModule.SESSION);
-  const userService: IUserService = context.container.get(AppModule.USER);
-  const pushNotificationService: IPushNotificationService = context.container.get(AppModule.PUSH_NOTIFICATION);
-
-  const postsApi: IPostsDatasource = context.container.get(AppModule.POSTS_DATASOURCE);
+  const welcomeHeaderVM: IWelcomeHeaderVM = createWelcomeHeaderVM(context);
+  const postsDatasource: IPostsDatasource = context.container.get(AppModule.POSTS_DATASOURCE);
   const postsFactory: IPostsListFactory = context.container.get(AppModule.POSTS_VM);
 
   return new HomeVM(
-    sessionService,
+    router,
+    welcomeHeaderVM,
+    postsDatasource,
+    postsFactory,
+  );
+};
+
+const createWelcomeHeaderVM = (context: interfaces.Context): IWelcomeHeaderVM => {
+  const userService: IUserService = context.container.get(AppModule.USER);
+  const pushNotificationService: IPushNotificationService = context.container.get(AppModule.PUSH_NOTIFICATION);
+  const sessionService: ISessionService = context.container.get(AppModule.SESSION);
+  const router: IRouter = context.container.get(AppModule.ROUTER);
+
+  return new WelcomeHeaderVM(
     userService,
     pushNotificationService,
+    sessionService,
     router,
-    postsApi,
-    postsFactory,
   );
 };

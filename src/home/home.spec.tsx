@@ -4,7 +4,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { ISessionService } from '@/auth/session';
 import { ILogger } from '@/log';
 import { IModalService } from '@/modal';
-import { IPost, IPostsApi } from '@/posts';
+import { IPost, IPostsDatasource } from '@/posts';
 import { PostDetailsPresenter } from '@/posts/post-details/post-details-presenter';
 import { IPostsListVM } from '@/posts/posts-list/posts-list.component';
 import { PostsListVM } from '@/posts/posts-list/posts-list.vm';
@@ -25,7 +25,7 @@ describe('Home', () => {
   let modalService: IModalService;
   let logger: ILogger;
 
-  const postsApi: IPostsApi = {
+  const postsApi: IPostsDatasource = {
     getPosts: jest.fn(() => Promise.resolve([])),
   };
 

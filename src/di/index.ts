@@ -10,7 +10,7 @@ export const AppModule = {
   USER: Symbol.for('UserService'),
 
   POSTS_VM: Symbol.for('PostsVM'),
-  POSTS_API: Symbol.for('PostsAPI'),
+  POSTS_DATASOURCE: Symbol.for('PostsAPI'),
 
   /* Screens */
   SPLASH_SCREEN: Symbol.for('SplashScreen'),

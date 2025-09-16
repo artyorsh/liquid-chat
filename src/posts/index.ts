@@ -16,14 +16,14 @@ export interface IPost {
   image_url: string;
 }
 
-export interface IPostsApi {
+export interface IPostsDatasource {
   getPosts(): Promise<IPost[]>;
 }
 
 export type IPostsListFactory = (posts: IPost[]) => IPostsListVM;
 
 export const PostsModule = new ContainerModule(bind => {
-  bind(AppModule.POSTS_API).toConstantValue(new PostsAPI());
+  bind(AppModule.POSTS_DATASOURCE).toConstantValue(new PostsAPI());
 
   bind(AppModule.POSTS_VM).toFactory(context => {
     return (posts: IPost[]) => createPostsListVM(posts, context);

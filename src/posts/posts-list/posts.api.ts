@@ -1,6 +1,6 @@
-import { IPost, IPostsApi } from '.';
+import { IPost, IPostsDatasource } from '..';
 
-export class PostsAPI implements IPostsApi {
+export class PostsAPI implements IPostsDatasource {
 
   public getPosts = async (): Promise<IPost[]> => {
     return this.sleep(1000).then(() => {

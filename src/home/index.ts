@@ -3,7 +3,7 @@ import { ContainerModule, interfaces } from 'inversify';
 
 import { AppModule } from '@/di';
 import { ISessionService } from '@/auth/session';
-import { IPostsApi, IPostsListFactory } from '@/posts';
+import { IPostsDatasource, IPostsListFactory } from '@/posts';
 import { IPushNotificationService } from '@/push-notification';
 import { IRouter } from '@/router';
 import { IUserService } from '@/user';
@@ -24,7 +24,7 @@ const createHomeVM = (context: interfaces.Context): IHomeVM => {
   const userService: IUserService = context.container.get(AppModule.USER);
   const pushNotificationService: IPushNotificationService = context.container.get(AppModule.PUSH_NOTIFICATION);
 
-  const postsApi: IPostsApi = context.container.get(AppModule.POSTS_API);
+  const postsApi: IPostsDatasource = context.container.get(AppModule.POSTS_DATASOURCE);
   const postsFactory: IPostsListFactory = context.container.get(AppModule.POSTS_VM);
 
   return new HomeVM(

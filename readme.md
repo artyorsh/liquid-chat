@@ -42,7 +42,7 @@ Liquid Chat - a showcase of on-device AI capabilities using Apple Foundation Mod
 ## Setup
 
 ```bash
-npm i
+npm i --legacy-peer-deps
 ```
 
 ```bash

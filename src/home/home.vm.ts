@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable } from 'mobx';
+import { makeAutoObservable, observable, runInAction } from 'mobx';
 
 import { IPostsDatasource, IPostsListFactory } from '@/posts';
 import { IPostsListVM } from '@/posts/posts-list/posts-list.component';
@@ -27,8 +27,11 @@ export class HomeVM implements IHomeVM, INavigationLifecycleListener {
 
   public onFocus = async (): Promise<void> => {
     const posts = await this.postsDatasource.getPosts();
-    this.posts = this.createPostsList(posts);
-    this.loading = false;
+
+    runInAction(() => {
+      this.posts = this.createPostsList(posts);
+      this.loading = false;
+    });
   };
 
   public onBlur = (): void => {

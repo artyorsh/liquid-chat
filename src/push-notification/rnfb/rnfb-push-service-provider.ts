@@ -1,6 +1,6 @@
 import '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
-import { FirebaseMessagingTypes, getInitialNotification, onMessage, onNotificationOpenedApp, setBackgroundMessageHandler } from '@react-native-firebase/messaging';
+import { FirebaseMessagingTypes, getAPNSToken, getInitialNotification, getToken, onMessage, onNotificationOpenedApp, setBackgroundMessageHandler } from '@react-native-firebase/messaging';
 
 import { IPushNotification, IPushNotificationHandler, IPushNotificationToken, IPushServiceProvider } from '../push-notification.service';
 
@@ -56,8 +56,8 @@ export class RNFBPushServiceProvider implements IPushServiceProvider {
   }
 
   public getToken = (): Promise<IPushNotificationToken> => {
-    return this.rnfb.getAPNSToken()
-      .then(apns => this.rnfb.getToken()
+    return getAPNSToken(this.rnfb)
+      .then(apns => getToken(this.rnfb)
         .then(fcm => ({ fcm, apns })));
   };
 

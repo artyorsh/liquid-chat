@@ -12,7 +12,7 @@
       "multiline": true
     }],
     "array-element-newline": ["error", "consistent"],
-    
+
     "brace-style": "off",
     "@typescript-eslint/brace-style": "error",
 
@@ -24,12 +24,12 @@
       "exports": "always-multiline",
       "functions": "always-multiline"
     }],
-    
+
     "comma-spacing": "off",
     "@typescript-eslint/comma-spacing": "error",
 
     "function-paren-newline": ["error", "multiline"],
- 
+
     "indent": "off",
     "@typescript-eslint/indent": ["error", 2],
     "react/jsx-indent-props": ["error", 2],
@@ -91,7 +91,7 @@
     "@typescript-eslint/no-shadow": "error",
 
     "no-var": "error",
-    
+
     "object-curly-spacing": "off",
     "@typescript-eslint/object-curly-spacing": ["error", "always"],
 
@@ -142,7 +142,7 @@
 
     "space-infix-ops": "off",
     "@typescript-eslint/space-infix-ops": "error",
-    
+
     "space-in-parens": ["error", "never"],
     "space-unary-ops": "error",
 
@@ -155,8 +155,8 @@
       "selfClosing": "tag-aligned"
     }],
     "react/jsx-curly-brace-presence": [ "warn", {
-      "props": "never", 
-      "children": "always", 
+      "props": "never",
+      "children": "always",
       "propElementValues": "always"
     }],
     "react/jsx-first-prop-new-line": ["error", "multiline"],

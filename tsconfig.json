@@ -6,16 +6,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": [
-      "react-native",
-      "jest",
-      "node"
-    ]
+    "types": ["react-native", "jest", "node"]
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+  "include": ["**/*.ts", "**/*.tsx"]
 }

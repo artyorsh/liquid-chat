@@ -24,3 +24,5 @@ export const StackRouteFactory = (routeMap: IRouteMap): IRouteFactory => {
     );
   };
 };
+
+StackRouteFactory.displayName = 'StackRouteFactory';

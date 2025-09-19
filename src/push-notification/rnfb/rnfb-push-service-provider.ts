@@ -1,4 +1,3 @@
-import '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
 import { FirebaseMessagingTypes, getAPNSToken, getInitialNotification, getToken, onMessage, onNotificationOpenedApp, setBackgroundMessageHandler } from '@react-native-firebase/messaging';
 

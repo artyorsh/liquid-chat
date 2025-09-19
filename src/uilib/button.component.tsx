@@ -25,10 +25,9 @@ export const Button: React.FC<ButtonProps> = ({ type = 'primary', disabled = fal
     return (
       <>
         {title && (
-          <Text
-            style={styles.text(state)}
-            children={title}
-          />
+          <Text style={styles.text(state)}>
+            {title}
+          </Text>
         )}
         {icon && <IconComponent style={styles.icon(state)} />}
       </>

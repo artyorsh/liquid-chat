@@ -1,6 +1,6 @@
 export default {
   '*.ts?(x)': [
-    'bun run lint --fix',
+    'bun run lint --cache --fix',
     () => 'tsc -p ./tsconfig.json',
   ],
 };

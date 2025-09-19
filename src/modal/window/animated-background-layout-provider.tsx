@@ -20,10 +20,12 @@ export class AnimatedBackgroundLayoutProvider implements ILayoutProvider {
   constructor(private config: IModalWindowLayoutConfig = DEFAULT_CONFIG) {}
 
   public getWrapperComponent(theme: UnistylesTheme): React.FC<ViewProps> {
+    const animationStyle = this.getAnimationStyle(theme.colors.overlay);
+
     return (props: ViewProps): React.ReactElement => (
       <Animated.View
         {...props}
-        style={[props.style, this.getAnimationStyle(theme.colors.overlay)]}
+        style={[props.style, animationStyle]}
       />
     );
   }

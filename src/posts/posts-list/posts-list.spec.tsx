@@ -3,8 +3,7 @@ import { fireEvent, render } from '@testing-library/react-native';
 
 import { ILogger } from '@/log';
 
-import { PostItem } from './post-item.component';
-import { IPostVM } from './post-item.component';
+import { IPostVM, PostItem } from './post-item.component';
 import { IPostsListVM, PostsList } from './posts-list.component';
 import { IPostDetailsPresenter, PostsListVM } from './posts-list.vm';
 

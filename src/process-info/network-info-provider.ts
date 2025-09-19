@@ -1,10 +1,10 @@
-import * as Network from 'expo-network';
+import { addNetworkStateListener, getNetworkStateAsync, NetworkState, NetworkStateType } from 'expo-network';
 
 import { IProcessInfoData, IProcessInfoProvider } from './process-info.service';
 
 export type NetworkInfoProviderId = 'NetworkInfo';
 
-export interface INetworkInfoData extends Network.NetworkState, IProcessInfoData {
+export interface INetworkInfoData extends NetworkState, IProcessInfoData {
 }
 
 export class NetworkInfoProvider implements IProcessInfoProvider<INetworkInfoData> {
@@ -14,13 +14,13 @@ export class NetworkInfoProvider implements IProcessInfoProvider<INetworkInfoDat
   }
 
   public getCurrentData = async (): Promise<INetworkInfoData> => {
-    const networkState: Network.NetworkState = await Network.getNetworkStateAsync();
+    const networkState: NetworkState = await getNetworkStateAsync();
 
     return this.createNetworkInfoData(networkState);
   };
 
   public subscribe(callback: (data: INetworkInfoData) => void): Function {
-    const subscription = Network.addNetworkStateListener((networkState: Network.NetworkState) => {
+    const subscription = addNetworkStateListener((networkState: NetworkState) => {
       const data = this.createNetworkInfoData(networkState);
       callback(data);
     });
@@ -30,7 +30,7 @@ export class NetworkInfoProvider implements IProcessInfoProvider<INetworkInfoDat
     };
   }
 
-  private createNetworkInfoData(networkState: Network.NetworkState): IProcessInfoData {
+  private createNetworkInfoData(networkState: NetworkState): IProcessInfoData {
     return {
       ...networkState,
       toString: () => JSON.stringify({
@@ -40,32 +40,31 @@ export class NetworkInfoProvider implements IProcessInfoProvider<INetworkInfoDat
     };
   }
 
-  private getNetworkTypeDescription(networkType: Network.NetworkState['type']): string {
+  private getNetworkTypeDescription(networkType: NetworkState['type']): string {
     switch (networkType) {
-      case Network.NetworkStateType.BLUETOOTH:
+      case NetworkStateType.BLUETOOTH:
         return 'Bluetooth';
 
-      case Network.NetworkStateType.CELLULAR:
+      case NetworkStateType.CELLULAR:
         return 'Cellular';
 
-      case Network.NetworkStateType.ETHERNET:
+      case NetworkStateType.ETHERNET:
         return 'Ethernet';
 
-      case Network.NetworkStateType.NONE:
+      case NetworkStateType.NONE:
         return 'None';
 
-      case Network.NetworkStateType.VPN:
+      case NetworkStateType.VPN:
         return 'VPN';
 
-      case Network.NetworkStateType.WIFI:
+      case NetworkStateType.WIFI:
         return 'Wi-Fi';
 
-      case Network.NetworkStateType.WIMAX:
+      case NetworkStateType.WIMAX:
         return 'WiMAX';
 
       default:
         return 'Unknown';
     }
   }
-
 }

@@ -19,7 +19,7 @@ export const App: React.FC<Props> = ({ get }) => {
 
   React.useEffect(() => {
     processInfoService.startListening();
-  }, []);
+  }, [processInfoService]);
 
   return (
     <>

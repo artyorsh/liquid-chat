@@ -16,7 +16,7 @@ React Native template with built-in modules, automation workflows and customisat
 - [![jest](https://img.shields.io/badge/jest-29.7-blue)](https://github.com/jestjs/jest/releases)
 - [![react-native-testing-library](https://img.shields.io/badge/testing--library-12.4-blue)](https://github.com/callstack/react-native-testing-library/releases)
 - [![typescript](https://img.shields.io/badge/typescript-5.7-blue)](https://github.com/microsoft/TypeScript/releases)
-- [![eslint](https://img.shields.io/badge/eslint-8.56-blue)](https://github.com/eslint/eslint/releases)
+- [![eslint](https://img.shields.io/badge/eslint-9-blue)](https://github.com/eslint/eslint/releases)
 
 ## Features
 

@@ -3,8 +3,8 @@ import { ContainerModule } from 'inversify';
 
 import { AppModule } from '@/di';
 
-import { AnimatedAlertLayoutProvider } from './layout-provider/animated-alert-layout-provider';
 import { AnimatedBottomSheetLayoutProvider } from './layout-provider/animated-bottom-sheet-layout-provider';
+import { AnimatedAlertLayoutProvider } from './layout-provider/AnimatedAlertLayoutProvider';
 import { ILayoutProvider } from './modal.component';
 import { IModalPresentationPolicy, ModalService } from './modal.service';
 import { OneAtTimePresentationPolicy } from './presentation-policy/one-at-time-presentation-policy';

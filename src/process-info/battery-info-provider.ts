@@ -1,10 +1,10 @@
-import * as Battery from 'expo-battery';
+import { addBatteryLevelListener, addBatteryStateListener, addLowPowerModeListener, BatteryState, getPowerStateAsync, PowerState } from 'expo-battery';
 
 import { IProcessInfoData, IProcessInfoProvider } from './process-info.service';
 
 export type BatteryInfoProviderId = 'BatteryInfo';
 
-export interface IBatteryInfoData extends Battery.PowerState, IProcessInfoData {
+export interface IBatteryInfoData extends PowerState, IProcessInfoData {
 }
 
 export class BatteryInfoProvider implements IProcessInfoProvider<IBatteryInfoData> {
@@ -16,24 +16,24 @@ export class BatteryInfoProvider implements IProcessInfoProvider<IBatteryInfoDat
   }
 
   public getCurrentData = async (): Promise<IBatteryInfoData> => {
-    const powerState: Battery.PowerState = await Battery.getPowerStateAsync();
+    const powerState: PowerState = await getPowerStateAsync();
     this.currentData = this.createBatteryInfoData(powerState);
 
     return this.currentData;
   };
 
   public subscribe(callback: (data: IBatteryInfoData) => void): Function {
-    const batteryLevelSubscription = Battery.addBatteryLevelListener(({ batteryLevel }) => {
+    const batteryLevelSubscription = addBatteryLevelListener(({ batteryLevel }) => {
       this.currentData = this.createBatteryInfoData({ ...this.currentData, batteryLevel });
       callback(this.currentData);
     });
 
-    const batteryStateSubscription = Battery.addBatteryStateListener(({ batteryState }) => {
+    const batteryStateSubscription = addBatteryStateListener(({ batteryState }) => {
       this.currentData = { ...this.currentData, batteryState };
       callback(this.currentData);
     });
 
-    const lowPowerModeSubscription = Battery.addLowPowerModeListener(({ lowPowerMode }) => {
+    const lowPowerModeSubscription = addLowPowerModeListener(({ lowPowerMode }) => {
       this.currentData = { ...this.currentData, lowPowerMode };
       callback(this.currentData);
     });
@@ -45,7 +45,7 @@ export class BatteryInfoProvider implements IProcessInfoProvider<IBatteryInfoDat
     };
   }
 
-  private createBatteryInfoData(powerState: Battery.PowerState): IBatteryInfoData {
+  private createBatteryInfoData(powerState: PowerState): IBatteryInfoData {
     return {
       ...powerState,
       toString: () => JSON.stringify({
@@ -56,15 +56,15 @@ export class BatteryInfoProvider implements IProcessInfoProvider<IBatteryInfoDat
     };
   }
 
-  private getBatteryStateDescription(batteryState: Battery.BatteryState): string {
+  private getBatteryStateDescription(batteryState: BatteryState): string {
     switch (batteryState) {
-      case Battery.BatteryState.UNPLUGGED:
+      case BatteryState.UNPLUGGED:
         return 'Unplugged';
 
-      case Battery.BatteryState.CHARGING:
+      case BatteryState.CHARGING:
         return 'Charging';
 
-      case Battery.BatteryState.FULL:
+      case BatteryState.FULL:
         return 'Full';
 
       default:

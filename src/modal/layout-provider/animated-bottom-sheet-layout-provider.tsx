@@ -20,10 +20,12 @@ export class AnimatedBottomSheetLayoutProvider implements ILayoutProvider {
   }
 
   public getWrapperComponent(): React.FC<ViewProps> {
+    const animationStyle: ViewStyle = this.getAnimationStyle();
+
     return (props: ViewProps): React.ReactElement => (
       <Animated.View
         {...props}
-        style={[props.style, this.getAnimationStyle()]}
+        style={[props.style, animationStyle]}
       />
     );
   }

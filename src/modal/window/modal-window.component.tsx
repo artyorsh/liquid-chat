@@ -19,7 +19,7 @@ interface Props extends ViewProps {
   onWindowSizeChange(numberOfActiveModals: number): void;
 }
 
-export const ModalWindow = React.forwardRef<IModalWindowRef, Props>(({ layoutProvider, ...props }, ref) => {
+export const ModalWindow = React.forwardRef<IModalWindowRef, Props>(({ layoutProvider, onWindowSizeChange, ...props }, ref) => {
 
   const { theme } = useUnistyles();
   const [elements, setElements] = useState<IElementMap>(new Map());
@@ -28,8 +28,8 @@ export const ModalWindow = React.forwardRef<IModalWindowRef, Props>(({ layoutPro
 
   React.useEffect(() => {
     layoutProvider.onWindowSizeChange(elements.size);
-    props.onWindowSizeChange(elements.size);
-  }, [elements.size]);
+    onWindowSizeChange(elements.size);
+  }, [elements.size, layoutProvider, onWindowSizeChange]);
 
   React.useImperativeHandle(ref, () => ({
     mount(element: React.ReactElement): number {

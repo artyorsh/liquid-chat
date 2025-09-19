@@ -116,7 +116,7 @@ const palette = {
 const lightTheme = {
   radius: 12,
   gap: (v: number): number => v * 4,
-  colors: <ThemeColors> {
+  colors: {
     background: palette.basic100,
     onBackground: palette.basic900,
     disabled: palette.basic300,
@@ -129,7 +129,7 @@ const lightTheme = {
     hint: palette.basic600,
     outline: palette.basic300,
     overlay: 'rgba(0, 0, 0, 0.5)',
-  },
+  } as ThemeColors,
   typography: {
     heading: (fontScale: number) => ({
       fontFamily: fontFamilyService.getFontName('Inter/600SemiBold'),
@@ -156,7 +156,7 @@ const lightTheme = {
 
 const darkTheme = {
   ...lightTheme,
-  colors: <ThemeColors> {
+  colors: {
     background: palette.basic900,
     onBackground: palette.basic100,
     disabled: palette.basic700,
@@ -168,7 +168,7 @@ const darkTheme = {
     surfaceVariant: palette.basic800,
     hint: palette.basic400,
     outline: palette.basic700,
-  },
+  } as ThemeColors,
 };
 
 /**

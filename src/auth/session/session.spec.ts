@@ -2,8 +2,7 @@ import { ILogger } from '@/log';
 
 import { ISessionModule } from './initialzier';
 import { IParallelModuleInitializerOptions, ParallelModuleInitializer } from './initialzier/parallel-module-initializer';
-import { AnyAuthenticationProvider, AnyAuthenticationStorage, ISessionInitializer, SessionService } from './session.service';
-import { AnyAuthenticationToken } from './session.service';
+import { AnyAuthenticationProvider, AnyAuthenticationStorage, AnyAuthenticationToken, ISessionInitializer, SessionService } from './session.service';
 
 jest.unmock('./session.service');
 

@@ -36,7 +36,9 @@ const createPushNotificationService = (context: ResolutionContext): IPushNotific
   let pushPermissionController: IPushPermissionController = new MockPushPermissionController();
 
   if (!isExpoGo) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { RNFBPushServiceProvider } = require('./rnfb/rnfb-push-service-provider');
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { RNFBPushPermissionController } = require('./rnfb/rnfb-push-permission-controller');
 
     pushServiceProvider = new RNFBPushServiceProvider({

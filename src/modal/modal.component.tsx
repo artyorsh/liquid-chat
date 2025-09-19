@@ -16,7 +16,7 @@ export interface IModalRef {
   hide(): Promise<void>;
 }
 
-export const Modal = React.forwardRef<IModalRef, ModalProps>(({ layoutProvider, ...props }, ref) => {
+export const Modal = React.forwardRef<IModalRef, ModalProps>(({ layoutProvider, onRequestClose, ...props }, ref) => {
 
   const WrapperComponent = layoutProvider.getWrapperComponent();
 
@@ -29,13 +29,13 @@ export const Modal = React.forwardRef<IModalRef, ModalProps>(({ layoutProvider, 
     layoutProvider.setVisible(true);
 
     const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
-      props.onRequestClose?.();
+      onRequestClose?.();
 
-      return !!props.onRequestClose;
+      return !!onRequestClose;
     });
 
     return () => subscription.remove();
-  }, []);
+  }, [layoutProvider, onRequestClose]);
 
   return (
     <WrapperComponent style={[styles.container, props.style]}>

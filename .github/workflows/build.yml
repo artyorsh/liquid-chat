@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
 
@@ -24,13 +23,15 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - uses: oven-sh/setup-bun@v2
+
       - uses: expo/expo-github-action@v8
         with:
           eas-version: ${{ vars.EXPO_EAS_VERSION || 'latest' }}
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install node modules
-        run: npm install
+        run: bun i
 
       - name: Trigger EAS build
-        run:  eas build --non-interactive --platform ${{ matrix.platform.name }} --profile ${{ matrix.platform.profile }}
+        run: eas build --non-interactive --platform ${{ matrix.platform.name }} --profile ${{ matrix.platform.profile }}

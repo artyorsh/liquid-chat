@@ -30,8 +30,10 @@ React Native template with built-in modules, automation workflows and customisat
 
 ## Setup
 
+Install [Bun](https://github.com/oven-sh/homebrew-bun#install).
+
 ```bash
-npm i
+bun i
 ```
 
 ```bash
@@ -43,7 +45,7 @@ cp .env.example .env
 Start Metro bundler and follow the instructions in terminal to run the app.
 
 ```bash
-npm start
+bun run start
 ```
 
 ## Documentation

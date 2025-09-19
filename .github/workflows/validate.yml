@@ -1,22 +1,15 @@
-name: Validate and create preview
+name: Validate
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - opened
-      - synchronize
-      - ready_for_review
+
+  workflow_dispatch:
 
 jobs:
-  validate:
-    name: Validate and create preview
+  build:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
@@ -32,14 +25,12 @@ jobs:
           eas-version: ${{ vars.EXPO_EAS_VERSION || 'latest' }}
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Install node modules
-        run: bun i
+      - run: bun i
 
       - run: bun run lint
+
       - run: bun run build
+
       - run: bun run test --ci --silent
 
-      - name: Create preview
-        uses: expo/expo-github-action/preview@v8
-        with:
-          command: eas update --auto --branch ${{ github.event.pull_request.head.ref }}
+      - run: npx expo-doctor --verbose

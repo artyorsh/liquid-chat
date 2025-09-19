@@ -1,6 +1,7 @@
 # expo-template
 
-[![Build](https://github.com/artyorsh/expo-template/actions/workflows/build.yml/badge.svg?event=push&branch=main)](https://github.com/artyorsh/expo-template/actions?query=branch%3Amain)
+[![Build](https://github.com/artyorsh/expo-template/actions/workflows/build.yml/badge.svg?event=schedule&branch=main)](https://github.com/artyorsh/expo-template/actions?query=branch%3Amain+event%3Aschedule)
+[![Validate](https://github.com/artyorsh/expo-template/actions/workflows/build.yml/badge.svg?event=schedule&branch=main)](https://github.com/artyorsh/expo-template/actions?query=branch%3Amain+event%3Aschedule)
 
 React Native template with built-in modules, automation workflows and customisation options.
 

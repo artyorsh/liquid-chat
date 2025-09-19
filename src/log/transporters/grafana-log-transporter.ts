@@ -1,4 +1,4 @@
-import { ILogOptions, ILogTransporter } from '../log.service';
+import { ILogTransporter, ITransporterLogPayload } from '../log.service';
 
 interface IGrafanaLogTransporterOptions {
   hostUrl: string;
@@ -11,7 +11,7 @@ export class GrafanaLogTransporter implements ILogTransporter {
   constructor(private options: IGrafanaLogTransporterOptions) {
   }
 
-  public transport = (tag: string, message: string, options?: ILogOptions): void => {
+  public transport = (tag: string, message: string, payload: ITransporterLogPayload): void => {
     const timestampNs: number = Date.now() * 1000000;
 
     fetch(`${this.options.hostUrl}/loki/api/v1/push`, {
@@ -22,7 +22,7 @@ export class GrafanaLogTransporter implements ILogTransporter {
       body: JSON.stringify({
         streams: [
           {
-            stream: { ...options, tag, level: options?.level || 'debug' },
+            stream: { ...payload, tag },
             values: [[timestampNs.toString(), `[${tag}] ${message}`]],
           },
         ],

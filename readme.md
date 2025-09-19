@@ -23,6 +23,7 @@ React Native template with built-in modules, automation workflows and customisat
 - Authentication flows: login, registration, refresh and restore.
 - Push Notifications with permission request.
 - Light and Dark themes with [flexible customization](https://github.com/artyorsh/expo-template/wiki/Branding).
+- Crash reporting with [Sentry](https://sentry.io).
 - Remote logging with [Grafana](https://github.com/artyorsh/grafana-mobile-observability).
 - CI/CD with GitHub Actions and [EAS](https://github.com/artyorsh/expo-template/wiki/Enabling-EAS).
 - Modularized architecture with Dependency Injection.

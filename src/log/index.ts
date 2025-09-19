@@ -9,6 +9,7 @@ import { ILogTransporter, LogService } from './log.service';
 import { ConsoleLogTransporter } from './transporters/console-log-transporter';
 import { FileLogTransporter } from './transporters/file-log-transporter';
 import { GrafanaLogTransporter } from './transporters/grafana-log-transporter';
+import { SentryLogTransporter } from './transporters/sentry-log-transporter';
 
 export type ILogLevel =
  | 'debug'
@@ -84,6 +85,13 @@ export const createTransporters = (): ILogTransporter[] => {
         const hostUrl: string = process.env.EXPO_PUBLIC_GRAFANA_HOST;
         const grafanaTransporter: ILogTransporter = new GrafanaLogTransporter({ hostUrl });
         result.push(grafanaTransporter);
+
+        break;
+
+      case 'sentry':
+        const dsn: string = process.env.EXPO_PUBLIC_SENTRY_DSN;
+        const sentryTransporter: ILogTransporter = new SentryLogTransporter({ dsn });
+        result.push(sentryTransporter);
 
         break;
 

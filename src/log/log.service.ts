@@ -6,13 +6,13 @@ export interface ILogServiceOptions {
   defaultLabels?: ILogPayload;
 }
 
-export interface ILogOptions {
+export type ITransporterLogPayload = ILogPayload & {
   level: ILogLevel;
-}
+};
 
 export interface ILogTransporter {
   readonly id: string;
-  transport(tag: string, message: string, options?: ILogOptions): void;
+  transport(tag: string, message: string, options?: ITransporterLogPayload): void;
   flush(): void;
 }
 

@@ -1,6 +1,6 @@
 import { LogBox } from 'react-native';
 
-import { ILogOptions, ILogTransporter } from '../log.service';
+import { ILogTransporter, ITransporterLogPayload } from '../log.service';
 
 export class ConsoleLogTransporter implements ILogTransporter {
 
@@ -19,8 +19,8 @@ export class ConsoleLogTransporter implements ILogTransporter {
     LogBox.ignoreAllLogs();
   }
 
-  public transport = (tag: string, message: string, options?: ILogOptions): void => {
-    switch (options?.level || 'debug') {
+  public transport = (tag: string, message: string, payload: ITransporterLogPayload): void => {
+    switch (payload.level) {
       case 'warn':
         return console.warn(`\x1b[33m[${this.currentTime}] \x1b[1m${tag} \x1b[0m${message}`);
 

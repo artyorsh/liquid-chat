@@ -88,5 +88,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-secure-store',
     '@react-native-firebase/app',
     '@react-native-firebase/messaging',
+    [
+      '@sentry/react-native/expo',
+      {
+        'url': 'https://sentry.io/',
+        'project': process.env.SENTRY_PROJECT,
+        'organization': process.env.SENTRY_ORGANIZATION,
+      },
+    ],
   ],
 });

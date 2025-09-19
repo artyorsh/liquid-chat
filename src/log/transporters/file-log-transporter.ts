@@ -1,6 +1,6 @@
 import { File, Paths } from 'expo-file-system';
 
-import { ILogOptions, ILogTransporter } from '../log.service';
+import { ILogTransporter, ITransporterLogPayload } from '../log.service';
 
 interface ILogMessage {
   timestamp: number;
@@ -23,8 +23,8 @@ export class FileLogTransporter implements ILogTransporter {
     this.writer = this.logFile.writableStream().getWriter();
   }
 
-  public transport = (tag: string, message: string, options?: ILogOptions): void => {
-    const logMessage: ILogMessage = this.createLogMessage(tag, message, options);
+  public transport = (tag: string, message: string, payload: ITransporterLogPayload): void => {
+    const logMessage: ILogMessage = this.createLogMessage(tag, message, payload);
 
     this.writeToFile(logMessage);
   };
@@ -35,13 +35,11 @@ export class FileLogTransporter implements ILogTransporter {
     });
   };
 
-  private createLogMessage = (tag: string, message: string, options?: ILogOptions): ILogMessage => {
+  private createLogMessage = (tag: string, message: string, payload: ITransporterLogPayload): ILogMessage => {
     return {
       timestamp: Date.now(),
       message: `${tag}: ${message}`,
-      payload: {
-        ...(options || {}),
-      },
+      payload: payload,
     };
   };
 

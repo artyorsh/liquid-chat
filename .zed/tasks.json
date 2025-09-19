@@ -17,6 +17,12 @@
     "use_new_terminal": false
   },
   {
+    "label": "prebuild",
+    "command": "npx expo prebuild --clean",
+    "hide": "on_success",
+    "use_new_terminal": false
+  },
+  {
     "label": "preview-android",
     "command": "npx eas build -p android -e preview",
     "hide": "on_success",
@@ -24,7 +30,7 @@
   },
   {
     "label": "preview-ios",
-    "command": "npx eas build -p ios-simulator -e preview",
+    "command": "npx eas build -p ios -e ios-simulator",
     "hide": "on_success",
     "use_new_terminal": true
   }

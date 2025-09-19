@@ -1,0 +1,31 @@
+[
+  {
+    "label": "start",
+    "command": "npm start",
+    "use_new_terminal": true
+  },
+  {
+    "label": "run-android",
+    "command": "npm run android",
+    "hide": "on_success",
+    "use_new_terminal": false
+  },
+  {
+    "label": "run-ios",
+    "command": "npm run ios",
+    "hide": "on_success",
+    "use_new_terminal": false
+  },
+  {
+    "label": "preview-android",
+    "command": "npx eas build -p android -e preview",
+    "hide": "on_success",
+    "use_new_terminal": true
+  },
+  {
+    "label": "preview-ios",
+    "command": "npx eas build -p ios-simulator -e preview",
+    "hide": "on_success",
+    "use_new_terminal": true
+  }
+]

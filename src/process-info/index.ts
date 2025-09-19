@@ -1,4 +1,4 @@
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 import { ILogger, ILogService } from '@/log';
@@ -20,14 +20,14 @@ export interface IProcessInfoService {
   getCurrentData<D = any>(providerId: IProviderId): Promise<D>;
 }
 
-export const ProcessInfoModule = new ContainerModule(bind => {
+export const ProcessInfoModule = new ContainerModule(({ bind }) => {
   bind<IProcessInfoService>(AppModule.PROCESS_INFO)
     .toDynamicValue(context => createProcessInfoService(context))
     .inSingletonScope();
 });
 
-const createProcessInfoService = (context: interfaces.Context): IProcessInfoService => {
-  const logService: ILogService = context.container.get(AppModule.LOG);
+const createProcessInfoService = (context: ResolutionContext): IProcessInfoService => {
+  const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(ProcessInfoService.name);
 
   const providers: Record<IProviderId, IProcessInfoProvider> = {

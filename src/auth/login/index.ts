@@ -1,5 +1,5 @@
 import React from 'react';
-import { interfaces } from 'inversify';
+import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 
@@ -8,13 +8,13 @@ import { LoginVM } from './login.vm';
 
 export type ILoginRoute = '/login';
 
-export const LoginScreenFactory = (context: interfaces.Context): React.FC => {
+export const LoginScreenFactory = (context: ResolutionContext): React.FC => {
   return () => React.createElement(Login, { vm: createLoginVM(context) });
 };
 
-const createLoginVM = (context: interfaces.Context): ILoginVM => {
+const createLoginVM = (context: ResolutionContext): ILoginVM => {
   return new LoginVM(
-    context.container.get(AppModule.ROUTER),
-    context.container.get(AppModule.SESSION),
+    context.get(AppModule.ROUTER),
+    context.get(AppModule.SESSION),
   );
 };

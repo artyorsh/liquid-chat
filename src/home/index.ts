@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 import { ISessionService } from '@/auth/session';
@@ -15,16 +15,16 @@ import { WelcomeHeaderVM } from './welcome-header/welcome-header.vm';
 
 export type IHomeRoute = '/home';
 
-export const HomeScreenModule = new ContainerModule(bind => {
-  bind<interfaces.Factory<React.FC>>(AppModule.HOME_SCREEN)
+export const HomeScreenModule = new ContainerModule(({ bind }) => {
+  bind<React.FC>(AppModule.HOME_SCREEN)
     .toFactory(context => () => React.createElement(Home, { vm: createHomeVM(context) }));
 });
 
-const createHomeVM = (context: interfaces.Context): IHomeVM => {
-  const router: IRouter = context.container.get(AppModule.ROUTER);
+const createHomeVM = (context: ResolutionContext): IHomeVM => {
+  const router: IRouter = context.get(AppModule.ROUTER);
   const welcomeHeaderVM: IWelcomeHeaderVM = createWelcomeHeaderVM(context);
-  const postsDatasource: IPostsDatasource = context.container.get(AppModule.POSTS_DATASOURCE);
-  const postsFactory: IPostsListFactory = context.container.get(AppModule.POSTS_VM);
+  const postsDatasource: IPostsDatasource = context.get(AppModule.POSTS_DATASOURCE);
+  const postsFactory: IPostsListFactory = context.get(AppModule.POSTS_VM);
 
   return new HomeVM(
     router,
@@ -34,11 +34,11 @@ const createHomeVM = (context: interfaces.Context): IHomeVM => {
   );
 };
 
-const createWelcomeHeaderVM = (context: interfaces.Context): IWelcomeHeaderVM => {
-  const userService: IUserService = context.container.get(AppModule.USER);
-  const pushNotificationService: IPushNotificationService = context.container.get(AppModule.PUSH_NOTIFICATION);
-  const sessionService: ISessionService = context.container.get(AppModule.SESSION);
-  const router: IRouter = context.container.get(AppModule.ROUTER);
+const createWelcomeHeaderVM = (context: ResolutionContext): IWelcomeHeaderVM => {
+  const userService: IUserService = context.get(AppModule.USER);
+  const pushNotificationService: IPushNotificationService = context.get(AppModule.PUSH_NOTIFICATION);
+  const sessionService: ISessionService = context.get(AppModule.SESSION);
+  const router: IRouter = context.get(AppModule.ROUTER);
 
   return new WelcomeHeaderVM(
     userService,

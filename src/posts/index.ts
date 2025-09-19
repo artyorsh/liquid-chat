@@ -1,4 +1,4 @@
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 import { ILogService } from '@/log';
@@ -22,17 +22,17 @@ export interface IPostsDatasource {
 
 export type IPostsListFactory = (posts: IPost[]) => IPostsListVM;
 
-export const PostsModule = new ContainerModule(bind => {
+export const PostsModule = new ContainerModule(({ bind }) => {
   bind(AppModule.POSTS_DATASOURCE).toConstantValue(new PostsAPI());
 
-  bind(AppModule.POSTS_VM).toFactory(context => {
+  bind<IPostsListFactory>(AppModule.POSTS_VM).toFactory(context => {
     return (posts: IPost[]) => createPostsListVM(posts, context);
   });
 });
 
-const createPostsListVM = (posts: IPost[], context: interfaces.Context): IPostsListVM => {
-  const modalService = context.container.get<IModalService>(AppModule.MODAL);
-  const logService = context.container.get<ILogService>(AppModule.LOG);
+const createPostsListVM = (posts: IPost[], context: ResolutionContext): IPostsListVM => {
+  const modalService = context.get<IModalService>(AppModule.MODAL);
+  const logService = context.get<ILogService>(AppModule.LOG);
   const detailsPresenter: IPostDetailsPresenter = new PostDetailsPresenter(modalService);
 
   return new PostsListVM(

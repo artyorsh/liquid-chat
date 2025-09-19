@@ -1,6 +1,6 @@
 import { ReactNavigationRouter } from './react-navigation/react-navigation-router';
 import { StackRouteFactory } from './react-navigation/stack-route-factory';
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 import { IAuthRoute } from '@/auth';
@@ -31,22 +31,21 @@ export interface IRouter {
   subscribe(route: IRoute, listener: INavigationLifecycleListener): Function;
 }
 
-export const RouterModule = new ContainerModule(bind => {
+export const RouterModule = new ContainerModule(({ bind }) => {
   bind<IRouter>(AppModule.ROUTER)
     .toDynamicValue(context => createRouter(context))
     .inSingletonScope();
 });
 
-const createRouter = (context: interfaces.Context): IRouter => {
-  const logService: ILogService = context.container.get(AppModule.LOG);
+const createRouter = (context: ResolutionContext): IRouter => {
+  const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(ReactNavigationRouter.name);
 
   return new ReactNavigationRouter(logger, StackRouteFactory({
-    '/': context.container.get(AppModule.SPLASH_SCREEN),
-    '/welcome': context.container.get(AppModule.WELCOME_SCREEN),
-    '/login': context.container.get(AppModule.LOGIN_SCREEN),
-    '/register': context.container.get(AppModule.REGISTER_SCREEN),
-    '/home': context.container.get(AppModule.HOME_SCREEN),
+    '/': context.get(AppModule.SPLASH_SCREEN),
+    '/welcome': context.get(AppModule.WELCOME_SCREEN),
+    '/login': context.get(AppModule.LOGIN_SCREEN),
+    '/register': context.get(AppModule.REGISTER_SCREEN),
+    '/home': context.get(AppModule.HOME_SCREEN),
   }));
 };
-

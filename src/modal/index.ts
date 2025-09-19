@@ -38,7 +38,7 @@ export interface IModalService {
   subscribe(listener: IWindowSizeListener): Function;
 }
 
-export const ModalModule = new ContainerModule(bind => {
+export const ModalModule = new ContainerModule(({ bind }) => {
   const useNativeDriver: boolean = true;
   const animationDuration: number = 200;
 

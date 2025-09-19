@@ -1,5 +1,5 @@
 import React from 'react';
-import { interfaces } from 'inversify';
+import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 
@@ -8,10 +8,10 @@ import { WelcomeVM } from './welcome.vm';
 
 export type IWelcomeRoute = '/welcome';
 
-export const WelcomeScreenFactory = (context: interfaces.Context): React.FC => {
+export const WelcomeScreenFactory = (context: ResolutionContext): React.FC => {
   return () => React.createElement(Welcome, { vm: createWelcomeVM(context) });
 };
 
-const createWelcomeVM = (context: interfaces.Context): IWelcomeVM => {
-  return new WelcomeVM(context.container.get(AppModule.ROUTER));
+const createWelcomeVM = (context: ResolutionContext): IWelcomeVM => {
+  return new WelcomeVM(context.get(AppModule.ROUTER));
 };

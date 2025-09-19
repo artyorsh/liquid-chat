@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 import { IRouter } from '@/router';
@@ -12,15 +12,15 @@ import { SessionRestoreTask } from './tasks/session-restore-task';
 
 export type ISplashRoute = '/';
 
-export const SplashScreenModule = new ContainerModule(bind => {
-  bind<interfaces.Factory<React.FC>>(AppModule.SPLASH_SCREEN).toFactory(context => {
+export const SplashScreenModule = new ContainerModule(({ bind }) => {
+  bind<React.FC>(AppModule.SPLASH_SCREEN).toFactory(context => {
     return () => React.createElement(Splash, { vm: createSplashVM(context) });
   });
 });
 
-const createSplashVM = (context: interfaces.Context): ISplashVM => {
-  const router: IRouter = context.container.get(AppModule.ROUTER);
-  const sessionService: ISessionService = context.container.get(AppModule.SESSION);
+const createSplashVM = (context: ResolutionContext): ISplashVM => {
+  const router: IRouter = context.get(AppModule.ROUTER);
+  const sessionService: ISessionService = context.get(AppModule.SESSION);
   const sessionRestoreTask: ISplashScreenTask = new SessionRestoreTask(sessionService);
 
   const expoSplashConfig: IExpoSplashConfig = {

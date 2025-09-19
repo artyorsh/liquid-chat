@@ -1,4 +1,4 @@
-import { interfaces } from 'inversify';
+import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 import { ILogger, ILogService } from '@/log';
@@ -22,12 +22,12 @@ export interface ISessionService {
   logout(): Promise<void>;
 }
 
-export const SessionServiceFactory = (context: interfaces.Context): ISessionService => {
-  const logService: ILogService = context.container.get(AppModule.LOG);
+export const SessionServiceFactory = (context: ResolutionContext): ISessionService => {
+  const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(SessionService.name);
 
-  const userModule: ISessionModule = context.container.get(AppModule.USER);
-  const pushServiceModule: ISessionModule = context.container.get(AppModule.PUSH_NOTIFICATION);
+  const userModule: ISessionModule = context.get(AppModule.USER);
+  const pushServiceModule: ISessionModule = context.get(AppModule.PUSH_NOTIFICATION);
   const sessionModules: ISessionModule[] = [userModule, pushServiceModule];
 
   const sessionInitializer: ISessionInitializer = new ParallelModuleInitializer(sessionModules, logger, {

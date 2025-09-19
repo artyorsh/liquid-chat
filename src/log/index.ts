@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import * as Application from 'expo-application';
 import * as Device from 'expo-device';
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 
@@ -33,13 +33,13 @@ export interface ILogService {
   flush(): void;
 }
 
-export const LogModule = new ContainerModule(bind => {
+export const LogModule = new ContainerModule(({ bind }) => {
   bind<ILogService>(AppModule.LOG)
     .toDynamicValue(context => createLogger(context))
     .inSingletonScope();
 });
 
-const createLogger = (_context: interfaces.Context): ILogService => {
+const createLogger = (_context: ResolutionContext): ILogService => {
   const grafanaAppId: string = `rnapp_${Platform.OS}_${process.env.EXPO_PUBLIC_ENV_NAME}`;
 
   const deviceName: string = Device.deviceName;

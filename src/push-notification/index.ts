@@ -1,5 +1,5 @@
 import Constants from 'expo-constants';
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 import { ILogger, ILogService } from '@/log';
@@ -19,17 +19,17 @@ export interface IPushNotificationService {
   authorize(): Promise<void>;
 }
 
-export const PushNotificationModule = new ContainerModule(bind => {
+export const PushNotificationModule = new ContainerModule(({ bind }) => {
   bind<IPushNotificationService>(AppModule.PUSH_NOTIFICATION)
     .toDynamicValue(context => createPushNotificationService(context))
     .inSingletonScope();
 });
 
-const createPushNotificationService = (context: interfaces.Context): IPushNotificationService => {
+const createPushNotificationService = (context: ResolutionContext): IPushNotificationService => {
   const isExpoGo: boolean = Constants.executionEnvironment === 'storeClient';
 
-  const router: IRouter = context.container.get(AppModule.ROUTER);
-  const logService: ILogService = context.container.get(AppModule.LOG);
+  const router: IRouter = context.get(AppModule.ROUTER);
+  const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(PushNotificationService.name);
 
   let pushServiceProvider: IPushServiceProvider = new MockPushServiceProvider();

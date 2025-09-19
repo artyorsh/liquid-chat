@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule } from 'inversify';
 
 import { AppModule } from '@/di';
 
@@ -13,17 +13,17 @@ export type IAuthRoute =
   | ILoginRoute
   | IRegisterRoute;
 
-export const AuthModule = new ContainerModule(bind => {
+export const AuthModule = new ContainerModule(({ bind }) => {
   bind<ISessionService>(AppModule.SESSION)
     .toDynamicValue(context => SessionServiceFactory(context))
     .inSingletonScope();
 
-  bind<interfaces.Factory<React.FC>>(AppModule.WELCOME_SCREEN)
+  bind<React.FC>(AppModule.WELCOME_SCREEN)
     .toFactory(context => WelcomeScreenFactory(context));
 
-  bind<interfaces.Factory<React.FC>>(AppModule.LOGIN_SCREEN)
+  bind<React.FC>(AppModule.LOGIN_SCREEN)
     .toFactory(context => LoginScreenFactory(context));
 
-  bind<interfaces.Factory<React.FC>>(AppModule.REGISTER_SCREEN)
+  bind<React.FC>(AppModule.REGISTER_SCREEN)
     .toFactory(context => RegisterScreenFactory(context));
 });

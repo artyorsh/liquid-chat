@@ -28,6 +28,7 @@ React Native template with built-in modules, automation workflows and customisat
 - Remote logging with [Grafana](https://github.com/artyorsh/grafana-mobile-observability).
 - CI/CD with GitHub Actions and [EAS](https://github.com/artyorsh/expo-template/wiki/Enabling-EAS).
 - Modularized architecture with Dependency Injection.
+- PR reviews with [Claude](./docs/claude-code.md).
 
 ## Setup
 

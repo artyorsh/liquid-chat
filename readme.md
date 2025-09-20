@@ -55,7 +55,8 @@ See [docs](./docs/readme.md).
 
 ## Example apps
 
-[Schiffradar](https://github.com/artyorsh/schiffradar)
+- [Schiffradar](https://github.com/artyorsh/schiffradar)
+- [LiquidChat](https://github.com/artyorsh/liquid-chat)
 
 ## Author
 

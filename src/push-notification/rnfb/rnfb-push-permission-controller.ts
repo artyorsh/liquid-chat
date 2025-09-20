@@ -18,57 +18,54 @@ export class RNFBPushPermissionController implements IPushPermissionController {
   constructor(private requestOptions: FirebaseMessagingTypes.IOSPermissions) {
   }
 
-  public isGranted = (): Promise<boolean> => {
-    return this.getStatus()
-      .then(status => status === 'granted');
+  public isGranted = async (): Promise<boolean> => {
+    const status = await this.getStatus();
+
+    return status === 'granted';
   };
 
-  public request = (): Promise<void> => {
-    return this.getStatus().then(status => {
-      switch (status) {
-        case 'granted':
-          return this.requestSystem();
+  public request = async (): Promise<void> => {
+    const status = await this.getStatus();
 
-        case 'denied':
-          return Linking.openSettings();
+    switch (status) {
+      case 'granted':
+        return this.requestSystem();
 
-        case 'not_requested':
-          return this.requestSystem();
-      }
-    });
+      case 'denied':
+        return Linking.openSettings();
+
+      case 'not_requested':
+        return this.requestSystem();
+    }
   };
 
-  private requestSystem = (): Promise<void> => {
-    return requestPermission(this.rnfb, this.requestOptions).then(() => {
-      return this.getStatus().then(result => {
-        if (result !== 'granted') {
-          throw new Error('User did not grant permission');
-        }
-      });
-    });
+  private requestSystem = async (): Promise<void> => {
+    await requestPermission(this.rnfb, this.requestOptions);
+    const permissionStatus = await this.getStatus();
+
+    if (permissionStatus !== 'granted') {
+      throw new Error('User did not grant permission');
+    }
   };
 
-  private getStatus = (): Promise<IPermissionRequestStatus> => {
-    return hasPermission(this.rnfb).then(result => {
-      switch (result) {
-        // case FirebaseMessagingTypes.AuthorizationStatus.NOT_DETERMINED:
-        case -1:
-          return 'not_requested';
+  private getStatus = async (): Promise<IPermissionRequestStatus> => {
+    const permissionStatus = await hasPermission(this.rnfb);
 
-        // case FirebaseMessagingTypes.AuthorizationStatus.DENIED:
-        case 0:
-          return 'denied';
+    // The values are FirebaseMessagingTypes.AuthorizationStatus, which is not resolved at runtime.
+    switch (permissionStatus) {
+      case -1:
+        return 'not_requested';
 
-        // case FirebaseMessagingTypes.AuthorizationStatus.AUTHORIZED:
-        case 1:
+      case 0:
+        return 'denied';
 
-        // case FirebaseMessagingTypes.AuthorizationStatus.PROVISIONAL:
-        case 2:
-          return 'granted';
+      case 1:
 
-        default:
-          return 'denied';
-      }
-    });
+      case 2:
+        return 'granted';
+
+      default:
+        return 'denied';
+    }
   };
 }

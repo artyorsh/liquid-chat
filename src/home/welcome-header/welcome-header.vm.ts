@@ -26,12 +26,12 @@ export class WelcomeHeaderVM implements IWelcomeHeaderVM {
     this.pushNotificationService.authorize();
   };
 
-  public logout = (): void => {
-    this.sessionService.logout().then(() => {
+  public logout = async (): Promise<void> => {
+    try {
+      await this.sessionService.logout();
       this.router.replace('/welcome');
-    }).catch(() => {
-      /* no-op */
-    });
+    } catch {
+      // no-op
+    }
   };
-
 }

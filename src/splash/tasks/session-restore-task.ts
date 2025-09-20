@@ -6,8 +6,7 @@ export class SessionRestoreTask implements ISplashScreenTask {
 
   constructor(private session: ISessionService) {}
 
-  public run(): Promise<void> {
-    return this.session.restore()
-      .then();
+  public async run(): Promise<void> {
+    await this.session.restore();
   }
 }

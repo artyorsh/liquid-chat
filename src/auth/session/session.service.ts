@@ -49,88 +49,84 @@ export class SessionService implements ISessionService {
     this.initializer = options.initializer;
   }
 
-  public login = (email: string, password: string): Promise<ISession> => {
-    return this.options.authenticationProvider.login(email, password).then(token => {
-      return this.options.authenticationStorage.setToken(token).then(() => {
-        const session: ISession = this.createSession(token);
+  public login = async (email: string, password: string): Promise<ISession> => {
+    const token = await this.options.authenticationProvider.login(email, password);
+    await this.options.authenticationStorage.setToken(token);
 
-        this.options.logger?.info(`login user ${session.userId}`);
+    const session: ISession = this.createSession(token);
+    await this.initializer.initialize(session);
 
-        return this.initializer.initialize(session)
-          .then(() => session);
-      });
-    });
+    this.options.logger?.info(`login user ${session.userId}`);
+
+    return session;
   };
 
-  public register = (email: string, password: string): Promise<ISession> => {
-    return this.options.authenticationProvider.register(email, password).then(token => {
-      return this.options.authenticationStorage.setToken(token).then(() => {
-        const session: ISession = this.createSession(token);
+  public register = async (email: string, password: string): Promise<ISession> => {
+    const token = await this.options.authenticationProvider.register(email, password);
+    await this.options.authenticationStorage.setToken(token);
 
-        this.options.logger?.info(`register user ${session.userId}`);
+    const session: ISession = this.createSession(token);
+    await this.initializer.initialize(session);
 
-        return this.initializer.initialize(session)
-          .then(() => session);
-      });
-    });
+    this.options.logger?.info(`register user ${session.userId}`);
+
+    return session;
   };
 
-  public refresh = (): Promise<ISession> => {
-    return this.options.authenticationStorage.getToken().then(storedToken => {
-      if (!storedToken) {
-        const error: string = 'Unable to refresh: no token found';
-        this.options.logger?.error(error);
+  public refresh = async (): Promise<ISession> => {
+    const storedToken = await this.options.authenticationStorage.getToken();
 
-        return Promise.reject(new Error(error));
-      }
+    if (!storedToken) {
+      const error: string = 'Unable to refresh: no token found';
+      this.options.logger?.error(error);
 
-      return this.options.authenticationProvider.refresh(storedToken).then(token => {
-        return this.options.authenticationStorage.setToken(token).then(() => {
-          const session: ISession = this.createSession(token);
+      return Promise.reject(new Error(error));
+    }
 
-          const expiresInMinutes: number = this.getExpiresInMinutes(token);
-          this.options.logger?.info(`refresh for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
+    const token = await this.options.authenticationProvider.refresh(storedToken);
+    await this.options.authenticationStorage.setToken(token);
 
-          return this.initializer.initialize(session)
-            .then(() => session);
-        });
-      });
-    });
+    const session: ISession = this.createSession(token);
+    const expiresInMinutes: number = this.getExpiresInMinutes(token);
+    await this.initializer.initialize(session);
+
+    this.options.logger?.info(`refresh for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
+
+    return session;
   };
 
-  public restore = (): Promise<ISession> => {
-    return this.options.authenticationStorage.getToken().then(token => {
-      if (!token) {
-        const error: string = 'Unable to restore: no token found';
-        this.options.logger?.error(error);
+  public restore = async (): Promise<ISession> => {
+    const storedToken = await this.options.authenticationStorage.getToken();
 
-        return Promise.reject(new Error(error));
-      }
+    if (!storedToken) {
+      const error: string = 'Unable to restore: no token found';
+      this.options.logger?.error(error);
 
-      const expiresInMinutes: number = this.getExpiresInMinutes(token);
-      const isValidEnough: boolean = expiresInMinutes > this.options.tokenRefreshThresholdMinutes;
+      return Promise.reject(new Error(error));
+    }
 
-      if (!isValidEnough) {
-        this.options.logger?.warn(`token expires in less than ${this.options.tokenRefreshThresholdMinutes} minutes, refreshing`);
+    const expiresInMinutes: number = this.getExpiresInMinutes(storedToken);
+    const isValidEnough: boolean = expiresInMinutes > this.options.tokenRefreshThresholdMinutes;
 
-        return this.refresh();
-      }
+    if (!isValidEnough) {
+      this.options.logger?.warn(`token expires in less than ${this.options.tokenRefreshThresholdMinutes} minutes, refreshing`);
 
-      const session: ISession = this.createSession(token);
+      return this.refresh();
+    }
 
-      this.options.logger?.info(`restore for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
+    const session: ISession = this.createSession(storedToken);
+    await this.initializer.initialize(session);
 
-      return this.initializer.initialize(session)
-        .then(() => session);
-    });
+    this.options.logger?.info(`restore for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
+
+    return session;
   };
 
-  public logout = (): Promise<void> => {
-    return this.options.authenticationStorage.clear().then(() => {
-      this.options.logger?.info('logout');
+  public logout = async (): Promise<void> => {
+    await this.options.authenticationStorage.clear();
+    this.options.logger?.info('logout');
 
-      return this.initializer.destroy();
-    });
+    return this.initializer.destroy();
   };
 
   private createSession = (token: AnyAuthenticationToken): ISession => {

@@ -55,12 +55,11 @@ export class PushNotificationService implements IPushNotificationService, IPushN
     this.provider.subscribe(this);
   }
 
-  public authorize = (): Promise<void> => {
-    return this.permissionController.request().then(() => {
-      return this.provider.getToken().then(token => {
-        this.logger.debug(`registered token: ${JSON.stringify(token, null, 2)}`);
-      });
-    });
+  public authorize = async (): Promise<void> => {
+    await this.permissionController.request();
+    const token = await this.provider.getToken();
+
+    this.logger.debug(`registered token: ${JSON.stringify(token, null, 2)}`);
   };
 
   // IPushNotificationHandler
@@ -92,12 +91,12 @@ export class PushNotificationService implements IPushNotificationService, IPushN
 
   // ISessionInitializer
 
-  public initialize = (_session: ISession): Promise<void> => {
-    return this.permissionController.isGranted().then(granted => {
-      if (granted) {
-        return this.authorize();
-      }
-    });
+  public initialize = async (_session: ISession): Promise<void> => {
+    const granted = await this.permissionController.isGranted();
+
+    if (granted) {
+      return this.authorize();
+    }
   };
 
   public destroy = (): Promise<void> => {

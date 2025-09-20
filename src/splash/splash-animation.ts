@@ -31,9 +31,10 @@ export class SplashAnimation implements ISplashAnimation {
     this.config = { ...defaultConfig, ...config };
   }
 
-  public playTillIntermediate(): Promise<void> {
-    return this.runAnimation(SplashAnimation.PHASE_MID)
-      .then(() => this.runAnimation(SplashAnimation.PHASE_MID - 0.2));
+  public async playTillIntermediate(): Promise<void> {
+    await this.runAnimation(SplashAnimation.PHASE_MID);
+
+    return this.runAnimation(SplashAnimation.PHASE_MID - 0.2);
   }
 
   public finish(): Promise<void> {

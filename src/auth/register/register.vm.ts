@@ -11,16 +11,16 @@ export class RegisterVM implements IRegisterVM {
   constructor(private router: IRouter, private sessionService: ISessionService) {
   }
 
-  public submit = (values: IRegisterFormValues): void => {
-    this.sessionService.register(values.email, values.password).then(() => {
+  public submit = async (values: IRegisterFormValues): Promise<void> => {
+    try {
+      await this.sessionService.register(values.email, values.password);
       this.router.replace('/home');
-    }).catch(() => {
-      /* no-op */
-    });
+    } catch {
+      // no-op
+    }
   };
 
   public goBack = (): void => {
     this.router.goBack();
   };
-
 }

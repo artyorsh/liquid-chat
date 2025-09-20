@@ -55,20 +55,20 @@ export class ProcessInfoService implements IProcessInfoService {
       return Promise.reject(new Error(`Provider not found: ${providerId}`));
     }
 
-    return provider.getCurrentData()
-      .then(data => data as D);
+    return provider.getCurrentData() as Promise<D>;
   }
 
-  private logCurrentData(): void {
-    Object.values(this.providers).forEach(provider => {
-      provider.getCurrentData()
-        .then(data => this.logProviderData(provider.getId(), data));
-    });
+  private async logCurrentData(): Promise<void> {
+    for (const providerId in this.providers) {
+      const provider: IProcessInfoProvider = this.providers[providerId];
+      const data = await provider.getCurrentData();
+
+      this.logProviderData(providerId, data);
+    }
   }
 
   private logProviderData = (providerId: string, data: IProcessInfoData): void => {
     const logLevel: ILogLevel = this.logLevels[providerId];
     this.logger.log(`[${providerId}]: ${data.toString()}`, logLevel);
   };
-
 }

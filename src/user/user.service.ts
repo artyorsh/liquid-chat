@@ -24,11 +24,11 @@ export class UserService implements IUserService, ISessionModule {
     return this.user;
   };
 
-  public initialize = (session: ISession): Promise<void> => {
-    return this.userRepository.getUser(session.userId).then(user => {
-      this.user = user;
-      this.logger.addLabel('user_id', user.id);
-    });
+  public initialize = async (session: ISession): Promise<void> => {
+    const user = await this.userRepository.getUser(session.userId);
+    this.user = user;
+
+    this.logger.addLabel('user_id', user.id);
   };
 
   public destroy = (): Promise<void> => {

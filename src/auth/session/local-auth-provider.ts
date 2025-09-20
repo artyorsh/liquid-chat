@@ -7,19 +7,24 @@ type ILocalAuthenticationToken = IAuthenticationToken<{
 
 export class LocalAuthenticationProvider implements IAuthenticationProvider<ILocalAuthenticationToken> {
 
-  public login(_email: string, _password: string): Promise<ILocalAuthenticationToken> {
-    return this.resolveAfter(1000)
-      .then(() => this.createSampleToken());
+  private static SLEEP_MS: number = 1000;
+
+  public async login(_email: string, _password: string): Promise<ILocalAuthenticationToken> {
+    await this.sleep(LocalAuthenticationProvider.SLEEP_MS);
+
+    return this.createSampleToken();
   }
 
-  public register(_email: string, _password: string): Promise<ILocalAuthenticationToken> {
-    return this.resolveAfter(1000)
-      .then(() => this.createSampleToken());
+  public async register(_email: string, _password: string): Promise<ILocalAuthenticationToken> {
+    await this.sleep(LocalAuthenticationProvider.SLEEP_MS);
+
+    return this.createSampleToken();
   }
 
-  public refresh(_token: ILocalAuthenticationToken): Promise<ILocalAuthenticationToken> {
-    return this.resolveAfter(1000)
-      .then(() => this.createSampleToken());
+  public async refresh(_token: ILocalAuthenticationToken): Promise<ILocalAuthenticationToken> {
+    await this.sleep(LocalAuthenticationProvider.SLEEP_MS);
+
+    return this.createSampleToken();
   }
 
   private createSampleToken(): ILocalAuthenticationToken {
@@ -37,8 +42,7 @@ export class LocalAuthenticationProvider implements IAuthenticationProvider<ILoc
     };
   }
 
-  private resolveAfter(ms: number): Promise<void> {
+  private sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
-

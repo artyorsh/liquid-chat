@@ -32,9 +32,10 @@ export class ModalService implements IModalService {
     });
   };
 
-  public show = <R>(factory: IModalFactory<R>, presentationType: PresentationType): Promise<R> => {
-    return this.options.presentationPolicy.apply(this.numberOfActiveModals, this.subscribe)
-      .then(() => this.showInternal(factory, presentationType));
+  public show = async <R>(factory: IModalFactory<R>, presentationType: PresentationType): Promise<R> => {
+    await this.options.presentationPolicy.apply(this.numberOfActiveModals, this.subscribe);
+
+    return this.showInternal(factory, presentationType);
   };
 
   public subscribe = (listener: IWindowSizeListener): Function => {
@@ -54,15 +55,17 @@ export class ModalService implements IModalService {
       }
 
       const controller: IModalController = {
-        resolve: (args: R) => {
-          return ref.current?.hide()
-            .then(() => this.windowRef.current?.unmount(elementId))
-            .then(() => resolve(args));
+        resolve: async (args: R) => {
+          await ref.current?.hide();
+          this.windowRef.current?.unmount(elementId);
+
+          return resolve(args);
         },
-        reject: (error: Error) => {
-          return ref.current?.hide()
-            .then(() => this.windowRef.current?.unmount(elementId))
-            .then(() => reject(error));
+        reject: async (error: Error) => {
+          await ref.current?.hide();
+          this.windowRef.current?.unmount(elementId);
+
+          return reject(error);
         },
       };
 

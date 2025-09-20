@@ -18,40 +18,43 @@ export class ParallelModuleInitializer implements ISessionInitializer {
 
   }
 
-  public initialize(session: ISession): Promise<void> {
-    const initializerPromizes = this.modules.map(module => {
-      return module.initialize(session).then(() => {
-        this.logModuleInitSuccess(module);
-      }).catch(error => {
-        const shouldFailSessionInit: boolean = this.options.shouldFailOnModuleFailure(module, error);
+  public async initialize(session: ISession): Promise<void> {
+    const initializerPromizes = this.modules.map(module => this.initializeModule(module, session));
 
-        if (shouldFailSessionInit) {
-          this.logModuleInitFailure(module, error);
+    try {
+      await Promise.all(initializerPromizes);
+    } catch (error) {
+      this.logSessionInitFailure(error);
 
-          throw error;
-        }
-
-        this.logModuleInitFailureIgnored(module, error);
-      });
-    });
-
-    return Promise.all(initializerPromizes)
-      .then(() => {/** no-op */})
-      .catch(error => {
-        this.logSessionInitFailure(error);
-
-        throw error;
-      });
+      throw error;
+    }
   }
 
-  public destroy(): Promise<void> {
+  public async destroy(): Promise<void> {
     const destroyerPromises = this.modules.map(initializer => initializer.destroy());
 
-    return Promise.all(destroyerPromises || [])
-      .then(() => {/** no-op */})
-      .catch(error => {
-        this.logger.error(`Failed to destroy modules: ${error.message}`);
-      });
+    try {
+      await Promise.all(destroyerPromises || []);
+    } catch (error) {
+      this.logger.error(`Failed to destroy modules: ${error.message}`);
+    }
+  }
+
+  private async initializeModule(module: ISessionModule, session: ISession): Promise<void> {
+    try {
+      await module.initialize(session);
+      this.logModuleInitSuccess(module);
+    } catch (error) {
+      const shouldFailSessionInit: boolean = this.options.shouldFailOnModuleFailure(module, error);
+
+      if (shouldFailSessionInit) {
+        this.logModuleInitFailure(module, error);
+
+        throw error;
+      }
+
+      this.logModuleInitFailureIgnored(module, error);
+    }
   }
 
   private logModuleInitSuccess(module: ISessionModule): void {

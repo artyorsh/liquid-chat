@@ -16,16 +16,16 @@ export class LoginVM implements ILoginVM {
   constructor(private router: IRouter, private sessionService: ISessionService) {
   }
 
-  public submit = (values: ILoginFormValues): void => {
-    this.sessionService.login(values.email, values.password).then(() => {
+  public submit = async (values: ILoginFormValues): Promise<void> => {
+    try {
+      await this.sessionService.login(values.email, values.password);
       this.router.replace('/home');
-    }).catch(() => {
-      /* no-op */
-    });
+    } catch {
+      // no-op
+    }
   };
 
   public goBack = (): void => {
     this.router.goBack();
   };
-
 }

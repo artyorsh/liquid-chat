@@ -30,9 +30,8 @@ export class FileLogTransporter implements ILogTransporter {
   };
 
   public flush = async (): Promise<void> => {
-    this.writer.close().then(() => {
-      this.writer = this.logFile.writableStream().getWriter();
-    });
+    await this.writer.close();
+    this.writer = this.logFile.writableStream().getWriter();
   };
 
   private createLogMessage = (tag: string, message: string, payload: ITransporterLogPayload): ILogMessage => {

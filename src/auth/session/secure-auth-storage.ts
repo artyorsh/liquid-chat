@@ -6,18 +6,14 @@ export class SecureAuthStorage implements IAuthenticationStorage<AnyAuthenticati
 
   private static KEY_TOKEN: string = 'token';
 
-  public getToken(): Promise<AnyAuthenticationToken | null> {
-    return SecureStore.getItemAsync(SecureAuthStorage.KEY_TOKEN).then((token) => {
-      if (!token) {
-        return null;
-      }
+  public async getToken(): Promise<AnyAuthenticationToken | null> {
+    const token = await SecureStore.getItemAsync(SecureAuthStorage.KEY_TOKEN);
 
-      try {
-        return JSON.parse(token);
-      } catch (error) {
-        return Promise.reject(error);
-      }
-    });
+    if (!token) {
+      return null;
+    }
+
+    return JSON.parse(token);
   }
 
   public setToken(token: AnyAuthenticationToken): Promise<void> {
@@ -28,4 +24,3 @@ export class SecureAuthStorage implements IAuthenticationStorage<AnyAuthenticati
     return SecureStore.deleteItemAsync(SecureAuthStorage.KEY_TOKEN);
   }
 }
-

@@ -12,9 +12,9 @@ export class PostDetailsPresenter implements IPostDetailsPresenter {
     return this.modalService.show(controller => (
       <PostDetails
         post={post}
-        markHidden={() => {
-          controller.resolve()
-            .then(() => callbacks.markHidden(post));
+        markHidden={async () => {
+          await controller.resolve();
+          callbacks.markHidden(post);
         }}
         close={() => {
           return controller.resolve();

@@ -54,10 +54,11 @@ export class RNFBPushServiceProvider implements IPushServiceProvider {
     this.subscribers.push(handler);
   }
 
-  public getToken = (): Promise<IPushNotificationToken> => {
-    return getAPNSToken(this.rnfb)
-      .then(apns => getToken(this.rnfb)
-        .then(fcm => ({ fcm, apns })));
+  public getToken = async (): Promise<IPushNotificationToken> => {
+    const apns: string = await getAPNSToken(this.rnfb);
+    const fcm: string = await getToken(this.rnfb);
+
+    return ({ fcm, apns });
   };
 
   private attemptHandleInitialNotification = (message: IPushNotification): void => {

@@ -54,8 +54,8 @@
     "@stylistic/eslint-plugin": "^5.4.0",
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^12.4.3",
-    "@types/jest": "ts5.7",
-    "@types/react": "19",
+    "@types/jest": "ts5.9",
+    "@types/react": "ts5.9",
     "babel-jest": "~29.7.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.0",
     "eslint": "^9.36.0",
@@ -69,7 +69,7 @@
     "react-dom": "19.1.0",
     "react-test-renderer": "~19.0.0",
     "ts-jest": "^29.3.1",
-    "typescript": "~5.7.0"
+    "typescript": "~5.9.2"
   },
   "expo": {
     "install": {

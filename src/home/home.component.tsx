@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import { IPostsListVM, PostsList } from '@/posts/posts-list/posts-list.component';
+import { IPostListVM, PostList } from '@/posts/post-list/post-list.component';
 import { Loading } from '@/uilib/loading.component';
 import { SafeArea } from '@/uilib/safe-area.component';
 
@@ -10,7 +10,7 @@ import { IWelcomeHeaderVM, WelcomeHeader } from './welcome-header/welcome-header
 export interface IHomeVM {
   loading: boolean;
   welcomeHeader: IWelcomeHeaderVM;
-  posts: IPostsListVM;
+  posts: IPostListVM;
 }
 
 export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => {
@@ -19,7 +19,7 @@ export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => {
     <SafeArea>
       <WelcomeHeader vm={vm.welcomeHeader} />
       <Loading loading={vm.loading}>
-        <PostsList vm={vm.posts} />
+        <PostList vm={vm.posts} />
       </Loading>
     </SafeArea>
   );

@@ -5,11 +5,11 @@ import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
 
+import { createConsoleTransport } from './console';
+import { createFileTransport } from './file';
+import { createGrafanaTransport } from './grafana';
 import { ILogTransporter, LogService } from './log.service';
-import { ConsoleLogTransporter } from './transporters/console-log-transporter';
-import { FileLogTransporter } from './transporters/file-log-transporter';
-import { GrafanaLogTransporter } from './transporters/grafana-log-transporter';
-import { SentryLogTransporter } from './transporters/sentry-log-transporter';
+import { createSentryTransport } from './sentry';
 
 export type ILogLevel =
  | 'debug'
@@ -40,7 +40,7 @@ export const LogModule = new ContainerModule(({ bind }) => {
     .inSingletonScope();
 });
 
-const createLogger = (_context: ResolutionContext): ILogService => {
+const createLogger = (context: ResolutionContext): ILogService => {
   const grafanaAppId: string = `rnapp_${Platform.OS}_${process.env.EXPO_PUBLIC_ENV_NAME}`;
 
   const deviceName: string = Device.deviceName;
@@ -49,7 +49,7 @@ const createLogger = (_context: ResolutionContext): ILogService => {
   const systemVersion: string = Device.osVersion;
   const appVersion: string = `${Application.nativeApplicationVersion} (${Application.nativeBuildVersion})`;
 
-  const transporters: ILogTransporter[] = createTransporters();
+  const transporters: ILogTransporter[] = createTransporters(context);
 
   return new LogService({
     flushInterval: 10_000,
@@ -62,35 +62,32 @@ const createLogger = (_context: ResolutionContext): ILogService => {
   });
 };
 
-export const createTransporters = (): ILogTransporter[] => {
+export const createTransporters = (context: ResolutionContext): ILogTransporter[] => {
   const transporterIds: string[] = process.env.EXPO_PUBLIC_LOG_TRANSPORTS.split(',');
   const result: ILogTransporter[] = [];
 
   transporterIds.forEach(transporterId => {
     switch (transporterId) {
       case 'console':
-        const consoleTransporter: ILogTransporter = new ConsoleLogTransporter();
+        const consoleTransporter: ILogTransporter = createConsoleTransport(context);
         result.push(consoleTransporter);
 
         break;
 
       case 'file':
-        const fileName: string = process.env.EXPO_PUBLIC_LOG_FILE_NAME;
-        const fileTransporter: ILogTransporter = new FileLogTransporter(fileName);
+        const fileTransporter: ILogTransporter = createFileTransport(context);
         result.push(fileTransporter);
 
         break;
 
       case 'grafana':
-        const hostUrl: string = process.env.EXPO_PUBLIC_GRAFANA_HOST;
-        const grafanaTransporter: ILogTransporter = new GrafanaLogTransporter({ hostUrl });
+        const grafanaTransporter: ILogTransporter = createGrafanaTransport(context);
         result.push(grafanaTransporter);
 
         break;
 
       case 'sentry':
-        const dsn: string = process.env.EXPO_PUBLIC_SENTRY_DSN;
-        const sentryTransporter: ILogTransporter = new SentryLogTransporter({ dsn });
+        const sentryTransporter: ILogTransporter = createSentryTransport(context);
         result.push(sentryTransporter);
 
         break;

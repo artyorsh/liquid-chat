@@ -17,10 +17,16 @@ export type IHomeRoute = '/home';
 
 export const HomeScreenModule = new ContainerModule(({ bind }) => {
   bind<React.FC>(AppModule.HOME_SCREEN)
-    .toFactory(context => () => React.createElement(Home, { vm: createHomeVM(context) }));
+    .toFactory(context => createHomeScreen(context));
 });
 
-const createHomeVM = (context: ResolutionContext): IHomeVM => {
+const createHomeScreen = (context: ResolutionContext): React.FC => {
+  const viewModel: IHomeVM = createHomeViewModel(context);
+
+  return () => React.createElement(Home, { vm: viewModel });
+};
+
+const createHomeViewModel = (context: ResolutionContext): IHomeVM => {
   const router: IRouter = context.get(AppModule.ROUTER);
   const welcomeHeaderVM: IWelcomeHeaderVM = createWelcomeHeaderVM(context);
   const postsDatasource: IPostsDatasource = context.get(AppModule.POSTS_DATASOURCE);

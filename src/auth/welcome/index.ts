@@ -2,16 +2,21 @@ import React from 'react';
 import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
+import { IRouter } from '@/router';
 
 import { IWelcomeVM, Welcome } from './welcome.component';
 import { WelcomeVM } from './welcome.vm';
 
 export type IWelcomeRoute = '/welcome';
 
-export const WelcomeScreenFactory = (context: ResolutionContext): React.FC => {
-  return () => React.createElement(Welcome, { vm: createWelcomeVM(context) });
+export const createWelcomeScreen = (context: ResolutionContext): React.FC => {
+  const viewModel: IWelcomeVM = createWelcomeViewModel(context);
+
+  return () => React.createElement(Welcome, { vm: viewModel });
 };
 
-const createWelcomeVM = (context: ResolutionContext): IWelcomeVM => {
-  return new WelcomeVM(context.get(AppModule.ROUTER));
+const createWelcomeViewModel = (context: ResolutionContext): IWelcomeVM => {
+  const router: IRouter = context.get(AppModule.ROUTER);
+
+  return new WelcomeVM(router);
 };

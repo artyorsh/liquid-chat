@@ -6,14 +6,14 @@ import { StyleSheet } from 'react-native-unistyles';
 import { IPostVM, PostItem } from './post-item.component';
 
 interface Props {
-  vm: IPostsListVM;
+  vm: IPostListVM;
 }
 
-export interface IPostsListVM {
+export interface IPostListVM {
   posts: IPostVM[];
 }
 
-export const PostsList: React.FC<Props> = observer(({ vm }) => {
+export const PostList: React.FC<Props> = observer(({ vm }) => {
 
   const renderItem = ({ item }: ListRenderItemInfo<IPostVM>): React.ReactElement => (
     <PostItem

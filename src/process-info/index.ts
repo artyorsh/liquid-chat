@@ -1,13 +1,13 @@
 import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
-import { ILogger, ILogService } from '@/log';
+import { ILogger, ILogLevel, ILogService } from '@/log';
 
-import { AppInfoProvider, AppInfoProviderId } from './app-info-provider';
-import { BatteryInfoProvider, BatteryInfoProviderId } from './battery-info-provider';
-import { DeviceInfoProvider, DeviceInfoProviderId } from './device-info-provider';
-import { NetworkInfoProvider, NetworkInfoProviderId } from './network-info-provider';
 import { IProcessInfoProvider, ProcessInfoService } from './process-info.service';
+import { AppInfoProvider, AppInfoProviderId } from './provider/app-info-provider';
+import { BatteryInfoProvider, BatteryInfoProviderId } from './provider/battery-info-provider';
+import { DeviceInfoProvider, DeviceInfoProviderId } from './provider/device-info-provider';
+import { NetworkInfoProvider, NetworkInfoProviderId } from './provider/network-info-provider';
 
 export type IProviderId =
   | DeviceInfoProviderId
@@ -29,6 +29,7 @@ export const ProcessInfoModule = new ContainerModule(({ bind }) => {
 const createProcessInfoService = (context: ResolutionContext): IProcessInfoService => {
   const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(ProcessInfoService.name);
+  const logLevel: ILogLevel = 'info';
 
   const providers: Record<IProviderId, IProcessInfoProvider> = {
     DeviceInfo: new DeviceInfoProvider(),
@@ -39,6 +40,6 @@ const createProcessInfoService = (context: ResolutionContext): IProcessInfoServi
 
   return new ProcessInfoService(logger, {
     providers,
-    logLevel: (_providerId: IProviderId) => 'info',
+    logLevel: (_providerId: IProviderId) => logLevel,
   });
 };

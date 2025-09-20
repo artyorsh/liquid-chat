@@ -13,15 +13,18 @@ import { SessionRestoreTask } from './tasks/session-restore-task';
 export type ISplashRoute = '/';
 
 export const SplashScreenModule = new ContainerModule(({ bind }) => {
-  bind<React.FC>(AppModule.SPLASH_SCREEN).toFactory(context => {
-    return () => React.createElement(Splash, { vm: createSplashVM(context) });
-  });
+  bind<React.FC>(AppModule.SPLASH_SCREEN)
+    .toFactory(context => createSplashScreen(context));
 });
 
-const createSplashVM = (context: ResolutionContext): ISplashVM => {
+const createSplashScreen = (context: ResolutionContext): React.FC => {
+  const viewModel: ISplashVM = createSplashViewModel(context);
+
+  return () => React.createElement(Splash, { vm: viewModel });
+};
+
+const createSplashViewModel = (context: ResolutionContext): ISplashVM => {
   const router: IRouter = context.get(AppModule.ROUTER);
-  const sessionService: ISessionService = context.get(AppModule.SESSION);
-  const sessionRestoreTask: ISplashScreenTask = new SessionRestoreTask(sessionService);
 
   const expoSplashConfig: IExpoSplashConfig = {
     backgroundColor: theme => theme.colors.background,
@@ -32,6 +35,9 @@ const createSplashVM = (context: ResolutionContext): ISplashVM => {
   const animation: ISplashAnimation = new SplashAnimation({
     duration: 400,
   });
+
+  const sessionService: ISessionService = context.get(AppModule.SESSION);
+  const sessionRestoreTask: ISplashScreenTask = new SessionRestoreTask(sessionService);
 
   return new SplashVM(router, {
     ...expoSplashConfig,

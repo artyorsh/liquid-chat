@@ -2,18 +2,23 @@ import React from 'react';
 import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
+import { IRouter } from '@/router';
 
+import { ISessionService } from '../session';
 import { IRegisterVM, Register } from './register.component';
 import { RegisterVM } from './register.vm';
 
 export type IRegisterRoute = '/register';
-export const RegisterScreenFactory = (context: ResolutionContext): React.FC => {
-  return () => React.createElement(Register, { vm: createRegisterVM(context) });
+
+export const createRegisterScreen = (context: ResolutionContext): React.FC => {
+  const registerViewModel: IRegisterVM = createRegisterVM(context);
+
+  return () => React.createElement(Register, { vm: registerViewModel });
 };
 
 const createRegisterVM = (context: ResolutionContext): IRegisterVM => {
-  return new RegisterVM(
-    context.get(AppModule.ROUTER),
-    context.get(AppModule.SESSION),
-  );
+  const router: IRouter = context.get(AppModule.ROUTER);
+  const sessionService: ISessionService = context.get(AppModule.SESSION);
+
+  return new RegisterVM(router, sessionService);
 };

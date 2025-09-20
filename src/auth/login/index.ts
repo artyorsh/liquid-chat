@@ -2,19 +2,23 @@ import React from 'react';
 import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
+import { IRouter } from '@/router';
 
+import { ISessionService } from '../session';
 import { ILoginVM, Login } from './login.component';
 import { LoginVM } from './login.vm';
 
 export type ILoginRoute = '/login';
 
-export const LoginScreenFactory = (context: ResolutionContext): React.FC => {
-  return () => React.createElement(Login, { vm: createLoginVM(context) });
+export const createLoginScreen = (context: ResolutionContext): React.FC => {
+  const loginViewModel: ILoginVM = createLoginVM(context);
+
+  return () => React.createElement(Login, { vm: loginViewModel });
 };
 
 const createLoginVM = (context: ResolutionContext): ILoginVM => {
-  return new LoginVM(
-    context.get(AppModule.ROUTER),
-    context.get(AppModule.SESSION),
-  );
+  const router: IRouter = context.get(AppModule.ROUTER);
+  const sessionService: ISessionService = context.get(AppModule.SESSION);
+
+  return new LoginVM(router, sessionService);
 };

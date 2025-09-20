@@ -1,13 +1,10 @@
-import { ContainerModule, ResolutionContext } from 'inversify';
+import { ContainerModule } from 'inversify';
 
 import { AppModule } from '@/di';
-import { ILogService } from '@/log';
-import { IModalService } from '@/modal';
 
-import { PostDetailsPresenter } from './post-details/post-details-presenter';
-import { PostsAPI } from './posts-list/posts.api';
-import { IPostsListVM } from './posts-list/posts-list.component';
-import { IPostDetailsPresenter, PostsListVM } from './posts-list/posts-list.vm';
+import { PostMockDatasource } from './datasource/post-mock-datasource';
+import { createPostListViewModel } from './post-list';
+import { IPostListVM } from './post-list/post-list.component';
 
 export interface IPost {
   id: string;
@@ -20,24 +17,14 @@ export interface IPostsDatasource {
   getPosts(): Promise<IPost[]>;
 }
 
-export type IPostsListFactory = (posts: IPost[]) => IPostsListVM;
+export type IPostsListFactory = (posts: IPost[]) => IPostListVM;
 
 export const PostsModule = new ContainerModule(({ bind }) => {
-  bind(AppModule.POSTS_DATASOURCE).toConstantValue(new PostsAPI());
+  const datasource: IPostsDatasource = new PostMockDatasource();
 
-  bind<IPostsListFactory>(AppModule.POSTS_VM).toFactory(context => {
-    return (posts: IPost[]) => createPostsListVM(posts, context);
-  });
+  bind(AppModule.POSTS_DATASOURCE)
+    .toConstantValue(datasource);
+
+  bind<IPostsListFactory>(AppModule.POSTS_VM)
+    .toFactory(context => (posts: IPost[]) => createPostListViewModel(posts, context));
 });
-
-const createPostsListVM = (posts: IPost[], context: ResolutionContext): IPostsListVM => {
-  const modalService = context.get<IModalService>(AppModule.MODAL);
-  const logService = context.get<ILogService>(AppModule.LOG);
-  const detailsPresenter: IPostDetailsPresenter = new PostDetailsPresenter(modalService);
-
-  return new PostsListVM(
-    posts,
-    detailsPresenter,
-    logService.createLogger(PostsListVM.name),
-  );
-};

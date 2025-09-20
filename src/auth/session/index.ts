@@ -22,7 +22,7 @@ export interface ISessionService {
   logout(): Promise<void>;
 }
 
-export const SessionServiceFactory = (context: ResolutionContext): ISessionService => {
+export const createSessionService = (context: ResolutionContext): ISessionService => {
   const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(SessionService.name);
 

@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
-import * as Application from 'expo-application';
+import { applicationId, applicationName, ApplicationReleaseType, getInstallationTimeAsync, getInstallReferrerAsync, getIosApplicationReleaseTypeAsync, getIosPushNotificationServiceEnvironmentAsync, getLastUpdateTimeAsync, nativeApplicationVersion, nativeBuildVersion } from 'expo-application';
 
-import { IProcessInfoData, IProcessInfoProvider } from './process-info.service';
+import { IProcessInfoData, IProcessInfoProvider } from '../process-info.service';
 
 export type AppInfoProviderId = 'AppInfo';
 
@@ -22,13 +22,13 @@ export class AppInfoProvider implements IProcessInfoProvider<IAppInfoData> {
 
   public getCurrentData = async (): Promise<IAppInfoData> => {
     const platformData: IProcessInfoData = await this.getPlatformData();
-    const installationTime = await Application.getInstallationTimeAsync();
+    const installationTime = await getInstallationTimeAsync();
 
     const data: IAppInfoData = {
-      applicationId: Application.applicationId,
-      applicationName: Application.applicationName,
-      nativeApplicationVersion: Application.nativeApplicationVersion,
-      nativeBuildVersion: Application.nativeBuildVersion,
+      applicationId: applicationId,
+      applicationName: applicationName,
+      nativeApplicationVersion: nativeApplicationVersion,
+      nativeBuildVersion: nativeBuildVersion,
       installationTime: installationTime.toISOString(),
       [Platform.OS]: platformData,
     };
@@ -59,8 +59,8 @@ export class AppInfoProvider implements IProcessInfoProvider<IAppInfoData> {
   };
 
   private getAndroidData = async (): Promise<IProcessInfoData> => {
-    const installReferrer = await Application.getInstallReferrerAsync();
-    const lastUpdateTime = await Application.getLastUpdateTimeAsync();
+    const installReferrer = await getInstallReferrerAsync();
+    const lastUpdateTime = await getLastUpdateTimeAsync();
 
     const data: Record<string, any> = {
       installReferrer,
@@ -74,8 +74,8 @@ export class AppInfoProvider implements IProcessInfoProvider<IAppInfoData> {
   };
 
   private getIosData = async (): Promise<IProcessInfoData> => {
-    const releaseType = await Application.getIosApplicationReleaseTypeAsync();
-    const pushNotificationServiceEnvironment = await Application.getIosPushNotificationServiceEnvironmentAsync();
+    const releaseType = await getIosApplicationReleaseTypeAsync();
+    const pushNotificationServiceEnvironment = await getIosPushNotificationServiceEnvironmentAsync();
 
     const data: Record<string, any> = {
       releaseType: releaseType,
@@ -91,21 +91,21 @@ export class AppInfoProvider implements IProcessInfoProvider<IAppInfoData> {
     };
   };
 
-  private getReleaseTypeDescription(releaseType: Application.ApplicationReleaseType): string {
+  private getReleaseTypeDescription(releaseType: ApplicationReleaseType): string {
     switch (releaseType) {
-      case Application.ApplicationReleaseType.SIMULATOR:
+      case ApplicationReleaseType.SIMULATOR:
         return 'Simulator';
 
-      case Application.ApplicationReleaseType.ENTERPRISE:
+      case ApplicationReleaseType.ENTERPRISE:
         return 'Enterprise';
 
-      case Application.ApplicationReleaseType.DEVELOPMENT:
+      case ApplicationReleaseType.DEVELOPMENT:
         return 'Development';
 
-      case Application.ApplicationReleaseType.AD_HOC:
+      case ApplicationReleaseType.AD_HOC:
         return 'Ad Hoc';
 
-      case Application.ApplicationReleaseType.APP_STORE:
+      case ApplicationReleaseType.APP_STORE:
         return 'App Store';
 
       default:

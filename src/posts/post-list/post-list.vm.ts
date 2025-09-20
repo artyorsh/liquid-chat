@@ -5,7 +5,7 @@ import { IModalService } from '@/modal';
 
 import { IPost } from '..';
 import { IPostVM } from './post-item.component';
-import { IPostsListVM } from './posts-list.component';
+import { IPostListVM } from './post-list.component';
 
 export interface IPostsListOptions {
   modalService: IModalService;
@@ -13,14 +13,14 @@ export interface IPostsListOptions {
 }
 
 export interface IPostDetailsPresenter {
-  viewDetails(post: IPost, callbacks: IPostDetailsCallbacks): void;
+  viewDetails(post: IPost, callbacks: IPostDetailsPresenterCallbacks): void;
 }
 
-export interface IPostDetailsCallbacks {
+export interface IPostDetailsPresenterCallbacks {
   markHidden(post: IPost): void;
 }
 
-export class PostsListVM implements IPostsListVM {
+export class PostListVM implements IPostListVM {
 
   private detailsPresenter: IPostDetailsPresenter;
   private logger: ILogger;

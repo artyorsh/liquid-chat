@@ -13,9 +13,9 @@ interface Props {
 
 export const App: React.FC<Props> = ({ get }) => {
 
-  const router = get<IRouter>(AppModule.ROUTER);
-  const modalService = get<IModalService>(AppModule.MODAL);
-  const processInfoService = get<IProcessInfoService>(AppModule.PROCESS_INFO);
+  const router: IRouter = get(AppModule.ROUTER);
+  const modalService: IModalService = get(AppModule.MODAL);
+  const processInfoService: IProcessInfoService = get(AppModule.PROCESS_INFO);
 
   React.useEffect(() => {
     processInfoService.startListening();

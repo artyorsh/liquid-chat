@@ -1,6 +1,6 @@
 import { addNetworkStateListener, getNetworkStateAsync, NetworkState, NetworkStateType } from 'expo-network';
 
-import { IProcessInfoData, IProcessInfoProvider } from './process-info.service';
+import { IProcessInfoData, IProcessInfoProvider } from '../process-info.service';
 
 export type NetworkInfoProviderId = 'NetworkInfo';
 

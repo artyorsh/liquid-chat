@@ -3,8 +3,8 @@ import { ContainerModule } from 'inversify';
 
 import { AppModule } from '@/di';
 
-import { AnimatedBottomSheetLayoutProvider } from './layout-provider/animated-bottom-sheet-layout-provider';
-import { AnimatedAlertLayoutProvider } from './layout-provider/AnimatedAlertLayoutProvider';
+import { AnimatedAlertLayoutProvider } from './alert/animated-alert-layout-provider';
+import { AnimatedBottomSheetLayoutProvider } from './bottom-sheet/animated-bottom-sheet-layout-provider';
 import { ILayoutProvider } from './modal.component';
 import { IModalPresentationPolicy, ModalService } from './modal.service';
 import { OneAtTimePresentationPolicy } from './presentation-policy/one-at-time-presentation-policy';
@@ -40,7 +40,7 @@ export interface IModalService {
 
 export const ModalModule = new ContainerModule(({ bind }) => {
   const useNativeDriver: boolean = true;
-  const animationDuration: number = 200;
+  const animationDuration: number = parseInt(process.env.EXPO_PUBLIC_MODAL_ANIMATION_DURATION);
 
   const alertLayoutProvider: ILayoutProvider = new AnimatedAlertLayoutProvider({
     useNativeDriver,

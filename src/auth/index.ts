@@ -3,10 +3,10 @@ import { ContainerModule } from 'inversify';
 
 import { AppModule } from '@/di';
 
-import { ILoginRoute, LoginScreenFactory } from './login';
-import { IRegisterRoute, RegisterScreenFactory } from './register';
-import { ISessionService, SessionServiceFactory } from './session';
-import { IWelcomeRoute, WelcomeScreenFactory } from './welcome';
+import { createLoginScreen, ILoginRoute } from './login';
+import { createRegisterScreen, IRegisterRoute } from './register';
+import { createSessionService, ISessionService } from './session';
+import { createWelcomeScreen, IWelcomeRoute } from './welcome';
 
 export type IAuthRoute =
   | IWelcomeRoute
@@ -15,15 +15,15 @@ export type IAuthRoute =
 
 export const AuthModule = new ContainerModule(({ bind }) => {
   bind<ISessionService>(AppModule.SESSION)
-    .toDynamicValue(context => SessionServiceFactory(context))
+    .toDynamicValue(context => createSessionService(context))
     .inSingletonScope();
 
   bind<React.FC>(AppModule.WELCOME_SCREEN)
-    .toFactory(context => WelcomeScreenFactory(context));
+    .toFactory(context => createWelcomeScreen(context));
 
   bind<React.FC>(AppModule.LOGIN_SCREEN)
-    .toFactory(context => LoginScreenFactory(context));
+    .toFactory(context => createLoginScreen(context));
 
   bind<React.FC>(AppModule.REGISTER_SCREEN)
-    .toFactory(context => RegisterScreenFactory(context));
+    .toFactory(context => createRegisterScreen(context));
 });

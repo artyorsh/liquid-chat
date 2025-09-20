@@ -1,14 +1,14 @@
 import { makeAutoObservable, observable, runInAction } from 'mobx';
 
 import { IPostsDatasource, IPostsListFactory } from '@/posts';
-import { IPostsListVM } from '@/posts/posts-list/posts-list.component';
+import { IPostListVM } from '@/posts/post-list/post-list.component';
 import { INavigationLifecycleListener, IRouter } from '@/router';
 
 import { IHomeVM } from './home.component';
 import { IWelcomeHeaderVM } from './welcome-header/welcome-header.component';
 
 export class HomeVM implements IHomeVM, INavigationLifecycleListener {
-  @observable public posts!: IPostsListVM;
+  @observable public posts!: IPostListVM;
   @observable public loading: boolean = true;
 
   public welcomeHeader: IWelcomeHeaderVM;

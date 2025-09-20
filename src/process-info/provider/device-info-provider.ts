@@ -1,6 +1,6 @@
 import * as Device from 'expo-device';
 
-import { IProcessInfoData, IProcessInfoProvider } from './process-info.service';
+import { IProcessInfoData, IProcessInfoProvider } from '../process-info.service';
 
 export type DeviceInfoProviderId = 'DeviceInfo';
 

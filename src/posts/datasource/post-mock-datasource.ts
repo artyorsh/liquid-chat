@@ -1,11 +1,11 @@
 import { IPost, IPostsDatasource } from '..';
 
-export class PostsAPI implements IPostsDatasource {
+export class PostMockDatasource implements IPostsDatasource {
 
   private static SLEEP_MS: number = 1000;
 
   public getPosts = async (): Promise<IPost[]> => {
-    await this.sleep(PostsAPI.SLEEP_MS);
+    await this.sleep(PostMockDatasource.SLEEP_MS);
 
     return new Array(10000).fill(null).map((_, index) => ({
       id: index.toString(),

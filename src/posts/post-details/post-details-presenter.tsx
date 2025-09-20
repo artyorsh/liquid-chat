@@ -1,14 +1,14 @@
 import { IModalService, PresentationType } from '@/modal';
 
 import { IPost } from '..';
-import { IPostDetailsCallbacks, IPostDetailsPresenter } from '../posts-list/posts-list.vm';
+import { IPostDetailsPresenter, IPostDetailsPresenterCallbacks } from '../post-list/post-list.vm';
 import { PostDetails } from './post-details.component';
 
 export class PostDetailsPresenter implements IPostDetailsPresenter {
 
   constructor(private modalService: IModalService) {}
 
-  public viewDetails(post: IPost, callbacks: IPostDetailsCallbacks): Promise<string> {
+  public viewDetails(post: IPost, callbacks: IPostDetailsPresenterCallbacks): Promise<string> {
     return this.modalService.show(controller => (
       <PostDetails
         post={post}

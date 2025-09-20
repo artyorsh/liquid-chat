@@ -1,7 +1,16 @@
 import { Animated, ViewProps, ViewStyle } from 'react-native';
 
 import { ILayoutProvider } from '../modal.component';
-import { DEFAULT_OPTIONS, IAlertLayoutProviderOptions } from './animated-alert-layout-provider';
+
+type ITimingAnimationConfig = Omit<Animated.TimingAnimationConfig, 'toValue'>;
+
+export type IAlertLayoutProviderOptions = ITimingAnimationConfig & {
+};
+
+const DEFAULT_OPTIONS: IAlertLayoutProviderOptions = {
+  useNativeDriver: true,
+  duration: 300,
+};
 
 export class AnimatedAlertLayoutProvider implements ILayoutProvider {
 

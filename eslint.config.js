@@ -103,6 +103,18 @@ module.exports = defineConfig([
       ],
       '@typescript-eslint/method-signature-style': ['error', 'method'],
       '@typescript-eslint/no-empty-function': 'error',
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          'paths': [
+            {
+              'name': 'react',
+              'importNames': ['default'],
+              'message': 'Use named imports from React instead of default import. Example: import { useState } from "react";'
+            }
+          ]
+        }
+      ],
       '@typescript-eslint/no-useless-constructor': 'error',
       '@typescript-eslint/prefer-enum-initializers': 'error',
 

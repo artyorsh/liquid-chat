@@ -1,11 +1,11 @@
-import React from 'react';
+import { useState } from 'react';
 import { TextInput, TextInputProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
 interface InputProps extends TextInputProps {}
 
 export const Input: React.FC<InputProps> = (props) => {
-  const [focused, setFocused] = React.useState(false);
+  const [focused, setFocused] = useState(false);
   styles.useVariants({ focused, editable: props.editable });
 
   return (

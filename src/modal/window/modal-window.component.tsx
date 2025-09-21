@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { cloneElement, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { StyleSheet, ViewProps } from 'react-native';
 import { UnistylesTheme, useUnistyles } from 'react-native-unistyles';
 
@@ -19,19 +19,19 @@ interface Props extends ViewProps {
   onWindowSizeChange(numberOfActiveModals: number): void;
 }
 
-export const ModalWindow = React.forwardRef<IModalWindowRef, Props>(({ layoutProvider, onWindowSizeChange, ...props }, ref) => {
+export const ModalWindow = forwardRef<IModalWindowRef, Props>(({ layoutProvider, onWindowSizeChange, ...props }, ref) => {
 
   const { theme } = useUnistyles();
   const [elements, setElements] = useState<IElementMap>(new Map());
 
   const WrapperComponent = layoutProvider.getWrapperComponent(theme);
 
-  React.useEffect(() => {
+  useEffect(() => {
     layoutProvider.onWindowSizeChange(elements.size);
     onWindowSizeChange(elements.size);
   }, [elements.size, layoutProvider, onWindowSizeChange]);
 
-  React.useImperativeHandle(ref, () => ({
+  useImperativeHandle(ref, () => ({
     mount(element: React.ReactElement): number {
       elements.set(elements.size, element);
       setElements(new Map(elements));
@@ -45,7 +45,7 @@ export const ModalWindow = React.forwardRef<IModalWindowRef, Props>(({ layoutPro
   }));
 
   const renderElement = ([id, element]: [number, React.ReactElement]): React.ReactElement => {
-    return React.cloneElement(element, { key: id });
+    return cloneElement(element, { key: id });
   };
 
   return (

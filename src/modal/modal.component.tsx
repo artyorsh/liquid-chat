@@ -1,4 +1,4 @@
-import React from 'react';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { BackHandler, StyleSheet, ViewProps } from 'react-native';
 
 export interface ILayoutProvider {
@@ -16,16 +16,16 @@ export interface IModalRef {
   hide(): Promise<void>;
 }
 
-export const Modal = React.forwardRef<IModalRef, ModalProps>(({ layoutProvider, onRequestClose, ...props }, ref) => {
+export const Modal = forwardRef<IModalRef, ModalProps>(({ layoutProvider, onRequestClose, ...props }, ref) => {
 
   const WrapperComponent = layoutProvider.getWrapperComponent();
 
-  React.useImperativeHandle(ref, () => ({
+  useImperativeHandle(ref, () => ({
     show: () => layoutProvider.setVisible(true),
     hide: () => layoutProvider.setVisible(false),
   }));
 
-  React.useEffect(() => {
+  useEffect(() => {
     layoutProvider.setVisible(true);
 
     const subscription = BackHandler.addEventListener('hardwareBackPress', () => {

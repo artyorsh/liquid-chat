@@ -1,4 +1,3 @@
-import React from 'react';
 import { observer } from 'mobx-react';
 
 import { IPostListVM, PostList } from '@/posts/post-list/post-list.component';
@@ -13,14 +12,11 @@ export interface IHomeVM {
   posts: IPostListVM;
 }
 
-export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => {
-
-  return (
-    <SafeArea>
-      <WelcomeHeader vm={vm.welcomeHeader} />
-      <Loading loading={vm.loading}>
-        <PostList vm={vm.posts} />
-      </Loading>
-    </SafeArea>
-  );
-});
+export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => (
+  <SafeArea>
+    <WelcomeHeader vm={vm.welcomeHeader} />
+    <Loading loading={vm.loading}>
+      <PostList vm={vm.posts} />
+    </Loading>
+  </SafeArea>
+));

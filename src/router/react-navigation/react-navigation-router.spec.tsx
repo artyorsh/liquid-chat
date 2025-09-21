@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement } from 'react';
 import { View } from 'react-native';
 import { ReactNavigationRouter } from './react-navigation-router';
 import { render, waitFor } from '@testing-library/react-native';
@@ -22,11 +22,11 @@ describe('ReactNavigationRouter', () => {
       .createLogger(`[Test] ${ReactNavigationRouter.name}`);
 
     router = new ReactNavigationRouter(logger, StackRouteFactory(() => ({
-      '/': () => React.createElement(View, { testID: 'screen-root' }),
-      '/home': () => React.createElement(View, { testID: 'screen-home' }),
-      '/auth': () => React.createElement(View, { testID: 'screen-welcome' }),
-      '/auth/login': () => React.createElement(View, { testID: 'screen-login' }),
-      '/auth/register': () => React.createElement(View, { testID: 'screen-register' }),
+      '/': () => createElement(View, { testID: 'screen-root' }),
+      '/home': () => createElement(View, { testID: 'screen-home' }),
+      '/auth': () => createElement(View, { testID: 'screen-welcome' }),
+      '/auth/login': () => createElement(View, { testID: 'screen-login' }),
+      '/auth/register': () => createElement(View, { testID: 'screen-register' }),
     })));
   });
 

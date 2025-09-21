@@ -1,4 +1,3 @@
-import React from 'react';
 import { ContainerModule } from 'inversify';
 
 import { AppModule } from '@/di';
@@ -40,7 +39,7 @@ export interface IModalService {
 
 export const ModalModule = new ContainerModule(({ bind }) => {
   const useNativeDriver: boolean = true;
-  const animationDuration: number = parseInt(process.env.EXPO_PUBLIC_MODAL_ANIMATION_DURATION);
+  const animationDuration: number = 200;
 
   const alertLayoutProvider: ILayoutProvider = new AnimatedAlertLayoutProvider({
     useNativeDriver,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Animated, ImageSourcePropType, ImageStyle, View, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react';
 import { StyleSheet, UnistylesTheme, useUnistyles } from 'react-native-unistyles';

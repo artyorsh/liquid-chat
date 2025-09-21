@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement, createRef } from 'react';
 
 import { IModalController, IModalFactory, IModalService, IWindowSizeListener, PresentationType } from '.';
 import { ILayoutProvider, IModalRef, Modal } from './modal.component';
@@ -15,7 +15,7 @@ export type IModalServiceOptions = Record<PresentationType, ILayoutProvider> & {
 
 export class ModalService implements IModalService {
 
-  private windowRef = React.createRef<IModalWindowRef>();
+  private windowRef = createRef<IModalWindowRef>();
 
   private numberOfActiveModals: number = 0;
   private windowSizeListeners: IWindowSizeListener[] = [];
@@ -25,7 +25,7 @@ export class ModalService implements IModalService {
   }
 
   public getWindow = (): React.ReactElement => {
-    return React.createElement(ModalWindow, {
+    return createElement(ModalWindow, {
       ref: this.windowRef,
       layoutProvider: new AnimatedBackgroundLayoutProvider(),
       onWindowSizeChange: this.onWindowSizeChange,
@@ -75,8 +75,8 @@ export class ModalService implements IModalService {
         throw new Error(`Layout provider for presentation type ${presentationType} not found. Is it present in ModalService options?`);
       }
 
-      const ref = React.createRef<IModalRef>();
-      const modal = React.createElement(Modal, { ref, layoutProvider }, factory(controller));
+      const ref = createRef<IModalRef>();
+      const modal = createElement(Modal, { ref, layoutProvider }, factory(controller));
 
       const elementId: number = this.windowRef.current?.mount(modal);
     });

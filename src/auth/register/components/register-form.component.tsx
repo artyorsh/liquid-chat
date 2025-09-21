@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { View, ViewProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
@@ -16,8 +16,8 @@ interface Props extends ViewProps {
 
 export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
 
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <View

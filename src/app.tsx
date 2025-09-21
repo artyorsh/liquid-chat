@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { ServiceIdentifier } from 'inversify';
 
 import { AppModule } from '@/di';
@@ -17,7 +17,7 @@ export const App: React.FC<Props> = ({ get }) => {
   const modalService: IModalService = get(AppModule.MODAL);
   const processInfoService: IProcessInfoService = get(AppModule.PROCESS_INFO);
 
-  React.useEffect(() => {
+  useEffect(() => {
     processInfoService.startListening();
   }, [processInfoService]);
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet } from 'react-native-unistyles';
 
 import { Button, ButtonProps } from './button.component';

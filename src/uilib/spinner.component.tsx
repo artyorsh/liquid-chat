@@ -1,4 +1,3 @@
-import React from 'react';
 import { ActivityIndicator, ViewProps } from 'react-native';
 
 interface Props extends ViewProps {

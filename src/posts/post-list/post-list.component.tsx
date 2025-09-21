@@ -1,4 +1,3 @@
-import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { observer } from 'mobx-react';
 import { StyleSheet } from 'react-native-unistyles';

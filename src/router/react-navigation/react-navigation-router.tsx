@@ -1,4 +1,4 @@
-import React from 'react';
+import { createRef } from 'react';
 import { NavigationContainer, NavigationContainerRef, NavigationState, StackActions } from '@react-navigation/native';
 
 import { ILogger } from '@/log';
@@ -9,7 +9,7 @@ export type IRouteFactory = () => React.ReactElement;
 
 export class ReactNavigationRouter implements IRouter {
 
-  private navigationContainerRef = React.createRef<NavigationContainerRef<{}>>();
+  private navigationContainerRef = createRef<NavigationContainerRef<{}>>();
 
   private currentRoute: IRoute = '/';
 

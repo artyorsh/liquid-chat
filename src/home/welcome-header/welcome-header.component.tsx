@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
 
 import { IconButton } from '@/uilib/icon-button.component';

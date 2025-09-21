@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pressable, StyleProp, TouchableWithoutFeedbackProps, ViewStyle } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 

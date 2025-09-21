@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer, NavigationContainerRef, Route, StackActions } from '@react-navigation/native';
+import { NavigationContainer, NavigationContainerRef, NavigationState, Route, StackActions } from '@react-navigation/native';
 
 import { ILogger } from '@/log';
 
@@ -13,7 +13,7 @@ export class ReactNavigationRouter implements IRouter {
 
   private currentRoute: IRoute = '/';
 
-  private navigationListeners: Map<IRoute, INavigationLifecycleListener> = new Map();
+  private navigationListeners: Map<IRoute, INavigationLifecycleListener[]> = new Map();
 
   constructor(private logger: ILogger, private routeFactory: IRouteFactory) {
   }
@@ -44,35 +44,41 @@ export class ReactNavigationRouter implements IRouter {
   };
 
   private onNavigationReady = (): void => {
-    this.navigationListeners.get(this.currentRoute)?.onFocus?.();
+    const listeners: INavigationLifecycleListener[] = this.navigationListeners.get(this.currentRoute);
+    listeners?.forEach(listener => listener.onFocus?.());
   };
 
-  private onNavigationStateChange = (): void => {
-    const nextRoute = this.navigationContainerRef.current?.getCurrentRoute() as Route<IRoute> | undefined;
-
-    if (nextRoute && nextRoute.name !== this.currentRoute) {
-      this.logger.info(`Moving from ${this.currentRoute} to ${nextRoute.name}`);
-
-      this.navigationListeners.get(this.currentRoute)?.onBlur?.();
-      this.navigationListeners.get(nextRoute.name)?.onFocus?.();
-
-      this.currentRoute = nextRoute.name as IRoute;
+  private onNavigationStateChange = (state: NavigationState | undefined): void => {
+    if (!state) {
+      return;
     }
+
+    const nextRoute = state.routes[state.index].name as IRoute;
+
+    if (this.currentRoute === nextRoute) {
+      return;
+    }
+
+    this.logger.info(`Moving from ${this.currentRoute} to ${nextRoute}`);
+
+    const currentRouteListeners: INavigationLifecycleListener[] = this.navigationListeners.get(this.currentRoute);
+    currentRouteListeners?.forEach(listener => listener.onBlur?.());
+
+    const nextRouteListeners: INavigationLifecycleListener[] = this.navigationListeners.get(nextRoute);
+    nextRouteListeners?.forEach(listener => listener.onFocus?.());
+
+    this.currentRoute = nextRoute;
   };
 
-  /*
-   * TODO: I am not sure if this is the right way to do this.
-   * I didn't want to use {navigation} prop from react-navigation, so came up with this.
-   * It might be so, that onFocus is called earlier than componendDidMount, which is not correct.
-   * The onNavigationStateChange should be tested to see it.
-   *
-   * @see {onNavigationStateChange}
-   */
   public subscribe = (route: IRoute, listener: INavigationLifecycleListener): Function => {
-    this.navigationListeners.set(route, listener);
+    const routeListeners: INavigationLifecycleListener[] = this.navigationListeners.get(route) || [];
+    this.navigationListeners.set(route, [...routeListeners, listener]);
 
     return () => {
-      this.navigationListeners.delete(route);
+      const nextListeners: INavigationLifecycleListener[] = this.navigationListeners.get(route)
+        .filter(l => l !== listener);
+
+      this.navigationListeners.set(route, nextListeners);
     };
   };
 }

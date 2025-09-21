@@ -1,6 +1,8 @@
 import { ILogger } from '@/log';
+import { INavigationLifecycleListener, IRoute, IRouter } from '@/router';
 
 import { IPushNotificationService } from '.';
+import { NavigationNotificationHandler } from './handlers/navigation-notification-handler';
 import { IPushNotificationHandler, IPushPermissionController, IPushServiceProvider, PushNotificationService } from './push-notification.service';
 
 jest.unmock('./push-notification.service');
@@ -186,5 +188,78 @@ describe('PushNotificationService', () => {
     );
 
     expect(logger.error).toHaveBeenCalledWith(expect.stringContaining('could not handle notification'));
+  });
+});
+
+describe('NavigationNotificationHandler', () => {
+
+  let handler: IPushNotificationHandler;
+  let router: IRouter;
+
+  beforeEach(() => {
+    router = jest.requireMock('@/router/react-navigation/react-navigation-router').RouterService();
+    handler = new NavigationNotificationHandler(router);
+  });
+
+  it('should not handle notifications without a route', () => {
+    const isHandled: boolean = handler.handleOpen({
+      id: '1',
+      title: 'Test',
+      body: 'Test',
+      data: {},
+    });
+
+    expect(isHandled).toBe(false);
+  });
+
+  it('should handle notificatoins with a route', () => {
+    const isHandled: boolean = handler.handleOpen({
+      id: '1',
+      title: 'Test',
+      body: 'Test',
+      data: { route: '/home' },
+    });
+
+    expect(isHandled).toBe(true);
+  });
+
+  it('should handle when current route becomes executeWhenRoute', () => {
+    const executeWhenRoute: IRoute = '/home';
+    const notificationRoute: IRoute = '/welcome';
+    const shouldDelayNavigation = (_currentRoute: IRoute): boolean => true;
+
+    const navigationListeners: Record<string, INavigationLifecycleListener> = {};
+
+    const unsubscribeFn = jest.fn();
+    router.subscribe = jest.fn((route, listener) => {
+      navigationListeners[route] = listener;
+
+      return unsubscribeFn;
+    });
+
+    router.navigate = jest.fn(route => {
+      navigationListeners[route]?.onFocus();
+    });
+
+    handler = new NavigationNotificationHandler(router, {
+      executeWhenRoute: executeWhenRoute,
+      shouldDelayNavigation: shouldDelayNavigation,
+    });
+
+    handler.handleOpen({
+      id: '1',
+      title: 'Test',
+      body: 'Test',
+      data: { route: notificationRoute },
+    });
+
+    expect(router.navigate).not.toHaveBeenCalled();
+    router.navigate(executeWhenRoute);
+
+    const navigationCalls = (router.navigate as jest.Mock).mock.calls;
+    const lastNavigationCall = navigationCalls[navigationCalls.length - 1];
+
+    expect(lastNavigationCall).toContain(notificationRoute);
+    expect(unsubscribeFn).toHaveBeenCalled();
   });
 });

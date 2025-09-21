@@ -6,6 +6,7 @@ jest.mock('./react-navigation/react-navigation-router', () => {
     navigate: jest.fn(),
     replace: jest.fn(),
     goBack: jest.fn(),
+    getCurrentRoute: jest.fn(() => '/'),
     subscribe: jest.fn((_route: IRoute, listener: INavigationLifecycleListener) => {
       listener.onFocus?.();
 

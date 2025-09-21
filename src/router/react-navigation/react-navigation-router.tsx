@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer, NavigationContainerRef, NavigationState, Route, StackActions } from '@react-navigation/native';
+import { NavigationContainer, NavigationContainerRef, NavigationState, StackActions } from '@react-navigation/native';
 
 import { ILogger } from '@/log';
 
@@ -81,4 +81,8 @@ export class ReactNavigationRouter implements IRouter {
       this.navigationListeners.set(route, nextListeners);
     };
   };
+
+  public getCurrentRoute(): IRoute {
+    return this.currentRoute;
+  }
 }

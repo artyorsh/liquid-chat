@@ -8,7 +8,6 @@ import { IRouter } from '@/router';
 import { MockPushPermissionController } from './expo-go-compat/mock-push-permission-controller';
 import { MockPushServiceProvider } from './expo-go-compat/mock-push-service-provider';
 import { NavigationNotificationHandler } from './handlers/navigation-notification-handler';
-import { NotificationRemoveHandler } from './handlers/notification-remove-handler';
 import { IPushNotificationHandler, IPushPermissionController, IPushServiceProvider, PushNotificationService } from './push-notification.service';
 
 export interface IPushNotificationService {
@@ -28,7 +27,6 @@ export const PushNotificationModule = new ContainerModule(({ bind }) => {
 const createPushNotificationService = (context: ResolutionContext): IPushNotificationService => {
   const isExpoGo: boolean = Constants.executionEnvironment === 'storeClient';
 
-  const router: IRouter = context.get(AppModule.ROUTER);
   const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(PushNotificationService.name);
 
@@ -41,10 +39,7 @@ const createPushNotificationService = (context: ResolutionContext): IPushNotific
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { RNFBPushPermissionController } = require('./rnfb/rnfb-push-permission-controller');
 
-    pushServiceProvider = new RNFBPushServiceProvider({
-      initialNotificationPollInterval: 1000,
-      shouldHandleInitialNotification: () => true,
-    });
+    pushServiceProvider = new RNFBPushServiceProvider();
 
     pushPermissionController = new RNFBPushPermissionController({
       alert: true,
@@ -53,15 +48,28 @@ const createPushNotificationService = (context: ResolutionContext): IPushNotific
     });
   }
 
-  const handlers: IPushNotificationHandler[] = [
-    new NavigationNotificationHandler(router),
-    new NotificationRemoveHandler(),
-  ];
+  const navigationNotificationHandler: IPushNotificationHandler = createNavigationNotificationHandler(context);
 
   return new PushNotificationService(
     pushServiceProvider,
     pushPermissionController,
-    handlers,
+    [navigationNotificationHandler],
     logger,
   );
+};
+
+const createNavigationNotificationHandler = (context: ResolutionContext): IPushNotificationHandler => {
+  const router: IRouter = context.get(AppModule.ROUTER);
+
+  const delayRoutes: IRoute[] = [
+    '/',
+    '/welcome',
+    '/login',
+    '/register',
+  ];
+
+  return new NavigationNotificationHandler(router, {
+    executeWhenRoute: '/home',
+    shouldDelayNavigation: currentRoute => delayRoutes.includes(currentRoute),
+  });
 };

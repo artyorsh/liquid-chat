@@ -25,6 +25,7 @@ export interface IRouter {
   navigate(route: IRoute, params?: IRouteParams): void;
   replace(route: IRoute, params?: IRouteParams): void;
   goBack(): void;
+  getCurrentRoute(): IRoute;
   /**
    * @returns a function to unsubscribe the listener
    */

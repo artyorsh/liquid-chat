@@ -3,55 +3,35 @@ import { FirebaseMessagingTypes, getAPNSToken, getInitialNotification, getToken,
 
 import { IPushNotification, IPushNotificationHandler, IPushNotificationToken, IPushServiceProvider } from '../push-notification.service';
 
-interface RNFBPushServiceProviderOptions {
-  /**
-   * Interval to poll shouldHandleInitialNotification() until it returns true to invoke handleOpen() with initial notification.
-   */
-  initialNotificationPollInterval: number;
-  /**
-   * RNFB provides initial notification through messaging().getInitialNotification() function.
-   * This function is not convenient to use, so we poll shouldHandleInitialNotification() until it returns true to invoke handleOpen() on all subscribers.
-   */
-  shouldHandleInitialNotification(): boolean;
-}
-
 export class RNFBPushServiceProvider implements IPushServiceProvider {
 
-  private subscribers: IPushNotificationHandler[] = [];
-  private initialNotificationHandleTimeout: NodeJS.Timeout | null = null;
+  private handlers: IPushNotificationHandler[] = [];
 
   private get rnfb(): FirebaseMessagingTypes.Module {
     return getApp().messaging();
   }
 
-  constructor(private options: RNFBPushServiceProviderOptions) {
+  constructor() {
     onMessage(this.rnfb, m => {
       const notification: IPushNotification = this.createPushNotification(m);
-      this.subscribers.forEach(h => h.handleForeground(notification));
+      this.handlers.forEach(h => h.handleForeground(notification));
     });
 
     setBackgroundMessageHandler(this.rnfb, async m => {
       const notification: IPushNotification = this.createPushNotification(m);
-      this.subscribers.forEach(h => h.handleBackground(notification));
+      this.handlers.forEach(h => h.handleBackground(notification));
     });
 
     onNotificationOpenedApp(this.rnfb, m => {
       const notification: IPushNotification = this.createPushNotification(m);
-      this.subscribers.forEach(h => h.handleOpen(notification));
+      this.handlers.forEach(h => h.handleOpen(notification));
     });
 
-    getInitialNotification(this.rnfb).then((message: FirebaseMessagingTypes.RemoteMessage | null) => {
-      if (!message) {
-        return;
-      }
-
-      const notification: IPushNotification = this.createPushNotification(message);
-      this.attemptHandleInitialNotification(notification);
-    });
+    this.handleInitialNotification();
   }
 
   public subscribe(handler: IPushNotificationHandler): void {
-    this.subscribers.push(handler);
+    this.handlers.push(handler);
   }
 
   public getToken = async (): Promise<IPushNotificationToken> => {
@@ -59,17 +39,6 @@ export class RNFBPushServiceProvider implements IPushServiceProvider {
     const fcm: string = await getToken(this.rnfb);
 
     return ({ fcm, apns });
-  };
-
-  private attemptHandleInitialNotification = (message: IPushNotification): void => {
-    if (this.options.shouldHandleInitialNotification()) {
-      this.subscribers.forEach(h => h.handleOpen(message as IPushNotification));
-      this.initialNotificationHandleTimeout && clearTimeout(this.initialNotificationHandleTimeout);
-    } else {
-      this.initialNotificationHandleTimeout = setTimeout(() => {
-        this.attemptHandleInitialNotification(message);
-      }, this.options.initialNotificationPollInterval);
-    }
   };
 
   private createPushNotification = (message: FirebaseMessagingTypes.RemoteMessage): IPushNotification => {
@@ -80,4 +49,16 @@ export class RNFBPushServiceProvider implements IPushServiceProvider {
       data: message.data || {},
     };
   };
+
+  private async handleInitialNotification(): Promise<void> {
+    const message: FirebaseMessagingTypes.RemoteMessage | null = await getInitialNotification(this.rnfb);
+
+    if (!message) {
+      return;
+    }
+
+    const notification: IPushNotification = this.createPushNotification(message);
+    this.handlers.forEach(h => h.handleOpen(notification));
+  }
+
 }

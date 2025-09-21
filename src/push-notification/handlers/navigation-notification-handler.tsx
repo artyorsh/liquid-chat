@@ -2,25 +2,27 @@ import { IRoute, IRouter } from '@/router';
 
 import { IPushNotification, IPushNotificationHandler } from '../push-notification.service';
 
-interface INavigationNotificationPayload {
-  type: 'navigation';
-  route: string;
-}
+type INavigationNotification = IPushNotification<{ route: string }>;
 
-type INavigationNotification = IPushNotification<INavigationNotificationPayload>;
+interface INavigationNotificationHandlerOptions {
+  /**
+   * The route to await to perform navigation, if shouldDelayNavigation returned true.
+   */
+  executeWhenRoute: IRoute;
+  shouldDelayNavigation(currentRoute: IRoute): boolean;
+}
 
 export class NavigationNotificationHandler implements IPushNotificationHandler {
 
-  constructor(private router: IRouter) {
+  constructor(private router: IRouter, private options?: INavigationNotificationHandlerOptions) {
   }
 
-  public getName = (): string => {
-    return 'NavigationNotificationHandler';
+  public getName(): string {
+    return NavigationNotificationHandler.name;
   };
 
   /**
    * no-op: the notification is handled by system, presenting it in notification center
-   * @returns true if {notification.data.type} is 'navigation'
    */
   public handleForeground(notification: IPushNotification): boolean {
     return this.isSupportedNotification(notification);
@@ -28,7 +30,6 @@ export class NavigationNotificationHandler implements IPushNotificationHandler {
 
   /**
    * no-op: the notification is handled by system, presenting it in notification center
-   * @returns true if {notification.data.type} is 'navigation'
    */
   public handleBackground(notification: IPushNotification): boolean {
     return this.isSupportedNotification(notification);
@@ -44,16 +45,26 @@ export class NavigationNotificationHandler implements IPushNotificationHandler {
 
     const { route, ...params } = notification.data;
 
-    this.router.navigate(route as IRoute, params);
+    const currentRoute: IRoute = this.router.getCurrentRoute();
+    const shouldDelayNavigation: boolean = this.options?.shouldDelayNavigation(currentRoute);
+
+    if (!shouldDelayNavigation) {
+      this.router.navigate(route as IRoute, params);
+
+      return true;
+    }
+
+    const whenRouteSubscription = this.router.subscribe(this.options.executeWhenRoute, {
+      onFocus: () => {
+        this.router.navigate(route as IRoute, params);
+        whenRouteSubscription();
+      },
+    });
 
     return true;
   }
 
   private isSupportedNotification(notification: IPushNotification): notification is INavigationNotification {
-    if (!notification.data) {
-      return false;
-    }
-
-    return notification.data.type === 'navigation' && !!notification.data.route;
+    return !!notification.data?.route;
   }
 }

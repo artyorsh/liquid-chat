@@ -10,9 +10,11 @@ import { WelcomeVM } from './welcome.vm';
 export type IWelcomeRoute = '/welcome';
 
 export const createWelcomeScreen = (context: ResolutionContext): React.FC => {
-  const viewModel: IWelcomeVM = createWelcomeViewModel(context);
+  return () => {
+    const viewModel: IWelcomeVM = createWelcomeViewModel(context);
 
-  return () => React.createElement(Welcome, { vm: viewModel });
+    return React.createElement(Welcome, { vm: viewModel });
+  };
 };
 
 const createWelcomeViewModel = (context: ResolutionContext): IWelcomeVM => {

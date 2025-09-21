@@ -21,9 +21,11 @@ export const HomeScreenModule = new ContainerModule(({ bind }) => {
 });
 
 const createHomeScreen = (context: ResolutionContext): React.FC => {
-  const viewModel: IHomeVM = createHomeViewModel(context);
+  return () => {
+    const viewModel: IHomeVM = createHomeViewModel(context);
 
-  return () => React.createElement(Home, { vm: viewModel });
+    return React.createElement(Home, { vm: viewModel });
+  };
 };
 
 const createHomeViewModel = (context: ResolutionContext): IHomeVM => {

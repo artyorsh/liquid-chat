@@ -1,11 +1,11 @@
-import { createRef } from 'react';
-import { NavigationContainer, NavigationContainerRef, NavigationState, StackActions } from '@react-navigation/native';
+import { createElement, createRef } from 'react';
+import { createStaticNavigation, NavigationContainerRef, NavigationState, StackActions, StaticNavigation } from '@react-navigation/native';
 
 import { ILogger } from '@/log';
 
 import { INavigationLifecycleListener, IRoute, IRouteParams, IRouter } from '..';
 
-export type IRouteFactory = () => React.ReactElement;
+export type INavigationTreeFactory = () => StaticNavigation<any, any, any>;
 
 export class ReactNavigationRouter implements IRouter {
 
@@ -15,18 +15,17 @@ export class ReactNavigationRouter implements IRouter {
 
   private navigationListeners: Map<IRoute, INavigationLifecycleListener[]> = new Map();
 
-  constructor(private logger: ILogger, private routeFactory: IRouteFactory) {
+  constructor(private logger: ILogger, private treeFactory: INavigationTreeFactory) {
   }
 
   public getWindow(): React.ReactElement {
-    return (
-      <NavigationContainer
-        ref={this.navigationContainerRef}
-        onReady={this.onNavigationReady}
-        onStateChange={this.onNavigationStateChange}>
-        {this.routeFactory()}
-      </NavigationContainer>
-    );
+    const NavigationContainer = createStaticNavigation(this.treeFactory());
+
+    return createElement(NavigationContainer, {
+      ref: this.navigationContainerRef,
+      onReady: this.onNavigationReady,
+      onStateChange: this.onNavigationStateChange,
+    });
   }
 
   public navigate = (route: IRoute, params?: IRouteParams): void => {

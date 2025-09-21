@@ -1,5 +1,6 @@
-import { IRouteFactory, ReactNavigationRouter } from './react-navigation/react-navigation-router';
-import { StackRouteFactory } from './react-navigation/stack-route-factory';
+import { FC } from 'react';
+import { ReactNavigationRouter } from './react-navigation/react-navigation-router';
+import { StackTreeFactory } from './react-navigation/stack-tree-factory';
 import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
@@ -42,13 +43,11 @@ const createRouter = (context: ResolutionContext): IRouter => {
   const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(ReactNavigationRouter.name);
 
-  const routeFactory: IRouteFactory = StackRouteFactory(() => ({
-    '/': context.get(AppModule.SPLASH_SCREEN),
-    '/auth': context.get(AppModule.WELCOME_SCREEN),
-    '/auth/login': context.get(AppModule.LOGIN_SCREEN),
-    '/auth/register': context.get(AppModule.REGISTER_SCREEN),
-    '/home': context.get(AppModule.HOME_SCREEN),
-  }));
-
-  return new ReactNavigationRouter(logger, routeFactory);
+  return new ReactNavigationRouter(logger, StackTreeFactory(() => ({
+    '/': context.get<FC>(AppModule.SPLASH_SCREEN),
+    '/auth': context.get<FC>(AppModule.WELCOME_SCREEN),
+    '/auth/login': context.get<FC>(AppModule.LOGIN_SCREEN),
+    '/auth/register': context.get<FC>(AppModule.REGISTER_SCREEN),
+    '/home': context.get<FC>(AppModule.HOME_SCREEN),
+  })));
 };

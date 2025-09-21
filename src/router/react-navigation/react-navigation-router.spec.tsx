@@ -6,7 +6,7 @@ import { render, waitFor } from '@testing-library/react-native';
 import { ILogger } from '@/log';
 
 import { IRouter } from '..';
-import { StackRouteFactory } from './stack-route-factory';
+import { StackTreeFactory } from './stack-tree-factory';
 
 jest.unmock('./react-navigation-router');
 
@@ -21,7 +21,7 @@ describe('ReactNavigationRouter', () => {
     logger = jest.requireMock('@/log/log.service').LogService()
       .createLogger(`[Test] ${ReactNavigationRouter.name}`);
 
-    router = new ReactNavigationRouter(logger, StackRouteFactory(() => ({
+    router = new ReactNavigationRouter(logger, StackTreeFactory(() => ({
       '/': () => createElement(View, { testID: 'screen-root' }),
       '/home': () => createElement(View, { testID: 'screen-home' }),
       '/auth': () => createElement(View, { testID: 'screen-welcome' }),

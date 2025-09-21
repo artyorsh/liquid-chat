@@ -11,9 +11,9 @@ import { LoginVM } from './login.vm';
 export type ILoginRoute = '/auth/login';
 
 export const createLoginScreen = (context: ResolutionContext): React.FC => {
-  return () => {
-    const viewModel: ILoginVM = createLoginVM(context);
+  const viewModel: ILoginVM = createLoginVM(context);
 
+  return () => {
     return React.createElement(Login, { vm: viewModel });
   };
 };

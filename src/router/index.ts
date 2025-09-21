@@ -1,4 +1,4 @@
-import { ReactNavigationRouter } from './react-navigation/react-navigation-router';
+import { IRouteFactory, ReactNavigationRouter } from './react-navigation/react-navigation-router';
 import { StackRouteFactory } from './react-navigation/stack-route-factory';
 import { ContainerModule, ResolutionContext } from 'inversify';
 
@@ -42,11 +42,13 @@ const createRouter = (context: ResolutionContext): IRouter => {
   const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(ReactNavigationRouter.name);
 
-  return new ReactNavigationRouter(logger, StackRouteFactory({
+  const routeFactory: IRouteFactory = StackRouteFactory(() => ({
     '/': context.get(AppModule.SPLASH_SCREEN),
     '/auth': context.get(AppModule.WELCOME_SCREEN),
     '/auth/login': context.get(AppModule.LOGIN_SCREEN),
     '/auth/register': context.get(AppModule.REGISTER_SCREEN),
     '/home': context.get(AppModule.HOME_SCREEN),
   }));
+
+  return new ReactNavigationRouter(logger, routeFactory);
 };

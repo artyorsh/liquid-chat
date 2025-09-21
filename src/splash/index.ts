@@ -18,9 +18,9 @@ export const SplashScreenModule = new ContainerModule(({ bind }) => {
 });
 
 const createSplashScreen = (context: ResolutionContext): React.FC => {
-  return () => {
-    const viewModel: ISplashVM = createSplashViewModel(context);
+  const viewModel: ISplashVM = createSplashViewModel(context);
 
+  return () => {
     return React.createElement(Splash, { vm: viewModel });
   };
 };

@@ -11,9 +11,9 @@ import { RegisterVM } from './register.vm';
 export type IRegisterRoute = '/auth/register';
 
 export const createRegisterScreen = (context: ResolutionContext): React.FC => {
-  return () => {
-    const viewModel: IRegisterVM = createRegisterVM(context);
+  const viewModel: IRegisterVM = createRegisterVM(context);
 
+  return () => {
     return React.createElement(Register, { vm: viewModel });
   };
 };

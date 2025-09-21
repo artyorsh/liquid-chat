@@ -21,13 +21,13 @@ describe('ReactNavigationRouter', () => {
     logger = jest.requireMock('@/log/log.service').LogService()
       .createLogger(`[Test] ${ReactNavigationRouter.name}`);
 
-    router = new ReactNavigationRouter(logger, StackRouteFactory({
+    router = new ReactNavigationRouter(logger, StackRouteFactory(() => ({
       '/': () => React.createElement(View, { testID: 'screen-root' }),
       '/home': () => React.createElement(View, { testID: 'screen-home' }),
       '/auth': () => React.createElement(View, { testID: 'screen-welcome' }),
       '/auth/login': () => React.createElement(View, { testID: 'screen-login' }),
       '/auth/register': () => React.createElement(View, { testID: 'screen-register' }),
-    }));
+    })));
   });
 
   it('should mount only root screen', () => {

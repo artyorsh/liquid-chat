@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement, useMemo } from 'react';
 import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
@@ -10,10 +10,10 @@ import { WelcomeVM } from './welcome.vm';
 export type IWelcomeRoute = '/auth';
 
 export const createWelcomeScreen = (context: ResolutionContext): React.FC => {
-  const viewModel: IWelcomeVM = createWelcomeViewModel(context);
-
   return () => {
-    return React.createElement(Welcome, { vm: viewModel });
+    const viewModel: IWelcomeVM = useMemo(() => createWelcomeViewModel(context), []);
+
+    return createElement(Welcome, { vm: viewModel });
   };
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement, useMemo } from 'react';
 import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
@@ -11,10 +11,10 @@ import { RegisterVM } from './register.vm';
 export type IRegisterRoute = '/auth/register';
 
 export const createRegisterScreen = (context: ResolutionContext): React.FC => {
-  const viewModel: IRegisterVM = createRegisterVM(context);
-
   return () => {
-    return React.createElement(Register, { vm: viewModel });
+    const viewModel: IRegisterVM = useMemo(() => createRegisterVM(context), []);
+
+    return createElement(Register, { vm: viewModel });
   };
 };
 

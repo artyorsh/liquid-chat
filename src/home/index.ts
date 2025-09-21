@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement, useMemo } from 'react';
 import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
@@ -21,10 +21,10 @@ export const HomeScreenModule = new ContainerModule(({ bind }) => {
 });
 
 const createHomeScreen = (context: ResolutionContext): React.FC => {
-  const viewModel: IHomeVM = createHomeViewModel(context);
-
   return () => {
-    return React.createElement(Home, { vm: viewModel });
+    const viewModel: IHomeVM = useMemo(() => createHomeViewModel(context), []);
+
+    return createElement(Home, { vm: viewModel });
   };
 };
 

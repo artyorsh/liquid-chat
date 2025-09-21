@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement, useMemo } from 'react';
 import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
@@ -18,10 +18,10 @@ export const SplashScreenModule = new ContainerModule(({ bind }) => {
 });
 
 const createSplashScreen = (context: ResolutionContext): React.FC => {
-  const viewModel: ISplashVM = createSplashViewModel(context);
-
   return () => {
-    return React.createElement(Splash, { vm: viewModel });
+    const viewModel: ISplashVM = useMemo(() => createSplashViewModel(context), []);
+
+    return createElement(Splash, { vm: viewModel });
   };
 };
 

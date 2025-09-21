@@ -1,4 +1,3 @@
-import React from 'react';
 import { ContainerModule } from 'inversify';
 
 import { AppModule } from '@/di';

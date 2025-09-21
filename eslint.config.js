@@ -2,6 +2,7 @@ const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const reactNative = require('@react-native/eslint-plugin');
 const pluginJest = require('eslint-plugin-jest');
+const pluginPromise = require('eslint-plugin-promise');
 const simpleImportSort = require('eslint-plugin-simple-import-sort');
 const stylistic = require('@stylistic/eslint-plugin');
 
@@ -33,6 +34,7 @@ const stylistic = require('@stylistic/eslint-plugin');
 module.exports = defineConfig([
   expoConfig,
   pluginJest.configs['flat/recommended'],
+  pluginPromise.configs['flat/recommended'],
   {
     plugins: {
       '@react-native': reactNative,

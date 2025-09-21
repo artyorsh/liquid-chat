@@ -29,7 +29,7 @@ export class WelcomeHeaderVM implements IWelcomeHeaderVM {
   public logout = async (): Promise<void> => {
     try {
       await this.sessionService.logout();
-      this.router.replace('/welcome');
+      this.router.replace('/auth');
     } catch {
       // no-op
     }

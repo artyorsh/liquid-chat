@@ -7,7 +7,7 @@ import { IRouter } from '@/router';
 import { IWelcomeVM, Welcome } from './welcome.component';
 import { WelcomeVM } from './welcome.vm';
 
-export type IWelcomeRoute = '/welcome';
+export type IWelcomeRoute = '/auth';
 
 export const createWelcomeScreen = (context: ResolutionContext): React.FC => {
   return () => {

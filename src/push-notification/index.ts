@@ -61,15 +61,8 @@ const createPushNotificationService = (context: ResolutionContext): IPushNotific
 const createNavigationNotificationHandler = (context: ResolutionContext): IPushNotificationHandler => {
   const router: IRouter = context.get(AppModule.ROUTER);
 
-  const delayRoutes: IRoute[] = [
-    '/',
-    '/welcome',
-    '/login',
-    '/register',
-  ];
-
   return new NavigationNotificationHandler(router, {
     executeWhenRoute: '/home',
-    shouldDelayNavigation: currentRoute => delayRoutes.includes(currentRoute),
+    shouldDelayNavigation: currentRoute => currentRoute === '/' || currentRoute.includes('/auth'),
   });
 };

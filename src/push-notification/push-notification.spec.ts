@@ -225,7 +225,7 @@ describe('NavigationNotificationHandler', () => {
 
   it('should handle when current route becomes executeWhenRoute', () => {
     const executeWhenRoute: IRoute = '/home';
-    const notificationRoute: IRoute = '/welcome';
+    const notificationRoute: IRoute = '/auth';
     const shouldDelayNavigation = (_currentRoute: IRoute): boolean => true;
 
     const navigationListeners: Record<string, INavigationLifecycleListener> = {};

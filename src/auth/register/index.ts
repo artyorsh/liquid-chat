@@ -8,7 +8,7 @@ import { ISessionService } from '../session';
 import { IRegisterVM, Register } from './register.component';
 import { RegisterVM } from './register.vm';
 
-export type IRegisterRoute = '/register';
+export type IRegisterRoute = '/auth/register';
 
 export const createRegisterScreen = (context: ResolutionContext): React.FC => {
   return () => {

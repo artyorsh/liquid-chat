@@ -45,7 +45,7 @@ describe('Home/WelcomeHeader', () => {
     fireEvent.press(api.getByTestId('logout-button'));
 
     await waitFor(() => {
-      expect(router.replace).toHaveBeenCalledWith('/welcome');
+      expect(router.replace).toHaveBeenCalledWith('/auth');
     });
   });
 

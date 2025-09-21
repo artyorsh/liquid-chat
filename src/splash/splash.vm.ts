@@ -60,7 +60,7 @@ export class SplashVM implements ISplashVM, INavigationLifecycleListener {
       this.router.replace('/home');
     } catch {
       await this.animation.finish();
-      this.router.replace('/welcome');
+      this.router.replace('/auth');
     }
   };
 

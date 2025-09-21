@@ -56,7 +56,7 @@ describe('Splash', () => {
     render(<Splash vm={vm} />);
 
     await waitFor(() => {
-      return expect(router.replace).toHaveBeenCalledWith('/welcome');
+      return expect(router.replace).toHaveBeenCalledWith('/auth');
     });
   });
 });

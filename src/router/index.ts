@@ -44,9 +44,9 @@ const createRouter = (context: ResolutionContext): IRouter => {
 
   return new ReactNavigationRouter(logger, StackRouteFactory({
     '/': context.get(AppModule.SPLASH_SCREEN),
-    '/welcome': context.get(AppModule.WELCOME_SCREEN),
-    '/login': context.get(AppModule.LOGIN_SCREEN),
-    '/register': context.get(AppModule.REGISTER_SCREEN),
+    '/auth': context.get(AppModule.WELCOME_SCREEN),
+    '/auth/login': context.get(AppModule.LOGIN_SCREEN),
+    '/auth/register': context.get(AppModule.REGISTER_SCREEN),
     '/home': context.get(AppModule.HOME_SCREEN),
   }));
 };

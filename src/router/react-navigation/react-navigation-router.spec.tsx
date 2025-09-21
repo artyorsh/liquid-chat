@@ -24,9 +24,9 @@ describe('ReactNavigationRouter', () => {
     router = new ReactNavigationRouter(logger, StackRouteFactory({
       '/': () => React.createElement(View, { testID: 'screen-root' }),
       '/home': () => React.createElement(View, { testID: 'screen-home' }),
-      '/welcome': () => React.createElement(View, { testID: 'screen-welcome' }),
-      '/login': () => React.createElement(View, { testID: 'screen-login' }),
-      '/register': () => React.createElement(View, { testID: 'screen-register' }),
+      '/auth': () => React.createElement(View, { testID: 'screen-welcome' }),
+      '/auth/login': () => React.createElement(View, { testID: 'screen-login' }),
+      '/auth/register': () => React.createElement(View, { testID: 'screen-register' }),
     }));
   });
 

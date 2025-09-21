@@ -8,7 +8,7 @@ import { ISessionService } from '../session';
 import { ILoginVM, Login } from './login.component';
 import { LoginVM } from './login.vm';
 
-export type ILoginRoute = '/login';
+export type ILoginRoute = '/auth/login';
 
 export const createLoginScreen = (context: ResolutionContext): React.FC => {
   return () => {

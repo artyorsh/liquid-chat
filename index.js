@@ -4,19 +4,13 @@ import { Container } from 'inversify';
 
 import '@/uilib';
 import { AIModule } from '@/ai';
-import { AuthModule } from '@/auth';
-import { I18nModule } from '@/i18n';
-import { HttpModule } from '@/http';
 import { ChatModule } from '@/chat';
-import { HomeScreenModule } from '@/home';
+import { I18nModule } from '@/i18n';
 import { LogModule } from '@/log';
 import { ModalModule } from '@/modal';
-import { PostsModule } from '@/posts';
 import { ProcessInfoModule } from '@/process-info';
-import { PushNotificationModule } from '@/push-notification';
 import { RouterModule } from '@/router';
 import { SplashScreenModule } from '@/splash';
-import { UserModule } from '@/user';
 
 import { App } from './src/app';
 
@@ -24,19 +18,13 @@ export const container = new Container();
 
 container.load(
   AIModule,
-  AuthModule,
-  I18nModule,
   ChatModule,
-  HttpModule,
   LogModule,
+  I18nModule,
   RouterModule,
   ProcessInfoModule,
-  PushNotificationModule,
   ModalModule,
-  UserModule,
-  PostsModule,
   SplashScreenModule,
-  HomeScreenModule,
 );
 
 registerRootComponent(() => {

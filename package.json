@@ -14,15 +14,20 @@
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.1",
     "@expo/vector-icons": "^15.0.3",
+    "@faker-js/faker": "^10.0.0",
     "@formatjs/intl-locale": "^4.2.11",
     "@formatjs/intl-pluralrules": "^5.4.4",
     "@lingui/core": "^6.0.0",
     "@lingui/react": "^6.0.0",
+    "@react-native-ai/apple": "^0.9.0",
+    "@react-native-ai/mlc": "^0.9.0",
     "@react-native-firebase/app": "^23.0.0",
     "@react-native-firebase/messaging": "^23.0.0",
     "@react-navigation/native": "^7.1.0",
     "@react-navigation/native-stack": "^7.3.0",
     "@sentry/react-native": "~7.11.0",
+    "ai": "^5.0.48",
+    "core-js": "~3.24.0",
     "expo": "~55.0.19",
     "expo-application": "~55.0.14",
     "expo-battery": "~55.0.13",
@@ -30,7 +35,9 @@
     "expo-constants": "~55.0.15",
     "expo-dev-client": "~55.0.30",
     "expo-device": "~55.0.15",
+    "expo-file-system": "~55.0.17",
     "expo-font": "~55.0.6",
+    "expo-glass-effect": "^0.1.4",
     "expo-image": "~55.0.9",
     "expo-localization": "~55.0.13",
     "expo-network": "~55.0.13",
@@ -39,13 +46,21 @@
     "expo-updates": "~55.0.21",
     "inversify": "^8.1.0",
     "mobx": "^6.13.0",
+    "mobx-react": "^9.2.0",
     "mobx-react-lite": "^4.1.1",
     "react": "19.2.0",
     "react-native": "0.83.6",
+    "react-native-gifted-chat": "^2.8.1",
+    "react-native-keyboard-controller": "1.18.5",
+    "react-native-mmkv": "^3.3.3",
     "react-native-nitro-modules": "^0.35.6",
+    "react-native-reanimated": "~4.1.0",
     "react-native-safe-area-context": "~5.6.2",
     "react-native-screens": "~4.23.0",
-    "react-native-unistyles": "^3.2.4"
+    "react-native-unistyles": "^3.2.4",
+    "react-native-worklets": "0.5.1",
+    "zocker": "^3.0.0",
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@babel/core": "^7.25.0",
@@ -83,5 +98,10 @@
     "react-test-renderer": "19.2.0",
     "ts-jest": "^29.3.1",
     "typescript": "~5.9.2"
+  },
+  "expo": {
+    "install": {
+      "exclude": ["@sentry/react-native"]
+    }
   }
 }

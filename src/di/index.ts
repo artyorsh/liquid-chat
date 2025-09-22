@@ -1,5 +1,6 @@
 export const AppModule = {
   /* Services */
+  AI: Symbol.for('AI'),
   HTTP: Symbol.for('HttpClient'),
   I18N: Symbol.for('I18nService'),
   LOG: Symbol.for('LogService'),
@@ -20,4 +21,6 @@ export const AppModule = {
   LOGIN_SCREEN: Symbol.for('LoginScreen'),
   REGISTER_SCREEN: Symbol.for('RegisterScreen'),
   HOME_SCREEN: Symbol.for('HomeScreen'),
+  CHAT_GROUPS_SCREEN: Symbol.for('ChatGroupsScreen'),
+  CHAT_SCREEN: Symbol.for('ChatScreen'),
 };

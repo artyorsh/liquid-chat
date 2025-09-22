@@ -1,10 +1,13 @@
+import 'core-js/proposals/reflect-metadata';
 import registerRootComponent from 'expo/src/launch/registerRootComponent';
 import { Container } from 'inversify';
 
 import '@/uilib';
+import { AIModule } from '@/ai';
 import { AuthModule } from '@/auth';
 import { I18nModule } from '@/i18n';
 import { HttpModule } from '@/http';
+import { ChatModule } from '@/chat';
 import { HomeScreenModule } from '@/home';
 import { LogModule } from '@/log';
 import { ModalModule } from '@/modal';
@@ -20,8 +23,10 @@ import { App } from './src/app';
 export const container = new Container();
 
 container.load(
+  AIModule,
   AuthModule,
   I18nModule,
+  ChatModule,
   HttpModule,
   LogModule,
   RouterModule,

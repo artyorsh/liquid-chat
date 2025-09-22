@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "expo-template",
+      "name": "liquid-chat",
       "dependencies": {
         "@expo-google-fonts/inter": "^0.4.1",
         "@expo/vector-icons": "^15.0.3",

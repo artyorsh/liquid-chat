@@ -17,7 +17,7 @@ describe('Splash', () => {
       backgroundColor: () => '#000000',
       imageWidth: 100,
       task: {
-        run: jest.fn(() => Promise.resolve(['/home', {}])),
+        run: jest.fn(() => Promise.resolve(['/chats', {}])),
       },
       animation: {
         playTillIntermediate: jest.fn(() => Promise.resolve()),
@@ -37,7 +37,7 @@ describe('Splash', () => {
     render(<Splash vm={vm} />);
 
     await waitFor(() => {
-      return expect(router.replace).toHaveBeenCalledWith('/home', {});
+      return expect(router.replace).toHaveBeenCalledWith('/chats', {});
     });
   });
 });

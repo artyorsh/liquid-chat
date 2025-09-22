@@ -4,16 +4,12 @@ import { StackTreeFactory } from './react-navigation/stack-tree-factory';
 import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
-import { IAuthRoute } from '@/auth';
 import { IChatRoute } from '@/chat';
-import { IHomeRoute } from '@/home';
 import { ILogger, ILogService } from '@/log';
 import { ISplashRoute } from '@/splash';
 
 export type IRoute =
   | ISplashRoute
-  | IAuthRoute
-  | IHomeRoute
   | IChatRoute;
 
 export type IRouteParams = Record<string, any>;
@@ -47,10 +43,6 @@ const createRouter = (context: ResolutionContext): IRouter => {
 
   return new ReactNavigationRouter(logger, StackTreeFactory(() => ({
     '/': context.get<FC>(AppModule.SPLASH_SCREEN),
-    '/auth': context.get<FC>(AppModule.WELCOME_SCREEN),
-    '/auth/login': context.get<FC>(AppModule.LOGIN_SCREEN),
-    '/auth/register': context.get<FC>(AppModule.REGISTER_SCREEN),
-    '/home': context.get<FC>(AppModule.HOME_SCREEN),
     '/chats': context.get(AppModule.CHAT_GROUPS_SCREEN),
     '/chats/:id': context.get(AppModule.CHAT_SCREEN),
   })));

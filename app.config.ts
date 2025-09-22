@@ -1,6 +1,6 @@
 import { ConfigContext, ExpoConfig } from 'expo/config';
 
-const projectId: string = '9fe3a870-cac3-4d43-a6a3-a291cd5fb90c';
+const projectId: string = 'ce29bb1e-6085-47cc-a5a2-061d66dbcdf3';
 
 /**
  * Font families as they stored in node_modules/@expo-google-fonts dir.
@@ -15,7 +15,7 @@ const fontFamilies: string[] = [
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: process.env.APP_NAME,
-  slug: 'rnapp',
+  slug: 'liquid-chat',
   newArchEnabled: true,
   icon: './assets/images/ic-launcher.png',
   android: {
@@ -78,7 +78,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-splash-screen',
       {
-        'backgroundColor': '#F5F5F5', // uilib > colors.background
+        'backgroundColor': '#212121', // uilib > colors.background
         'image': './assets/images/ic-splash.png', // no-image
         'dark': {
           'backgroundColor': '#212121',

@@ -1,9 +1,15 @@
-# expo-template
+# LiquidChat
 
-[![Validate](https://github.com/artyorsh/expo-template/actions/workflows/validate.yml/badge.svg?event=push&branch=main)](https://github.com/artyorsh/expo-template/actions?query=branch%3Amain+event%3Apush)
-[![Build](https://github.com/artyorsh/expo-template/actions/workflows/build.yml/badge.svg?event=schedule&branch=main)](https://github.com/artyorsh/expo-template/actions?query=branch%3Amain+event%3Aschedule)
+[![Validate](https://github.com/artyorsh/liquid-chat/actions/workflows/validate.yml/badge.svg?event=push&branch=main)](https://github.com/artyorsh/liquid-chat/actions?query=branch%3Amain+event%3Apush)
+[![Build](https://github.com/artyorsh/liquid-chat/actions/workflows/build.yml/badge.svg?event=schedule&branch=main)](https://github.com/artyorsh/liquid-chat/actions?query=branch%3Amain+event%3Aschedule)
 
-React Native template with built-in modules, automation workflows and customisation options.
+## Description
+
+LiquidChat - a showcase of on-device AI capabilities using Apple Foundation Models, MLC LLM Engine and Vercel AI SDK.
+
+[Demo](./screenshots/demo.gif).
+
+<img src="./screenshots/preview.png" />
 
 ## Stack
 
@@ -11,6 +17,7 @@ React Native template with built-in modules, automation workflows and customisat
 - [![react-native](https://img.shields.io/badge/react--native-0.81-blue)](https://github.com/facebook/react-native/releases)
 - [![react-navigation](https://img.shields.io/badge/react--navigation-7.0-blue)](https://github.com/react-navigation/react-navigation/releases)
 - [![react-native-unistyles](https://img.shields.io/badge/react--native--unistyles-3.0-blue)](https://github.com/vitalets/react-native-unistyles/releases)
+- [![react-native-ai](https://img.shields.io/badge/react--native--ai-0.9-blue)](https://github.com/callstackincubator/ai/releases)
 - [![mobx-react](https://img.shields.io/badge/mobx--react-9.2-blue)](https://github.com/mobxjs/mobx/releases)
 - [![inversifyjs](https://img.shields.io/badge/inversifyjs-7-blue)](https://github.com/inversify/InversifyJS/releases)
 - [![jest](https://img.shields.io/badge/jest-29.7-blue)](https://github.com/jestjs/jest/releases)
@@ -20,15 +27,16 @@ React Native template with built-in modules, automation workflows and customisat
 
 ## Features
 
-- Splash Screen Animation, fully compatible with expo-splash-screen.
-- Authentication flows via [NestJS Authentication Server](https://github.com/artyorsh/nestjs-simple-auth).
-- Push Notifications via [Firebase](https://rnfirebase.io/messaging/usage#what-does-it-do).
-- Light and Dark themes with [flexible customization](https://github.com/artyorsh/expo-template/wiki/Branding).
-- Crash reporting with [Sentry](https://sentry.io).
-- Remote logging with [Grafana](https://github.com/artyorsh/grafana-mobile-o11y).
-- CI/CD with GitHub Actions and [EAS](https://expo.dev/eas).
-- Modularized architecture with [Dependency Injection](https://inversify.io).
-- PR reviews with [Claude](https://github.com/anthropics/claude-code-action#claude-code-action).
+- On-device LLMs via Apple Foundation Models or MLC LLM Engine.
+- AI-generated chat topics and group conversations.
+- Light and Dark themes with flexible customization.
+- CI/CD with GitHub Actions and EAS.
+- Modularized architecture with Dependency Injection.
+
+## Requirements
+
+- For Apple Foundation Models, MacOS 26 with Xcode 26 are required.
+- No above restrictions for MLC models. However, [testing is limited](#running).
 
 ## Setup
 
@@ -40,6 +48,7 @@ bun i
 
 ```bash
 cp .env.example .env
+# (Optionally) update the EXPO_PUBLIC_AI_FALLBACK_MODEL
 ```
 
 ## Running
@@ -50,14 +59,26 @@ Start Metro bundler and follow the instructions in terminal to run the app.
 bun run start
 ```
 
-## Documentation
+### Android
 
-See [docs](./docs/readme.md).
+Pre-built MLC models aren't available for Android making the platform not testable at the moment.
+Follow [callstackincubator/ai](https://github.com/callstackincubator/ai?tab=readme-ov-file#mlc-engine-experimental) for updates.
 
-## Example apps
+### iOS
 
-- [Schiffradar](https://github.com/artyorsh/schiffradar)
-- [LiquidChat](https://github.com/artyorsh/liquid-chat)
+MLC models require a physical device, making them not testable on Simulator.
+As a workaround, it's possible to run on Mac or a physical device.
+
+**Mac / Physical device**:
+- Build Xcode project: `npx expo prebuild` > `open ios/liquidchat.xcworkspace`
+- Adjust Signing & Capabilities with your Personal Team
+
+**Simulator**:
+- Remove MLC deps: `bun rm @react-native-ai/mlc` > `npx expo prebuild --clean` > then adjust the [ai/index](src/ai/index.ts) to always return AppleAIProvider.
+
+## Other apps
+
+[Schiffradar](https://github.com/artyorsh/schiffradar)
 
 ## Author
 

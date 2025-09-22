@@ -34,6 +34,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: process.env.BUNDLE_IDENTIFIER,
     entitlements: {
       'aps-environment': process.env.NOTIFICATIONS_IOS_APS_ENVIRONMENT,
+      'com.apple.developer.kernel.increased-memory-limit': true,
     },
     googleServicesFile: process.env.GOOGLE_SERVICES_FILE_IOS ?? './.firebase/GoogleService-Info.plist',
     infoPlist: {

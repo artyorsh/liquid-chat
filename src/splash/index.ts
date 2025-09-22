@@ -4,11 +4,9 @@ import { ContainerModule, ResolutionContext } from 'inversify';
 import { AppModule } from '@/di';
 import { IRouter } from '@/router';
 
-import { ISessionService } from '../auth/session';
 import { ISplashVM, Splash } from './splash.component';
-import { IExpoSplashConfig, ISplashAnimation, ISplashScreenTask, SplashVM } from './splash.vm';
+import { IExpoSplashConfig, ISplashAnimation, SplashVM } from './splash.vm';
 import { SplashAnimation } from './splash-animation';
-import { SessionRestoreTask } from './tasks/session-restore-task';
 
 export type ISplashRoute = '/';
 
@@ -38,12 +36,9 @@ const createSplashViewModel = (context: ResolutionContext): ISplashVM => {
     duration: 400,
   });
 
-  const sessionService: ISessionService = context.get(AppModule.SESSION);
-  const sessionRestoreTask: ISplashScreenTask = new SessionRestoreTask(sessionService);
-
   return new SplashVM(router, {
     ...expoSplashConfig,
-    task: sessionRestoreTask,
+    task: { run: () => Promise.resolve(['/chats', {}]) },
     animation: animation,
   });
 };

@@ -92,7 +92,7 @@ export interface IFontFamilyService {
  * @see https://colors.eva.design
  */
 const palette = {
-  basic100: '#F5F5F5',
+  basic100: '#FFFFFF',
   basic200: '#EEEEEE',
   basic300: '#E0E0E0',
   basic400: '#BDBDBD',
@@ -102,23 +102,23 @@ const palette = {
   basic800: '#424242',
   basic900: '#212121',
 
-  primary100: '#F0F8EC',
-  primary200: '#E0F2DA',
-  primary300: '#BED8B8',
-  primary400: '#93B191',
-  primary500: '#5F7D5F',
-  primary600: '#456B48',
-  primary700: '#2F5937',
-  primary800: '#1E4829',
-  primary900: '#123B20',
+  primary100: '#D1C4E9',
+  primary200: '#B39DDB',
+  primary300: '#9575CD',
+  primary400: '#7E57C2',
+  primary500: '#673AB7',
+  primary600: '#5E35B1',
+  primary700: '#512DA8',
+  primary800: '#4527A0',
+  primary900: '#311B92',
 };
 
 const lightTheme = {
-  radius: 12,
+  radius: 16,
   gap: (v: number): number => v * 4,
   colors: {
     background: palette.basic100,
-    onBackground: palette.basic900,
+    onBackground: palette.basic100,
     disabled: palette.basic300,
     onDisabled: palette.basic600,
     primary: palette.primary500,
@@ -126,7 +126,7 @@ const lightTheme = {
     onPrimary: palette.basic100,
     surface: palette.basic100,
     surfaceVariant: palette.basic200,
-    hint: palette.basic600,
+    hint: palette.basic300,
     outline: palette.basic300,
     overlay: 'rgba(0, 0, 0, 0.5)',
   } as ThemeColors,
@@ -138,12 +138,12 @@ const lightTheme = {
     }),
     subheading: (fontScale: number) => ({
       fontFamily: fontFamilyService.getFontName('Inter/500Medium'),
-      fontSize: fontScale * 20,
-      lineHeight: 30,
+      fontSize: fontScale * 16,
+      lineHeight: 24,
     }),
     paragraph: (fontScale: number) => ({
       fontFamily: fontFamilyService.getFontName('Inter/400Regular'),
-      fontSize: fontScale * 15,
+      fontSize: fontScale * 14,
       lineHeight: 20,
     }),
     control: (fontScale: number) => ({
@@ -157,8 +157,8 @@ const lightTheme = {
 const darkTheme = {
   ...lightTheme,
   colors: {
+    ...lightTheme.colors,
     background: palette.basic900,
-    onBackground: palette.basic100,
     disabled: palette.basic700,
     onDisabled: palette.basic400,
     primary: palette.primary500,
@@ -166,7 +166,6 @@ const darkTheme = {
     onPrimary: palette.basic100,
     surface: palette.basic900,
     surfaceVariant: palette.basic800,
-    hint: palette.basic400,
     outline: palette.basic700,
   } as ThemeColors,
 };
@@ -176,7 +175,7 @@ const darkTheme = {
  */
 const config = {
   themes: {
-    light: lightTheme,
+    // light: lightTheme,
     dark: darkTheme,
   },
   breakpoints: {
@@ -187,6 +186,6 @@ const config = {
 StyleSheet.configure({
   ...config,
   settings: {
-    adaptiveThemes: true,
+    adaptiveThemes: false,
   },
 });

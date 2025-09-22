@@ -3,8 +3,10 @@ import registerRootComponent from 'expo/src/launch/registerRootComponent';
 import { Container } from 'inversify';
 
 import '@/uilib';
+import { AIModule } from '@/ai';
 import { AuthModule } from '@/auth';
 import { HttpModule } from '@/http';
+import { ChatModule } from '@/chat';
 import { HomeScreenModule } from '@/home';
 import { LogModule } from '@/log';
 import { ModalModule } from '@/modal';
@@ -20,7 +22,9 @@ import { App } from './src/app';
 export const container = new Container();
 
 container.load(
+  AIModule,
   AuthModule,
+  ChatModule,
   HttpModule,
   LogModule,
   RouterModule,

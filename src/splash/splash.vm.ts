@@ -1,12 +1,16 @@
 import { ImageSourcePropType, ImageStyle, ViewStyle } from 'react-native';
 import { UnistylesTheme } from 'react-native-unistyles';
 
-import { INavigationLifecycleListener, IRouter } from '@/router';
+import { INavigationLifecycleListener, IRoute, IRouter } from '@/router';
 
 import { ISplashVM } from './splash.component';
 
 export interface ISplashScreenTask {
-  run(): Promise<void>;
+  /**
+   * Performs asynchronous operations required for the initial start.
+   * @returns initial route and params to navigate.
+   */
+  run(): Promise<[IRoute, object]>;
 }
 
 export interface ISplashAnimation {
@@ -54,14 +58,10 @@ export class SplashVM implements ISplashVM, INavigationLifecycleListener {
   public onFocus = async (): Promise<void> => {
     await this.animation.playTillIntermediate();
 
-    try {
-      await this.task.run();
-      await this.animation.finish();
-      this.router.replace('/home');
-    } catch {
-      await this.animation.finish();
-      this.router.replace('/auth');
-    }
+    const [route, params] = await this.task.run();
+    await this.animation.finish();
+
+    this.router.replace(route, params);
   };
 
   public onBlur = (): void => {

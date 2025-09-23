@@ -17,7 +17,7 @@ describe('Splash', () => {
       backgroundColor: () => '#000000',
       imageWidth: 100,
       task: {
-        run: jest.fn(() => Promise.resolve()),
+        run: jest.fn(() => Promise.resolve(['/home', {}])),
       },
       animation: {
         playTillIntermediate: jest.fn(() => Promise.resolve()),
@@ -31,31 +31,13 @@ describe('Splash', () => {
     jest.clearAllMocks();
   });
 
-  it('should navigate to home screen if task resolves', async () => {
-    config.task.run = jest.fn(() => Promise.resolve());
+  it('should navigate to resolved route', async () => {
     const vm: ISplashVM = new SplashVM(router, config);
 
     render(<Splash vm={vm} />);
 
     await waitFor(() => {
-      return expect(router.replace).toHaveBeenCalledWith('/home');
-    });
-
-    render(<Splash vm={vm} />);
-
-    await waitFor(() => {
-      return expect(router.replace).toHaveBeenCalledWith('/home');
-    });
-  });
-
-  it('should navigate to welcome screen if session is not restored', async () => {
-    config.task.run = jest.fn(() => Promise.reject());
-    const vm: ISplashVM = new SplashVM(router, config);
-
-    render(<Splash vm={vm} />);
-
-    await waitFor(() => {
-      return expect(router.replace).toHaveBeenCalledWith('/auth');
+      return expect(router.replace).toHaveBeenCalledWith('/home', {});
     });
   });
 });

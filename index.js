@@ -4,6 +4,7 @@ import { Container } from 'inversify';
 
 import '@/uilib';
 import { AuthModule } from '@/auth';
+import { HttpModule } from '@/http';
 import { HomeScreenModule } from '@/home';
 import { LogModule } from '@/log';
 import { ModalModule } from '@/modal';
@@ -20,6 +21,7 @@ export const container = new Container();
 
 container.load(
   AuthModule,
+  HttpModule,
   LogModule,
   RouterModule,
   ProcessInfoModule,

@@ -28,6 +28,7 @@ describe('SessionService', () => {
 
   beforeEach(() => {
     authenticationProvider = {
+      getName: jest.fn(() => 'local'),
       login: jest.fn(() => Promise.resolve(createToken(TWO_MINUTES_MS))),
       register: jest.fn(() => Promise.resolve(createToken(TWO_MINUTES_MS))),
       refresh: jest.fn(() => Promise.resolve(createToken(TWO_MINUTES_MS))),

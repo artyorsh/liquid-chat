@@ -12,7 +12,8 @@ export interface IAuthenticationToken<Payload> {
 
 export type AnyAuthenticationToken = IAuthenticationToken<{}>;
 
-export interface IAuthenticationProvider<Token extends AnyAuthenticationToken> {
+export interface IAuthenticationProvider<Token extends AnyAuthenticationToken = AnyAuthenticationToken> {
+  getName(): string;
   login(email: string, password: string): Promise<Token>;
   register(email: string, password: string): Promise<Token>;
   refresh(token: Token): Promise<Token>;
@@ -56,7 +57,7 @@ export class SessionService implements ISessionService {
     const session: ISession = this.createSession(token);
     await this.initializer.initialize(session);
 
-    this.options.logger?.info(`login user ${session.userId}`);
+    this.options.logger?.info(`login user ${session.userId} via ${this.options.authenticationProvider.getName()}`);
 
     return session;
   };
@@ -68,7 +69,7 @@ export class SessionService implements ISessionService {
     const session: ISession = this.createSession(token);
     await this.initializer.initialize(session);
 
-    this.options.logger?.info(`register user ${session.userId}`);
+    this.options.logger?.info(`register user ${session.userId} via ${this.options.authenticationProvider.getName()}`);
 
     return session;
   };
@@ -90,7 +91,7 @@ export class SessionService implements ISessionService {
     const expiresInMinutes: number = this.getExpiresInMinutes(token);
     await this.initializer.initialize(session);
 
-    this.options.logger?.info(`refresh for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
+    this.options.logger?.info(`refresh for user ${session.userId} via ${this.options.authenticationProvider.getName()}, expires in ${expiresInMinutes} minutes`);
 
     return session;
   };

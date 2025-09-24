@@ -1,10 +1,9 @@
 import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
-import { IHttpClient } from '@/http';
 import { ILogger, ILogService } from '@/log';
 
-import { HttpAuthenticationProvider } from './auth-provider/http-auth-provider';
+import { MockAuthenticationProvider } from './auth-provider/mock-auth-provider';
 import { ISessionModule } from './initialzier';
 import { ParallelModuleInitializer } from './initialzier/parallel-module-initializer';
 import { SecureAuthStorage } from './secure-auth-storage';
@@ -17,7 +16,7 @@ export interface ISession {
 
 export interface ISessionService {
   login(email: string, password: string): Promise<ISession>;
-  register(email: string, password: string): Promise<ISession>;
+  register(name: string, email: string, password: string): Promise<ISession>;
   refresh(): Promise<ISession>;
   restore(): Promise<ISession>;
   logout(): Promise<void>;
@@ -48,14 +47,15 @@ export const createSessionService = (context: ResolutionContext): ISessionServic
   });
 };
 
-const createAuthenticationProvider = (context: ResolutionContext): IAuthenticationProvider => {
-  const httpClient: IHttpClient = context.get(AppModule.HTTP);
+const createAuthenticationProvider = (_context: ResolutionContext): IAuthenticationProvider => {
+  const tokenTtlMinutes: number = Number(process.env.EXPO_PUBLIC_AUTH_TOKEN_REFRESH_THRESHOLD_MINUTES) + 1;
 
-  // const tokenTtlMinutes: number = Number(process.env.EXPO_PUBLIC_AUTH_TOKEN_REFRESH_THRESHOLD_MINUTES) + 1;
-  // return new MockAuthenticationProvider({
-  //   resolveMs: 1000,
-  //   tokenTtl: tokenTtlMinutes * 60 * 1000,
-  // });
+  return new MockAuthenticationProvider({
+    resolveMs: 1000,
+    tokenTtl: tokenTtlMinutes * 60 * 1000,
+  });
 
-  return new HttpAuthenticationProvider(httpClient);
+  // const httpClient: IHttpClient = context.get(AppModule.HTTP);
+
+  // return new HttpAuthenticationProvider(httpClient);
 };

@@ -60,7 +60,7 @@ describe('SessionService', () => {
   });
 
   it('should register', async () => {
-    await expect(sessionService.register('test@test.com', 'password'))
+    await expect(sessionService.register('User', 'test@test.com', 'password'))
       .resolves
       .toEqual({ userId: '1', secret: '123' });
   });
@@ -149,7 +149,7 @@ describe('SessionService', () => {
   });
 
   it('should initialize modules on register', async () => {
-    await sessionService.register('test@test.com', 'password');
+    await sessionService.register('User', 'test@test.com', 'password');
 
     expect(sessionInitializer.initialize)
       .toHaveBeenCalledWith({ userId: '1', secret: '123' });

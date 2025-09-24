@@ -13,7 +13,7 @@ export class RegisterVM implements IRegisterVM {
 
   public submit = async (values: IRegisterFormValues): Promise<void> => {
     try {
-      await this.sessionService.register(values.email, values.password);
+      await this.sessionService.register(values.name, values.email, values.password);
       this.router.replace('/home');
     } catch {
       // no-op

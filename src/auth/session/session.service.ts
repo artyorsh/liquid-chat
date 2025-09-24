@@ -15,7 +15,7 @@ export type AnyAuthenticationToken = IAuthenticationToken<{}>;
 export interface IAuthenticationProvider<Token extends AnyAuthenticationToken = AnyAuthenticationToken> {
   getName(): string;
   login(email: string, password: string): Promise<Token>;
-  register(email: string, password: string): Promise<Token>;
+  register(name: string, email: string, password: string): Promise<Token>;
   refresh(token: Token): Promise<Token>;
 }
 
@@ -62,8 +62,8 @@ export class SessionService implements ISessionService {
     return session;
   };
 
-  public register = async (email: string, password: string): Promise<ISession> => {
-    const token = await this.options.authenticationProvider.register(email, password);
+  public register = async (name: string, email: string, password: string): Promise<ISession> => {
+    const token = await this.options.authenticationProvider.register(name, email, password);
     await this.options.authenticationStorage.setToken(token);
 
     const session: ISession = this.createSession(token);

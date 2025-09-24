@@ -24,7 +24,7 @@ export class MockAuthenticationProvider implements IAuthenticationProvider<IMock
     return this.createSampleToken();
   }
 
-  public async register(_email: string, _password: string): Promise<IMockAuthenticationToken> {
+  public async register(_name: string, _email: string, _password: string): Promise<IMockAuthenticationToken> {
     await this.sleep(this.config.resolveMs);
 
     return this.createSampleToken();

@@ -9,12 +9,10 @@ export class RemoteUserDatasource implements IUserDatasource {
   }
 
   public async getUser(secret: string): Promise<IUser> {
-    const user: IUser = await this.httpClient.get(`/auth/user`, {
+    return this.httpClient.get(`/auth/user`, {
       headers: {
         'Authorization': `Bearer ${secret}`,
       },
     });
-
-    return { ...user, name: 'John Doe' };
   }
 }

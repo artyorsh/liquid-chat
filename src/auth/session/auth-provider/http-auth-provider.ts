@@ -29,8 +29,8 @@ export class HttpAuthenticationProvider implements IAuthenticationProvider<HttpA
     return this.createToken(response);
   }
 
-  public async register(email: string, password: string): Promise<HttpAuthToken> {
-    const body: string = JSON.stringify({ email, password });
+  public async register(name: string, email: string, password: string): Promise<HttpAuthToken> {
+    const body: string = JSON.stringify({ name, email, password });
     const response: IAuthResponse = await this.httpClient.post('/auth/register', { body });
 
     return this.createToken(response);

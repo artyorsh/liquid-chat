@@ -29,6 +29,7 @@ describe('Register Component', () => {
   it('should render without initial values', () => {
     const api = render(<Register vm={vm} />);
 
+    expect(api.getByTestId('name-input').props.value).toBe('');
     expect(api.getByTestId('email-input').props.value).toBe('');
     expect(api.getByTestId('password-input').props.value).toBe('');
   });
@@ -36,12 +37,13 @@ describe('Register Component', () => {
   it('should call submit with correct values', () => {
     const api = render(<Register vm={vm} />);
 
+    fireEvent.changeText(api.getByTestId('name-input'), 'user');
     fireEvent.changeText(api.getByTestId('email-input'), 'test2@test.com');
     fireEvent.changeText(api.getByTestId('password-input'), 'password2');
 
     fireEvent.press(api.getByTestId('submit-button'));
 
-    expect(vm.submit).toHaveBeenCalledWith({ email: 'test2@test.com', password: 'password2' });
+    expect(vm.submit).toHaveBeenCalledWith({ name: 'user', email: 'test2@test.com', password: 'password2' });
   });
 });
 
@@ -61,7 +63,7 @@ describe('Register VM', () => {
   it('should navigate to home screen if registration is successful', async () => {
     const vm: IRegisterVM = new RegisterVM(router, sessionService);
 
-    vm.submit({ email: 'test@test.com', password: 'password' });
+    vm.submit({ name: 'User', email: 'test@test.com', password: 'password' });
 
     await waitFor(() => {
       expect(router.replace).toHaveBeenCalledWith('/home');
@@ -72,7 +74,7 @@ describe('Register VM', () => {
     sessionService.register = jest.fn(() => Promise.reject());
     const vm: IRegisterVM = new RegisterVM(router, sessionService);
 
-    vm.submit({ email: 'test@test.com', password: 'password' });
+    vm.submit({ name: 'User', email: 'test@test.com', password: 'password' });
 
     await waitFor(() => {
       expect(router.replace).not.toHaveBeenCalled();

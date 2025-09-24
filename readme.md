@@ -21,14 +21,14 @@ React Native template with built-in modules, automation workflows and customisat
 ## Features
 
 - Splash Screen Animation, fully compatible with expo-splash-screen.
-- Authentication flows via [NestJS Authentication Server](./docs/authentication-server.md).
-- Push Notifications with permission request.
+- Authentication flows via [NestJS Authentication Server](https://github.com/artyorsh/nestjs-simple-auth).
+- Push Notifications via [Firebase](https://rnfirebase.io/messaging/usage#what-does-it-do).
 - Light and Dark themes with [flexible customization](https://github.com/artyorsh/expo-template/wiki/Branding).
 - Crash reporting with [Sentry](https://sentry.io).
 - Remote logging with [Grafana](https://github.com/artyorsh/grafana-mobile-observability).
-- CI/CD with GitHub Actions and [EAS](https://github.com/artyorsh/expo-template/wiki/Enabling-EAS).
-- Modularized architecture with Dependency Injection.
-- PR reviews with [Claude](./docs/claude-code.md).
+- CI/CD with GitHub Actions and [EAS](https://expo.dev/eas).
+- Modularized architecture with [Dependency Injection](https://inversify.io).
+- PR reviews with [Claude](https://github.com/anthropics/claude-code-action#claude-code-action).
 
 ## Setup
 

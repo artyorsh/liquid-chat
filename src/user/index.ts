@@ -3,8 +3,8 @@ import { ContainerModule, ResolutionContext } from 'inversify';
 import { AppModule } from '@/di';
 import { ILogService } from '@/log';
 
-import { IUserRepository, UserService } from './user.service';
-import { UserApi } from './user-api';
+import { MockUserDatasource } from './datasource/mock-datasource';
+import { IUserDatasource, UserService } from './user.service';
 
 export interface IUser {
   id: string;
@@ -23,7 +23,14 @@ export const UserModule = new ContainerModule(({ bind }) => {
 
 const createUserService = (context: ResolutionContext): IUserService => {
   const logService: ILogService = context.get(AppModule.LOG);
-  const userApi: IUserRepository = new UserApi();
+  const dataSource: IUserDatasource = createDatasource(context);
 
-  return new UserService(userApi, logService);
+  return new UserService(dataSource, logService);
+};
+
+const createDatasource = (_context: ResolutionContext): IUserDatasource => {
+  // const httpClient: IHttpClient = context.get(AppModule.HTTP);
+
+  // return new RemoteUserDatasource(httpClient);
+  return new MockUserDatasource();
 };

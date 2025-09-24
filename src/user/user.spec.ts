@@ -1,7 +1,7 @@
 import { ILogService } from '@/log';
 
 import { IUserService } from '.';
-import { IUserRepository, UserService } from './user.service';
+import { IUserDatasource, UserService } from './user.service';
 
 jest.unmock('./user.service');
 
@@ -11,7 +11,7 @@ describe('UserService', () => {
   let logService: ILogService;
 
   beforeEach(() => {
-    const api: IUserRepository = {
+    const api: IUserDatasource = {
       getUser: jest.fn(() => Promise.resolve({ id: '1', name: 'John Doe' })),
     };
 

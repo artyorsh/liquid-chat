@@ -4,8 +4,8 @@ import { ILogService } from '@/log';
 
 import { IUser, IUserService } from '.';
 
-export interface IUserRepository {
-  getUser(userId: string): Promise<IUser>;
+export interface IUserDatasource {
+  getUser(secret: string): Promise<IUser>;
 }
 
 export class UserService implements IUserService, ISessionModule {
@@ -14,24 +14,24 @@ export class UserService implements IUserService, ISessionModule {
 
   private user: IUser | null = null;
 
-  constructor(private userRepository: IUserRepository, private logger: ILogService) {}
+  constructor(private dataSource: IUserDatasource, private logger: ILogService) {}
 
-  public getUser = (): IUser => {
+  public getUser(): IUser {
     if (!this.user) {
       throw new Error('User not found. Was the session initialized?');
     }
 
     return this.user;
-  };
+  }
 
-  public initialize = async (session: ISession): Promise<void> => {
-    const user = await this.userRepository.getUser(session.userId);
+  public async initialize(session: ISession): Promise<void> {
+    const user = await this.dataSource.getUser(session.secret);
     this.user = user;
 
     this.logger.addLabel('user_id', user.id);
   };
 
-  public destroy = (): Promise<void> => {
+  public async destroy(): Promise<void> {
     this.user = null;
 
     return Promise.resolve();

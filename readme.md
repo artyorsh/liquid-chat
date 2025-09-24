@@ -21,7 +21,7 @@ React Native template with built-in modules, automation workflows and customisat
 ## Features
 
 - Splash Screen Animation, fully compatible with expo-splash-screen.
-- Authentication flows: login, registration, refresh and restore.
+- Authentication flows via [NestJS Authentication Server](./docs/authentication-server.md).
 - Push Notifications with permission request.
 - Light and Dark themes with [flexible customization](https://github.com/artyorsh/expo-template/wiki/Branding).
 - Crash reporting with [Sentry](https://sentry.io).

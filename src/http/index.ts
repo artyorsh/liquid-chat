@@ -1,9 +1,9 @@
-import { ContainerModule, ResolutionContext } from "inversify";
+import { ContainerModule, ResolutionContext } from 'inversify';
 
-import { AppModule } from "@/di";
-import { ILogService } from "@/log";
+import { AppModule } from '@/di';
+import { ILogService } from '@/log';
 
-import { FetchJsonClient } from "./fetch-json-client";
+import { FetchJsonClient } from './fetch-json-client';
 
 export type IReqestConfig = Omit<RequestInit, 'method'>;
 

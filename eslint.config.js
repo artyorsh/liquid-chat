@@ -201,6 +201,7 @@ module.exports = defineConfig([
       '@stylistic/space-in-parens': ['error', 'never'],
       '@stylistic/space-unary-ops': 'error',
       '@stylistic/type-annotation-spacing': 'error',
+      "@stylistic/quotes": ["error", "single"],
 
       'react/function-component-definition': [
         'error', {

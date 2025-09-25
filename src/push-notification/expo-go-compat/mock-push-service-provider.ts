@@ -7,7 +7,7 @@ export class MockPushServiceProvider implements IPushServiceProvider {
   }
 
   public getToken(): Promise<IPushNotificationToken> {
-    const message: string = "Can't get FCM or APNs token in Expo Go environment";
+    const message: string = 'Can\'t get FCM or APNs token in Expo Go environment';
 
     return Promise.resolve({ fcm: message, apns: message });
   }

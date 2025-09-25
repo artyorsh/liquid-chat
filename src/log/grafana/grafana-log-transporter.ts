@@ -37,7 +37,7 @@ export class GrafanaLogTransporter implements ILogTransporter {
       }),
     };
 
-    this.config.transport(`loki/api/v1/push`, request)
+    this.config.transport('loki/api/v1/push', request)
       .catch(error => console.error('Failed to send logs to Grafana:', error));
   };
 

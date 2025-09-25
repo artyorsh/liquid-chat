@@ -41,8 +41,6 @@ export const LogModule = new ContainerModule(({ bind }) => {
 });
 
 const createLogger = (context: ResolutionContext): ILogService => {
-  const grafanaAppId: string = `rnapp_${Platform.OS}_${process.env.EXPO_PUBLIC_ENV_NAME}`;
-
   const deviceName: string = Device.deviceName;
   const deviceModel: string = Device.modelName;
   const deviceBrand: string = Device.brand;
@@ -50,11 +48,13 @@ const createLogger = (context: ResolutionContext): ILogService => {
   const appVersion: string = `${Application.nativeApplicationVersion} (${Application.nativeBuildVersion})`;
 
   const transporters: ILogTransporter[] = createTransporters(context);
+  const flushInterval: number = parseInt(process.env.EXPO_PUBLIC_LOG_FLUSH_INTERVAL);
 
   return new LogService({
-    flushInterval: 10_000,
+    flushInterval: flushInterval,
     defaultLabels: {
-      app: grafanaAppId,
+      app: Application.applicationId,
+      os: Platform.OS,
       version: appVersion,
       runtime: `${deviceName}/${Platform.OS}/${systemVersion}/${deviceBrand}/${deviceModel}`,
     },

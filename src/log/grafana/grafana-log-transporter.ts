@@ -12,7 +12,7 @@ export class GrafanaLogTransporter implements ILogTransporter {
   }
 
   public transport = (tag: string, message: string, payload: ITransporterLogPayload): void => {
-    const timestampNs: number = Date.now() * 1000000;
+    const timestampNs: number = Date.now() * 1_000_000;
 
     fetch(`${this.options.hostUrl}/loki/api/v1/push`, {
       method: 'POST',

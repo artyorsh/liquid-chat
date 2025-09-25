@@ -25,7 +25,7 @@ React Native template with built-in modules, automation workflows and customisat
 - Push Notifications via [Firebase](https://rnfirebase.io/messaging/usage#what-does-it-do).
 - Light and Dark themes with [flexible customization](https://github.com/artyorsh/expo-template/wiki/Branding).
 - Crash reporting with [Sentry](https://sentry.io).
-- Remote logging with [Grafana](https://github.com/artyorsh/grafana-mobile-observability).
+- Remote logging with [Grafana](https://github.com/artyorsh/grafana-mobile-o11y).
 - CI/CD with GitHub Actions and [EAS](https://expo.dev/eas).
 - Modularized architecture with [Dependency Injection](https://inversify.io).
 - PR reviews with [Claude](https://github.com/anthropics/claude-code-action#claude-code-action).

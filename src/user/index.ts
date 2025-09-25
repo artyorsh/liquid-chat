@@ -1,7 +1,6 @@
 import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
-import { ILogService } from '@/log';
 
 import { MockUserDatasource } from './datasource/mock-datasource';
 import { IUserDatasource, UserService } from './user.service';
@@ -22,10 +21,9 @@ export const UserModule = new ContainerModule(({ bind }) => {
 });
 
 const createUserService = (context: ResolutionContext): IUserService => {
-  const logService: ILogService = context.get(AppModule.LOG);
   const dataSource: IUserDatasource = createDatasource(context);
 
-  return new UserService(dataSource, logService);
+  return new UserService(dataSource);
 };
 
 const createDatasource = (_context: ResolutionContext): IUserDatasource => {

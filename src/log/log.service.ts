@@ -3,7 +3,6 @@ import { ILogger, ILogLevel, ILogPayload, ILogService } from '.';
 export interface ILogServiceOptions {
   flushInterval?: number;
   transporters?: ILogTransporter[];
-  defaultLabels?: ILogPayload;
 }
 
 export type ITransporterLogPayload = ILogPayload & {
@@ -20,12 +19,8 @@ export class LogService implements ILogService {
 
   private transporters: ILogTransporter[] = [];
 
-  private defaultLabels: ILogPayload = {};
-  private customLabels: ILogPayload = {};
-
   constructor(options: ILogServiceOptions = {}) {
     this.transporters = options.transporters || [];
-    this.defaultLabels = options.defaultLabels || {};
 
     const flushInterval: number = options.flushInterval || 0;
 
@@ -44,23 +39,13 @@ export class LogService implements ILogService {
     };
   }
 
-  public addLabel = (key: string, value: string): void => {
-    this.customLabels[key] = value;
-  };
-
-  public removeLabel = (key: string): void => {
-    delete this.customLabels[key];
-  };
-
   public flush = (): void => {
     this.transporters.forEach(t => t.flush());
   };
 
   private log = (tag: string, message: string, level: ILogLevel, payload: ILogPayload = {}): void => {
     this.transporters.forEach(t => {
-      const labels = { ...this.customLabels, ...payload, ...this.defaultLabels, level };
-      t.transport(tag, message, labels);
+      t.transport(tag, message, { ...payload, level });
     });
   };
-
 }

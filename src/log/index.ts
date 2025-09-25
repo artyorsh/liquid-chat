@@ -1,6 +1,3 @@
-import { Platform } from 'react-native';
-import * as Application from 'expo-application';
-import * as Device from 'expo-device';
 import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
@@ -29,8 +26,6 @@ export interface ILogger {
 
 export interface ILogService {
   createLogger(tag: string): ILogger;
-  addLabel(key: string, value: string): void;
-  removeLabel(key: string): void;
   flush(): void;
 }
 
@@ -41,23 +36,11 @@ export const LogModule = new ContainerModule(({ bind }) => {
 });
 
 const createLogger = (context: ResolutionContext): ILogService => {
-  const deviceName: string = Device.deviceName;
-  const deviceModel: string = Device.modelName;
-  const deviceBrand: string = Device.brand;
-  const systemVersion: string = Device.osVersion;
-  const appVersion: string = `${Application.nativeApplicationVersion} (${Application.nativeBuildVersion})`;
-
   const transporters: ILogTransporter[] = createTransporters(context);
   const flushInterval: number = parseInt(process.env.EXPO_PUBLIC_LOG_FLUSH_INTERVAL);
 
   return new LogService({
     flushInterval: flushInterval,
-    defaultLabels: {
-      app: Application.applicationId,
-      os: Platform.OS,
-      version: appVersion,
-      runtime: `${deviceName}/${Platform.OS}/${systemVersion}/${deviceBrand}/${deviceModel}`,
-    },
     transporters: transporters,
   });
 };

@@ -10,12 +10,9 @@ jest.mock('./log.service', () => {
       error: jest.fn(m => console.error(m)),
     })),
     flush: jest.fn(),
-    addLabel: jest.fn(),
-    removeLabel: jest.fn(),
   };
 
   return {
     LogService: jest.fn().mockImplementation(() => logService),
   };
 });
-

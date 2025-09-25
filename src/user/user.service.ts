@@ -1,6 +1,5 @@
 import { ISession } from '@/auth/session';
 import { ISessionModule } from '@/auth/session/initialzier';
-import { ILogService } from '@/log';
 
 import { IUser, IUserService } from '.';
 
@@ -14,7 +13,7 @@ export class UserService implements IUserService, ISessionModule {
 
   private user: IUser | null = null;
 
-  constructor(private dataSource: IUserDatasource, private logger: ILogService) {}
+  constructor(private dataSource: IUserDatasource) {}
 
   public getUser(): IUser {
     if (!this.user) {
@@ -27,8 +26,6 @@ export class UserService implements IUserService, ISessionModule {
   public async initialize(session: ISession): Promise<void> {
     const user = await this.dataSource.getUser(session.secret);
     this.user = user;
-
-    this.logger.addLabel('user_id', user.id);
   };
 
   public async destroy(): Promise<void> {

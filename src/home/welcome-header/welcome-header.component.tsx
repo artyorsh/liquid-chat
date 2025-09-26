@@ -1,4 +1,6 @@
 import { StyleSheet, View, ViewProps } from 'react-native';
+import { observer } from 'mobx-react';
+import { i18n } from '@lingui/core';
 
 import { IconButton } from '@/uilib/icon-button.component';
 import { Text } from '@/uilib/text.component';
@@ -9,15 +11,23 @@ interface Props extends ViewProps {
 
 export interface IWelcomeHeaderVM {
   title: string;
+  unreadNotifications: number;
   viewNotifications(): void;
   logout(): void;
 }
 
-export const WelcomeHeader: React.FC<Props> = ({ vm, ...props }) => (
+export const WelcomeHeader: React.FC<Props> = observer(({ vm, ...props }) => (
   <View style={[styles.container, props.style]}>
-    <Text category='heading'>
-      {vm.title}
-    </Text>
+    <View>
+      <Text category='heading'>
+        {vm.title}
+      </Text>
+      <Text
+        type='hint'
+        category='paragraph'>
+        {i18n.t('home.welcome_header.unread_notifications', { count: vm.unreadNotifications })}
+      </Text>
+    </View>
     <View style={styles.actionsContainer}>
       <IconButton
         testID='notifications-button'
@@ -31,7 +41,7 @@ export const WelcomeHeader: React.FC<Props> = ({ vm, ...props }) => (
       />
     </View>
   </View>
-);
+));
 
 const styles = StyleSheet.create({
   container: {

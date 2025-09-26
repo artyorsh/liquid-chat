@@ -8,7 +8,6 @@ describe('Welcome Component', () => {
 
   beforeEach(() => {
     vm = {
-      title: 'Welcome',
       login: jest.fn(),
       register: jest.fn(),
     };

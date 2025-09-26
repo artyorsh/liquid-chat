@@ -20,7 +20,6 @@ describe('Login Component', () => {
 
   beforeEach(() => {
     vm = {
-      title: 'Login Title',
       initialValues: {
         email: '',
         password: '',

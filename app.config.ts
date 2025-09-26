@@ -74,6 +74,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         }),
       },
     ],
+    'expo-localization',
     [
       'expo-splash-screen',
       {

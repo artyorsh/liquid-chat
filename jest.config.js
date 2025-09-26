@@ -7,6 +7,9 @@ const tscPaths = Object.entries(compilerOptions.paths)
 
 module.exports = {
   preset: 'jest-expo',
+  setupFiles: [
+    '<rootDir>/src/i18n/jest-setup.ts',
+  ],
   setupFilesAfterEnv: [
     '@testing-library/jest-native/extend-expect',
     'react-native-unistyles/mocks',

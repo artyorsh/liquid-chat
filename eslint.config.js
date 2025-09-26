@@ -2,6 +2,7 @@ const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const reactNative = require('@react-native/eslint-plugin');
 const pluginJest = require('eslint-plugin-jest');
+const pluginLingui = require('eslint-plugin-lingui');
 const pluginPromise = require('eslint-plugin-promise');
 const simpleImportSort = require('eslint-plugin-simple-import-sort');
 const stylistic = require('@stylistic/eslint-plugin');
@@ -28,12 +29,16 @@ const stylistic = require('@stylistic/eslint-plugin');
  *  - jest/recommended
  *    @see https://github.com/jest-community/eslint-plugin-jest/blob/main/src/index.ts#L33
  *
+ *  - lingui/recommended
+ *    @see https://lingui.dev/ref/eslint-plugin#flat-config
+ *
  *  - simple-import-sort
  *    @see https://github.com/lydell/eslint-plugin-simple-import-sort
  */
 module.exports = defineConfig([
   expoConfig,
   pluginJest.configs['flat/recommended'],
+  pluginLingui.configs["flat/recommended"],
   pluginPromise.configs['flat/recommended'],
   {
     plugins: {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View, ViewProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
+import { i18n } from '@lingui/core';
 
 import { Button } from '@/uilib/button.component';
 import { Input } from '@/uilib/input.component';
@@ -30,7 +31,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
           testID='name-input'
           style={styles.input}
           value={name}
-          placeholder='Name'
+          placeholder={i18n.t('register.form.name_placeholder')}
           keyboardType='ascii-capable'
           onChangeText={setName}
           autoFocus={true}
@@ -39,7 +40,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
           testID='email-input'
           style={styles.input}
           value={email}
-          placeholder='Email'
+          placeholder={i18n.t('register.form.email_placeholder')}
           keyboardType='email-address'
           onChangeText={setEmail}
         />
@@ -47,7 +48,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
           testID='password-input'
           style={styles.input}
           value={password}
-          placeholder='Password'
+          placeholder={i18n.t('register.form.password_placeholder')}
           secureTextEntry={true}
           onChangeText={setPassword}
         />
@@ -55,7 +56,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
       <View style={styles.submitButtonWrapper}>
         <Button
           testID='submit-button'
-          title='Register'
+          title={i18n.t('register.form.submit_button')}
           onPress={() => onSubmit({ name, email, password })}
         />
       </View>

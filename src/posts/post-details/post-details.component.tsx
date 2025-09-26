@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
+import { i18n } from '@lingui/core';
 
 import { Button } from '@/uilib/button.component';
 import { IconButton } from '@/uilib/icon-button.component';
@@ -29,7 +30,7 @@ export const PostDetails: React.FC<Props> = ({ post, markHidden, close: onReques
     <Button
       style={styles.removeButton}
       type='tertiary'
-      title='Remove from Feed'
+      title={i18n.t('posts.details.remove_button')}
       onPress={() => markHidden()}
     />
   </View>

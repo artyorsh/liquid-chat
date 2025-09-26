@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View, ViewProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
+import { i18n } from '@lingui/core';
 
 import { Button } from '@/uilib/button.component';
 import { Input } from '@/uilib/input.component';
@@ -29,7 +30,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
           testID='email-input'
           style={styles.input}
           value={email}
-          placeholder='Email'
+          placeholder={i18n.t('login.form.email_placeholder')}
           keyboardType='email-address'
           onChangeText={setEmail}
           autoFocus={true}
@@ -38,7 +39,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
           testID='password-input'
           style={styles.input}
           value={password}
-          placeholder='Password'
+          placeholder={i18n.t('login.form.password_placeholder')}
           secureTextEntry={true}
           onChangeText={setPassword}
         />
@@ -46,7 +47,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
       <View style={styles.submitButtonWrapper}>
         <Button
           testID='submit-button'
-          title='Login'
+          title={i18n.t('login.form.submit_button')}
           onPress={() => onSubmit({ email, password })}
         />
       </View>

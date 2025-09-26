@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react';
 import { StyleSheet } from 'react-native-unistyles';
+import { i18n } from '@lingui/core';
 
 import { Button } from '@/uilib/button.component';
 import { SafeArea } from '@/uilib/safe-area.component';
 import { Text } from '@/uilib/text.component';
 
 export interface IWelcomeVM {
-  title: string;
   login(): void;
   register(): void;
 }
@@ -16,11 +16,11 @@ export const Welcome: React.FC<{ vm: IWelcomeVM }> = observer(({ vm }) => (
     <Text
       style={styles.title}
       category='heading'>
-      {vm.title}
+      {i18n.t('welcome.title')}
     </Text>
     <Button
       testID='register-button'
-      title='Register'
+      title={i18n.t('welcome.register_button')}
       onPress={() => vm.register()}
     />
     <Button
@@ -28,7 +28,7 @@ export const Welcome: React.FC<{ vm: IWelcomeVM }> = observer(({ vm }) => (
       testID='login-button'
       type='secondary'
       onPress={() => vm.login()}
-      title='Login'
+      title={i18n.t('welcome.login_button')}
     />
   </SafeArea>
 ));

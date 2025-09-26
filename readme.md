@@ -24,6 +24,7 @@ React Native template with built-in modules, automation workflows and customisat
 - Authentication flows via [NestJS Authentication Server](https://github.com/artyorsh/nestjs-simple-auth).
 - Push Notifications via [Firebase](https://rnfirebase.io/messaging/usage#what-does-it-do).
 - Light and Dark themes with [flexible customization](https://github.com/artyorsh/expo-template/wiki/Branding).
+- Localizatoin and multi-language support via [lingui](https://lingui.dev).
 - Crash reporting with [Sentry](https://sentry.io).
 - Remote logging with [Grafana](https://github.com/artyorsh/grafana-mobile-o11y).
 - CI/CD with GitHub Actions and [EAS](https://expo.dev/eas).

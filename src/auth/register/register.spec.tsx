@@ -20,7 +20,6 @@ describe('Register Component', () => {
 
   beforeEach(() => {
     vm = {
-      title: 'Register Title',
       submit: jest.fn(),
       goBack: jest.fn(),
     };

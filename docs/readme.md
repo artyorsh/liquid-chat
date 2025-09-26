@@ -2,5 +2,6 @@
 
 - [Enabling EAS](./eas.md)
 - [Branding](./branding.md)
+- [Localization](./localization.md)
 - [Claude Code](./claude-code.md)
 - [Authentication Server](./authentication-server.md)

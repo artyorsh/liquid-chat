@@ -6,8 +6,6 @@ import { IRegisterVM } from './register.component';
 
 export class RegisterVM implements IRegisterVM {
 
-  public readonly title = 'Register';
-
   constructor(private router: IRouter, private sessionService: ISessionService) {
   }
 

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
-import { i18n } from '@lingui/core';
+import { useLingui } from '@lingui/react/macro';
 
 import { Button } from '@/uilib/button.component';
 import { IconButton } from '@/uilib/icon-button.component';
@@ -14,27 +14,31 @@ interface Props {
   close(): void;
 }
 
-export const PostDetails: React.FC<Props> = ({ post, markHidden, close: onRequestClose }) => (
-  <View style={styles.container}>
-    <IconButton
-      style={styles.closeButton}
-      icon='Close'
-      onPress={() => onRequestClose()}
-    />
-    <Text category='heading'>
-      {post.title}
-    </Text>
-    <Text style={styles.body}>
-      {post.body}
-    </Text>
-    <Button
-      style={styles.removeButton}
-      type='tertiary'
-      title={i18n.t('posts.details.remove_button')}
-      onPress={() => markHidden()}
-    />
-  </View>
-);
+export const PostDetails: React.FC<Props> = ({ post, markHidden, close: onRequestClose }) => {
+  const { t } = useLingui();
+
+  return (
+    <View style={styles.container}>
+      <IconButton
+        style={styles.closeButton}
+        icon='Close'
+        onPress={() => onRequestClose()}
+      />
+      <Text category='heading'>
+        {post.title}
+      </Text>
+      <Text style={styles.body}>
+        {post.body}
+      </Text>
+      <Button
+        style={styles.removeButton}
+        type='tertiary'
+        title={t`posts.details.remove_button`}
+        onPress={() => markHidden()}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create(theme => ({
   container: {

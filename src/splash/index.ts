@@ -2,7 +2,6 @@ import { createElement, useMemo } from 'react';
 import { ContainerModule, ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
-import { II18nService } from '@/i18n';
 import { IRouter } from '@/router';
 
 import { ISessionService } from '../auth/session';
@@ -40,8 +39,7 @@ const createSplashViewModel = (context: ResolutionContext): ISplashVM => {
   });
 
   const sessionService: ISessionService = context.get(AppModule.SESSION);
-  const i18nService: II18nService = context.get(AppModule.I18N);
-  const sessionRestoreTask: ISplashScreenTask = new SessionRestoreTask(sessionService, i18nService);
+  const sessionRestoreTask: ISplashScreenTask = new SessionRestoreTask(sessionService);
 
   return new SplashVM(router, {
     ...expoSplashConfig,

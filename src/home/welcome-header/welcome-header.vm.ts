@@ -1,4 +1,3 @@
-import { i18n } from '@lingui/core';
 import { action, computed, makeAutoObservable, observable } from 'mobx';
 
 import { ISessionService } from '@/auth/session';
@@ -21,10 +20,10 @@ export class WelcomeHeaderVM implements IWelcomeHeaderVM {
     makeAutoObservable(this);
   }
 
-  @computed public get title(): string {
+  @computed public get userName(): string {
     const currentUser: IUser = this.userService.getUser();
 
-    return i18n.t('home.welcome_header.title', { name: currentUser.name });
+    return currentUser.name;
   }
 
   @action public viewNotifications = (): void => {

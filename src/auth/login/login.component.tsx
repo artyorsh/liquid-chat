@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import { StyleSheet } from 'react-native-unistyles';
-import { i18n } from '@lingui/core';
+import { useLingui } from '@lingui/react/macro';
 
 import { IconButton } from '@/uilib/icon-button.component';
 import { SafeArea } from '@/uilib/safe-area.component';
@@ -14,24 +14,28 @@ export interface ILoginVM {
   goBack(): void;
 }
 
-export const Login: React.FC<{ vm: ILoginVM }> = observer(({ vm }) => (
-  <SafeArea style={styles.container}>
-    <IconButton
-      icon='Back'
-      onPress={vm.goBack}
-    />
-    <Text
-      style={styles.title}
-      category='heading'>
-      {i18n.t('login.title')}
-    </Text>
-    <LoginForm
-      style={styles.form}
-      initialValues={vm.initialValues}
-      onSubmit={vm.submit}
-    />
-  </SafeArea>
-));
+export const Login: React.FC<{ vm: ILoginVM }> = observer(({ vm }) => {
+  const { t } = useLingui();
+
+  return (
+    <SafeArea style={styles.container}>
+      <IconButton
+        icon='Back'
+        onPress={vm.goBack}
+      />
+      <Text
+        style={styles.title}
+        category='heading'>
+        {t`login.title`}
+      </Text>
+      <LoginForm
+        style={styles.form}
+        initialValues={vm.initialValues}
+        onSubmit={vm.submit}
+      />
+    </SafeArea>
+  );
+});
 
 const styles = StyleSheet.create((theme, rt) => ({
   container: {

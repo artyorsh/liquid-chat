@@ -9,6 +9,10 @@ export default defineConfig({
     {
       path: 'src/i18n/locales/{locale}',
       include: ['src'],
+      exclude: [
+        '**/node_modules/**',
+        '**/*.spec.*',
+      ],
     },
   ],
 });

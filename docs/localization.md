@@ -1,7 +1,19 @@
 # Localization
 
-- `npx lingui extract` > [i18n/locales/en.json](../src/i18n/locales/en.json)
-- The extract command is part of [pre-commit script](../.husky/pre-commit)
+Use Lingui components or macros for it to extract messages [automatically](https://lingui.dev/guides/message-extraction). Extraction runs on pre-commit.
+
+This codebase uses `t` macro from `@lingui/react` package.
+It allows switching languages at runtime while providing the best developer experience [compared to other options](https://github.com/artyorsh/expo-template/pull/12). Also see [alternative setups](#alternative-setups).
+
+## Adding new languages
+
+- [lingui.config.ts](./lingui.config.ts) > add new locale to the array > `npx lingui extract` > generates the new .po file in [i18n/locales](./src/i18n/locales)
+- [i18n/index](./src/i18n/index.ts) > update the ISupportedLocale type > update the provider to return messages for the new locale.
+- Translate either manually or with Weblate.
+
+## Alternative Setups
+
+If switching languages at runtime is not required (e.g the app may be restarted instead after changing the language), consider using the same macro from `@lingui/core` package. Then there is no need for `<I18nProvider>` wrapper and `useLingui` hook.
 
 ## Weblate
 

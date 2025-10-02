@@ -48,6 +48,7 @@ module.exports = defineConfig([
     },
     rules: {
       '@typescript-eslint/no-empty-object-type': 'off',
+      'lingui/no-expression-in-message': 'off',
       'react/display-name': 'off',
 
       '@typescript-eslint/consistent-indexed-object-style': 'error',

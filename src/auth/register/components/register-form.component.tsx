@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, ViewProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
-import { i18n } from '@lingui/core';
+import { useLingui } from '@lingui/react/macro';
 
 import { Button } from '@/uilib/button.component';
 import { Input } from '@/uilib/input.component';
@@ -18,6 +18,8 @@ interface Props extends ViewProps {
 
 export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
 
+  const { t } = useLingui();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +33,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
           testID='name-input'
           style={styles.input}
           value={name}
-          placeholder={i18n.t('register.form.name_placeholder')}
+          placeholder={t`register.form.name_placeholder`}
           keyboardType='ascii-capable'
           onChangeText={setName}
           autoFocus={true}
@@ -40,7 +42,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
           testID='email-input'
           style={styles.input}
           value={email}
-          placeholder={i18n.t('register.form.email_placeholder')}
+          placeholder={t`register.form.email_placeholder`}
           keyboardType='email-address'
           onChangeText={setEmail}
         />
@@ -48,7 +50,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
           testID='password-input'
           style={styles.input}
           value={password}
-          placeholder={i18n.t('register.form.password_placeholder')}
+          placeholder={t`register.form.password_placeholder`}
           secureTextEntry={true}
           onChangeText={setPassword}
         />
@@ -56,7 +58,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
       <View style={styles.submitButtonWrapper}>
         <Button
           testID='submit-button'
-          title={i18n.t('register.form.submit_button')}
+          title={t`register.form.submit_button`}
           onPress={() => onSubmit({ name, email, password })}
         />
       </View>

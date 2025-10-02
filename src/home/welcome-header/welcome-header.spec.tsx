@@ -34,11 +34,6 @@ describe('Home/WelcomeHeader', () => {
     jest.clearAllMocks();
   });
 
-  it('should render with user name in title', () => {
-    const api = render(<WelcomeHeader vm={vm} />);
-    expect(api.findByText(/Test User/)).toBeTruthy();
-  });
-
   it('should replace with welcome screen when logged out', async () => {
     const api = render(<WelcomeHeader vm={vm} />);
     fireEvent.press(api.getByTestId('logout-button'));

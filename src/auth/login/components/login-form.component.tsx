@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, ViewProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
-import { i18n } from '@lingui/core';
+import { useLingui } from '@lingui/react/macro';
 
 import { Button } from '@/uilib/button.component';
 import { Input } from '@/uilib/input.component';
@@ -18,6 +18,8 @@ interface Props extends ViewProps {
 
 export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }) => {
 
+  const { t } = useLingui();
+
   const [email, setEmail] = useState(initialValues.email);
   const [password, setPassword] = useState(initialValues.password);
 
@@ -30,7 +32,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
           testID='email-input'
           style={styles.input}
           value={email}
-          placeholder={i18n.t('login.form.email_placeholder')}
+          placeholder={t`login.form.email_placeholder`}
           keyboardType='email-address'
           onChangeText={setEmail}
           autoFocus={true}
@@ -39,7 +41,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
           testID='password-input'
           style={styles.input}
           value={password}
-          placeholder={i18n.t('login.form.password_placeholder')}
+          placeholder={t`login.form.password_placeholder`}
           secureTextEntry={true}
           onChangeText={setPassword}
         />
@@ -47,7 +49,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
       <View style={styles.submitButtonWrapper}>
         <Button
           testID='submit-button'
-          title={i18n.t('login.form.submit_button')}
+          title={t`login.form.submit_button`}
           onPress={() => onSubmit({ email, password })}
         />
       </View>

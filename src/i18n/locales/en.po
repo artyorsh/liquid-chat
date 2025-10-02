@@ -1,83 +1,74 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2025-09-26 18:32+0200\n"
+"POT-Creation-Date: 2025-10-02 17:46+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
-#. js-lingui-explicit-id
-#: src/posts/post-details/post-details.component.tsx:33
-msgid "posts.details.remove_button"
-msgstr "Remove from Feed"
+#: src/home/welcome-header/welcome-header.component.tsx:26
+msgid "home.welcome.title {0}"
+msgstr "Hello {0}"
 
-#. js-lingui-explicit-id
-#: src/home/welcome-header/welcome-header.vm.ts:27
-msgid "home.welcome_header.title"
-msgstr "Welcome, {name}"
+#: src/home/welcome-header/welcome-header.component.tsx:29
+msgid "home.welcome.unread_notifications {0}"
+msgstr "{0, plural, one {# unread notification} other {# unread notifications}}"
 
-#. js-lingui-explicit-id
-#: src/home/welcome-header/welcome-header.component.tsx:28
-msgid "home.welcome_header.unread_notifications"
-msgstr "You have {count, plural, =0 {no notifications} =1 {# notification} other {# notifications}}"
-
-#. js-lingui-explicit-id
-#: src/auth/welcome/welcome.component.tsx:19
-msgid "welcome.title"
-msgstr "Welcome"
-
-#. js-lingui-explicit-id
-#: src/auth/welcome/welcome.component.tsx:23
-msgid "welcome.register_button"
-msgstr "Register"
-
-#. js-lingui-explicit-id
-#: src/auth/welcome/welcome.component.tsx:31
-msgid "welcome.login_button"
-msgstr "Login"
-
-#. js-lingui-explicit-id
-#: src/auth/register/register.component.tsx:25
-msgid "register.title"
-msgstr "Register"
-
-#. js-lingui-explicit-id
-#: src/auth/register/components/register-form.component.tsx:34
-msgid "register.form.name_placeholder"
-msgstr "Name"
-
-#. js-lingui-explicit-id
-#: src/auth/register/components/register-form.component.tsx:43
-msgid "register.form.email_placeholder"
-msgstr "Email"
-
-#. js-lingui-explicit-id
-#: src/auth/register/components/register-form.component.tsx:51
-msgid "register.form.password_placeholder"
-msgstr "Password"
-
-#. js-lingui-explicit-id
-#: src/auth/register/components/register-form.component.tsx:59
-msgid "register.form.submit_button"
-msgstr "Register"
-
-#. js-lingui-explicit-id
-#: src/auth/login/login.component.tsx:26
-msgid "login.title"
-msgstr "Login"
-
-#. js-lingui-explicit-id
-#: src/auth/login/components/login-form.component.tsx:33
+#: src/auth/login/components/login-form.component.tsx:35
 msgid "login.form.email_placeholder"
 msgstr "Email"
 
-#. js-lingui-explicit-id
-#: src/auth/login/components/login-form.component.tsx:42
+#: src/auth/login/components/login-form.component.tsx:44
 msgid "login.form.password_placeholder"
 msgstr "Password"
 
-#. js-lingui-explicit-id
-#: src/auth/login/components/login-form.component.tsx:50
+#: src/auth/login/components/login-form.component.tsx:52
 msgid "login.form.submit_button"
 msgstr "Login"
+
+#: src/auth/login/login.component.tsx:29
+msgid "login.title"
+msgstr "Login"
+
+#: src/posts/post-details/post-details.component.tsx:36
+msgid "posts.details.remove_button"
+msgstr "Remove from Feed"
+
+#: src/auth/register/components/register-form.component.tsx:45
+msgid "register.form.email_placeholder"
+msgstr "Email"
+
+#: src/auth/register/components/register-form.component.tsx:36
+msgid "register.form.name_placeholder"
+msgstr "Name"
+
+#: src/auth/register/components/register-form.component.tsx:53
+msgid "register.form.password_placeholder"
+msgstr "Password"
+
+#: src/auth/register/components/register-form.component.tsx:61
+msgid "register.form.submit_button"
+msgstr "Register"
+
+#: src/auth/register/register.component.tsx:28
+msgid "register.title"
+msgstr "Register"
+
+#: src/auth/welcome/welcome.component.tsx:34
+msgid "welcome.login_button"
+msgstr "Login"
+
+#: src/auth/welcome/welcome.component.tsx:26
+msgid "welcome.register_button"
+msgstr "Register"
+
+#: src/auth/welcome/welcome.component.tsx:22
+msgid "welcome.title"
+msgstr "Welcome"

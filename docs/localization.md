@@ -7,8 +7,8 @@ It allows switching languages at runtime while providing the best developer expe
 
 ## Adding new languages
 
-- [lingui.config.ts](./lingui.config.ts) > add new locale to the array > `npx lingui extract` > generates the new .po file in [i18n/locales](./src/i18n/locales)
-- [i18n/index](./src/i18n/index.ts) > update the ISupportedLocale type > update the provider to return messages for the new locale.
+- [lingui.config.ts](../lingui.config.ts) > add new locale to the array > `npx lingui extract` > generates the new .po file in [i18n/locales](../src/i18n/locales)
+- [i18n/index](../src/i18n/index.ts) > update the ISupportedLocale type > update the provider to return messages for the new locale.
 - Translate either manually or with Weblate.
 
 ## Alternative Setups

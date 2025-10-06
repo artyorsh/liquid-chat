@@ -1,5 +1,5 @@
 import { FlatList, ListRenderItemInfo } from 'react-native';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { StyleSheet } from 'react-native-unistyles';
 
 import { IPostVM, PostItem } from './post-item.component';

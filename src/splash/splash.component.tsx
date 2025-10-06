@@ -1,5 +1,5 @@
 import { Animated, ImageSourcePropType, ImageStyle, View, ViewStyle } from 'react-native';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { StyleSheet, UnistylesTheme, useUnistyles } from 'react-native-unistyles';
 
 export interface ISplashVM {

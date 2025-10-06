@@ -1,5 +1,5 @@
 import { StyleSheet, View, ViewProps } from 'react-native';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { useLingui } from '@lingui/react/macro';
 
 import { IconButton } from '@/uilib/icon-button.component';

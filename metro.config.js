@@ -1,6 +1,10 @@
+const { withRozenite } = require("@rozenite/metro");
+const { withRozeniteExpoAtlasPlugin } = require('@rozenite/expo-atlas-plugin');
 const { getSentryExpoConfig } = require("@sentry/react-native/metro");
 
-const config = getSentryExpoConfig(__dirname);
+const config = getSentryExpoConfig(__dirname, {
+  includeWebReplay: false,
+});
 
 /**
  * @see https://lingui.dev/ref/metro-transformer#installation
@@ -15,4 +19,7 @@ config.resolver = {
   sourceExts: [...config.resolver.sourceExts, "po", "pot"],
 };
 
-module.exports = config;
+module.exports = withRozenite(config, {
+  enabled: true,
+  enhanceMetroConfig: (config) => withRozeniteExpoAtlasPlugin(config),
+});

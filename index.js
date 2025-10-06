@@ -1,4 +1,3 @@
-import 'core-js/proposals/reflect-metadata';
 import registerRootComponent from 'expo/src/launch/registerRootComponent';
 import { Container } from 'inversify';
 

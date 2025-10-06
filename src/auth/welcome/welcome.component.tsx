@@ -1,4 +1,4 @@
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { StyleSheet } from 'react-native-unistyles';
 import { useLingui } from '@lingui/react/macro';
 

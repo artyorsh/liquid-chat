@@ -1,9 +1,10 @@
 import { createElement, createRef } from 'react';
-import { createStaticNavigation, NavigationContainerRef, NavigationState, StackActions, StaticNavigation } from '@react-navigation/native';
+import { NavigationContainerRef, NavigationState, StackActions, StaticNavigation } from '@react-navigation/native';
 
 import { ILogger } from '@/log';
 
 import { INavigationLifecycleListener, IRoute, IRouteParams, IRouter } from '..';
+import { createStaticNavigationWithRozenite } from './create-static-navigation-rozenite';
 
 export type INavigationTreeFactory = () => StaticNavigation<any, any, any>;
 
@@ -19,7 +20,7 @@ export class ReactNavigationRouter implements IRouter {
   }
 
   public getWindow(): React.ReactElement {
-    const NavigationContainer = createStaticNavigation(this.treeFactory());
+    const NavigationContainer = createStaticNavigationWithRozenite(this.treeFactory());
 
     return createElement(NavigationContainer, {
       ref: this.navigationContainerRef,

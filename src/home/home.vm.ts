@@ -2,30 +2,27 @@ import { makeAutoObservable, observable, runInAction } from 'mobx';
 
 import { IPostsDatasource, IPostsListFactory } from '@/posts';
 import { IPostListVM } from '@/posts/post-list/post-list.component';
-import { INavigationLifecycleListener, IRouter } from '@/router';
 
 import { IHomeVM } from './home.component';
 import { IWelcomeHeaderVM } from './welcome-header/welcome-header.component';
 
-export class HomeVM implements IHomeVM, INavigationLifecycleListener {
+export class HomeVM implements IHomeVM {
   @observable public posts!: IPostListVM;
   @observable public loading: boolean = true;
 
   public welcomeHeader: IWelcomeHeaderVM;
 
   constructor(
-    router: IRouter,
     welcomeHeaderVM: IWelcomeHeaderVM,
     private postsDatasource: IPostsDatasource,
     private createPostsList: IPostsListFactory,
   ) {
-    router.subscribe('/home', this);
     this.welcomeHeader = welcomeHeaderVM;
 
     makeAutoObservable(this);
   }
 
-  public onFocus = async (): Promise<void> => {
+  public onMount = async (): Promise<void> => {
     const posts = await this.postsDatasource.getPosts();
 
     runInAction(() => {
@@ -34,7 +31,7 @@ export class HomeVM implements IHomeVM, INavigationLifecycleListener {
     });
   };
 
-  public onBlur = (): void => {
+  public onUnmount = (): void => {
     /* no-op */
   };
 }

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { IPostListVM, PostList } from '@/posts/post-list/post-list.component';
@@ -10,13 +11,23 @@ export interface IHomeVM {
   loading: boolean;
   welcomeHeader: IWelcomeHeaderVM;
   posts: IPostListVM;
+  onMount(): void;
+  onUnmount(): void;
 }
 
-export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => (
-  <SafeArea>
-    <WelcomeHeader vm={vm.welcomeHeader} />
-    <Loading loading={vm.loading}>
-      <PostList vm={vm.posts} />
-    </Loading>
-  </SafeArea>
-));
+export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => {
+  useEffect(() => {
+    vm.onMount();
+
+    return () => vm.onUnmount();
+  }, [vm]);
+
+  return (
+    <SafeArea>
+      <WelcomeHeader vm={vm.welcomeHeader} />
+      <Loading loading={vm.loading}>
+        <PostList vm={vm.posts} />
+      </Loading>
+    </SafeArea>
+  );
+});

@@ -29,18 +29,6 @@ describe('Login Component', () => {
     };
   });
 
-  it('should render with initial email and password', () => {
-    vm.initialValues = {
-      email: 'test@test.com',
-      password: 'password',
-    };
-
-    const api = render(<Login vm={vm} />);
-
-    expect(api.getByTestId('email-input').props.value).toBe('test@test.com');
-    expect(api.getByTestId('password-input').props.value).toBe('password');
-  });
-
   it('should call submit with initial values', () => {
     vm.initialValues = {
       email: 'test@test.com',

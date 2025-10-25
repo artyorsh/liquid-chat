@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { View, ViewProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useLingui } from '@lingui/react/macro';
@@ -20,9 +20,21 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
 
   const { t } = useLingui();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const name = useRef<string>('');
+  const email = useRef<string>('');
+  const password = useRef<string>('');
+
+  const onNameChange = useCallback((value: string) => {
+    name.current = value;
+  }, []);
+
+  const onEmailChange = useCallback((value: string) => {
+    email.current = value;
+  }, []);
+
+  const onPasswordChange = useCallback((value: string) => {
+    password.current = value;
+  }, []);
 
   return (
     <View
@@ -32,34 +44,34 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
         <Input
           testID='name-input'
           style={styles.input}
-          value={name}
+          defaultValue={name.current}
           placeholder={t`register.form.name_placeholder`}
           keyboardType='ascii-capable'
-          onChangeText={setName}
+          onChangeText={onNameChange}
           autoFocus={true}
         />
         <Input
           testID='email-input'
           style={styles.input}
-          value={email}
+          defaultValue={email.current}
           placeholder={t`register.form.email_placeholder`}
           keyboardType='email-address'
-          onChangeText={setEmail}
+          onChangeText={onEmailChange}
         />
         <Input
           testID='password-input'
           style={styles.input}
-          value={password}
+          value={password.current}
           placeholder={t`register.form.password_placeholder`}
           secureTextEntry={true}
-          onChangeText={setPassword}
+          onChangeText={onPasswordChange}
         />
       </View>
       <View style={styles.submitButtonWrapper}>
         <Button
           testID='submit-button'
           title={t`register.form.submit_button`}
-          onPress={() => onSubmit({ name, email, password })}
+          onPress={() => onSubmit({ name: name.current, email: email.current, password: password.current })}
         />
       </View>
     </View>

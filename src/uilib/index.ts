@@ -173,6 +173,10 @@ const darkTheme = {
 
 /**
  * @see https://www.unistyl.es/v3/guides/theming
+ *
+ * The breakpoints are set for the current iPhones on the market.
+ * Each breakpoint is screen width in logical pixels (physical pixels / pixel ratio)
+ * xs: smaller than SE models, sm: SE models, md: Pro models, lg: Pro Max models
  */
 const config = {
   themes: {
@@ -181,6 +185,9 @@ const config = {
   },
   breakpoints: {
     xs: 0,
+    sm: 375,
+    md: 402,
+    lg: 440,
   },
 };
 

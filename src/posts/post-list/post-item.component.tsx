@@ -15,6 +15,8 @@ export interface IPostVM {
   viewDetails(): void;
 }
 
+export const POST_ITEM_HEIGHT: number = 314;
+
 export const PostItem: React.FC<Props> = ({ vm, ...props }) => {
   return (
     <Card
@@ -25,10 +27,14 @@ export const PostItem: React.FC<Props> = ({ vm, ...props }) => {
         source={{ uri: vm.post.image_url }}
       />
       <View style={styles.content}>
-        <Text category='heading'>
+        <Text
+          category='heading'
+          numberOfLines={1}>
           {vm.post.title}
         </Text>
-        <Text category='paragraph'>
+        <Text
+          category='paragraph'
+          numberOfLines={3}>
           {vm.post.body}
         </Text>
       </View>

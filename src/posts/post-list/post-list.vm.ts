@@ -25,7 +25,7 @@ export class PostListVM implements IPostListVM {
   private detailsPresenter: IPostDetailsPresenter;
   private logger: ILogger;
 
-  @observable private data: IPost[];
+  @observable.ref private data: IPost[];
 
   constructor(
     data: IPost[],

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Pressable, PressableProps, PressableStateCallbackType, StyleProp, Text, ViewStyle } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
@@ -15,7 +16,7 @@ export interface ButtonProps extends PressableProps {
   icon?: IconName;
 }
 
-export const Button: React.FC<ButtonProps> = ({ type = 'primary', disabled = false, title, icon, ...props }) => {
+export const Button: React.FC<ButtonProps> = memo(({ type = 'primary', disabled = false, title, icon, ...props }) => {
   styles.useVariants({ type, disabled });
 
   const renderBody = (state: PressableStateCallbackType): React.ReactElement => {
@@ -41,7 +42,7 @@ export const Button: React.FC<ButtonProps> = ({ type = 'primary', disabled = fal
       {renderBody}
     </Pressable>
   );
-};
+});
 
 const styles = StyleSheet.create((theme, rt) => ({
   container: state => ({

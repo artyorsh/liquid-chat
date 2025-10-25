@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
@@ -14,7 +15,7 @@ type TextCategory =
   | 'subheading'
   | 'paragraph';
 
-export const Text: React.FC<TextProps> = ({ children, type, category = 'paragraph', ...props }) => {
+export const Text: React.FC<TextProps> = memo(({ children, type, category = 'paragraph', ...props }) => {
   styles.useVariants({ type, category });
 
   return (
@@ -24,7 +25,7 @@ export const Text: React.FC<TextProps> = ({ children, type, category = 'paragrap
       {children}
     </RNText>
   );
-};
+});
 
 const styles = StyleSheet.create((theme, rt) => ({
   text: {

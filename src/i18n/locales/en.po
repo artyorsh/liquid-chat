@@ -13,10 +13,12 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: vm.userName
 #: src/home/welcome-header/welcome-header.component.tsx:26
 msgid "home.welcome.title {0}"
 msgstr "Hello {0}"
 
+#. placeholder {0}: vm.unreadNotifications
 #: src/home/welcome-header/welcome-header.component.tsx:29
 msgid "home.welcome.unread_notifications {0}"
 msgstr "{0, plural, one {# unread notification} other {# unread notifications}}"

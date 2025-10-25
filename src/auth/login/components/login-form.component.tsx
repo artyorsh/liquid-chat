@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { View, ViewProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useLingui } from '@lingui/react/macro';
@@ -20,8 +20,16 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
 
   const { t } = useLingui();
 
-  const [email, setEmail] = useState(initialValues.email);
-  const [password, setPassword] = useState(initialValues.password);
+  const email = useRef<string>(initialValues.email);
+  const password = useRef<string>(initialValues.password);
+
+  const onEmailChange = useCallback((nextEmail: string) => {
+    email.current = nextEmail;
+  }, []);
+
+  const onPasswordChange = useCallback((nextPassword: string) => {
+    password.current = nextPassword;
+  }, []);
 
   return (
     <View
@@ -31,26 +39,26 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
         <Input
           testID='email-input'
           style={styles.input}
-          value={email}
+          defaultValue={email.current}
           placeholder={t`login.form.email_placeholder`}
           keyboardType='email-address'
-          onChangeText={setEmail}
+          onChangeText={onEmailChange}
           autoFocus={true}
         />
         <Input
           testID='password-input'
           style={styles.input}
-          value={password}
+          defaultValue={password.current}
           placeholder={t`login.form.password_placeholder`}
           secureTextEntry={true}
-          onChangeText={setPassword}
+          onChangeText={onPasswordChange}
         />
       </View>
       <View style={styles.submitButtonWrapper}>
         <Button
           testID='submit-button'
           title={t`login.form.submit_button`}
-          onPress={() => onSubmit({ email, password })}
+          onPress={() => onSubmit({ email: email.current, password: password.current })}
         />
       </View>
     </View>

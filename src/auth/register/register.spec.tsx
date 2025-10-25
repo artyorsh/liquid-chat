@@ -25,14 +25,6 @@ describe('Register Component', () => {
     };
   });
 
-  it('should render without initial values', () => {
-    const api = render(<Register vm={vm} />);
-
-    expect(api.getByTestId('name-input').props.value).toBe('');
-    expect(api.getByTestId('email-input').props.value).toBe('');
-    expect(api.getByTestId('password-input').props.value).toBe('');
-  });
-
   it('should call submit with correct values', () => {
     const api = render(<Register vm={vm} />);
 

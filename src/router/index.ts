@@ -9,6 +9,8 @@ import { IHomeRoute } from '@/home';
 import { ILogger, ILogService } from '@/log';
 import { ISplashRoute } from '@/splash';
 
+import { createPerformanceMonitoringLayout } from './performance/performance-monitoring-layout';
+
 export type IRoute =
   | ISplashRoute
   | IAuthRoute
@@ -43,11 +45,23 @@ const createRouter = (context: ResolutionContext): IRouter => {
   const logService: ILogService = context.get(AppModule.LOG);
   const logger: ILogger = logService.createLogger(ReactNavigationRouter.name);
 
-  return new ReactNavigationRouter(logger, StackTreeFactory(() => ({
-    '/': context.get<FC>(AppModule.SPLASH_SCREEN),
-    '/auth': context.get<FC>(AppModule.WELCOME_SCREEN),
-    '/auth/login': context.get<FC>(AppModule.LOGIN_SCREEN),
-    '/auth/register': context.get<FC>(AppModule.REGISTER_SCREEN),
-    '/home': context.get<FC>(AppModule.HOME_SCREEN),
-  })));
+  let screenLayout: FC;
+
+  if (__DEV__) {
+    screenLayout = createPerformanceMonitoringLayout({
+      logger,
+      watchPhases: ['mount'],
+    });
+  }
+
+  return new ReactNavigationRouter(logger, StackTreeFactory({
+    layout: screenLayout,
+    routeMap: () => ({
+      '/': context.get<FC>(AppModule.SPLASH_SCREEN),
+      '/auth': context.get<FC>(AppModule.WELCOME_SCREEN),
+      '/auth/login': context.get<FC>(AppModule.LOGIN_SCREEN),
+      '/auth/register': context.get<FC>(AppModule.REGISTER_SCREEN),
+      '/home': context.get<FC>(AppModule.HOME_SCREEN),
+    }),
+  }));
 };

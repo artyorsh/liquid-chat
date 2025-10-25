@@ -40,6 +40,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'ITSAppUsesNonExemptEncryption': false,
     },
   },
+  experiments: {
+    reactCompiler: true,
+  },
   extra: {
     eas: {
       projectId,

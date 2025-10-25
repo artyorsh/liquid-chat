@@ -29,13 +29,11 @@ const createHomeScreen = (context: ResolutionContext): React.FC => {
 };
 
 const createHomeViewModel = (context: ResolutionContext): IHomeVM => {
-  const router: IRouter = context.get(AppModule.ROUTER);
   const welcomeHeaderVM: IWelcomeHeaderVM = createWelcomeHeaderVM(context);
   const postsDatasource: IPostsDatasource = context.get(AppModule.POSTS_DATASOURCE);
   const postsFactory: IPostsListFactory = context.get(AppModule.POSTS_VM);
 
   return new HomeVM(
-    router,
     welcomeHeaderVM,
     postsDatasource,
     postsFactory,

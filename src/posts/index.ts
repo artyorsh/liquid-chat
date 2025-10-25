@@ -20,7 +20,10 @@ export interface IPostsDatasource {
 export type IPostsListFactory = (posts: IPost[]) => IPostListVM;
 
 export const PostsModule = new ContainerModule(({ bind }) => {
-  const datasource: IPostsDatasource = new PostMockDatasource();
+  const datasource: IPostsDatasource = new PostMockDatasource({
+    imageSize: 576,
+    useCachedImages: false,
+  });
 
   bind(AppModule.POSTS_DATASOURCE)
     .toConstantValue(datasource);

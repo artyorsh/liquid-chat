@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { Animated, ViewProps, ViewStyle } from 'react-native';
 
 import { ILayoutProvider } from '../modal.component';
@@ -19,15 +20,17 @@ export class AnimatedAlertLayoutProvider implements ILayoutProvider {
   constructor(private options: IAlertLayoutProviderOptions = DEFAULT_OPTIONS) {
   }
 
-  public getWrapperComponent(): React.FC<ViewProps> {
+  public getWrapperComponent(): FC<ViewProps> {
     const animationStyle: ViewStyle = this.getAnimatedStyle();
 
-    return (props: ViewProps): React.ReactElement => (
+    const AlertWrapper: FC<ViewProps> = (props) => (
       <Animated.View
         {...props}
         style={[props.style, animationStyle]}
       />
     );
+
+    return AlertWrapper;
   }
 
   public setVisible(visible: boolean): Promise<void> {

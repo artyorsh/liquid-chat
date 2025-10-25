@@ -37,6 +37,8 @@ export const Welcome: React.FC<{ vm: IWelcomeVM }> = observer(({ vm }) => {
   );
 });
 
+Welcome.displayName = 'WelcomeScreen';
+
 const styles = StyleSheet.create((theme, rt) => ({
   container: {
     paddingHorizontal: theme.gap(4),

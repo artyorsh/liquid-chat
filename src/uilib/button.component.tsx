@@ -44,6 +44,8 @@ export const Button: React.FC<ButtonProps> = memo(({ type = 'primary', disabled 
   );
 });
 
+Button.displayName = 'Button';
+
 const styles = StyleSheet.create((theme, rt) => ({
   container: state => ({
     flexDirection: 'row',

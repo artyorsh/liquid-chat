@@ -45,6 +45,8 @@ export const WelcomeHeader: React.FC<Props> = observer(({ vm, ...props }) => {
   );
 });
 
+WelcomeHeader.displayName = 'WelcomeHeader';
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

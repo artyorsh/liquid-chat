@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { Animated, ViewProps, ViewStyle } from 'react-native';
 
 import { ILayoutProvider } from '../modal.component';
@@ -19,15 +20,17 @@ export class AnimatedBottomSheetLayoutProvider implements ILayoutProvider {
   constructor(private options: IBottomSheetLayoutProviderOptions = DEFAULT_OPTIONS) {
   }
 
-  public getWrapperComponent(): React.FC<ViewProps> {
+  public getWrapperComponent(): FC<ViewProps> {
     const animationStyle: ViewStyle = this.getAnimationStyle();
 
-    return (props: ViewProps): React.ReactElement => (
+    const BottomSheetWrapper: FC<ViewProps> = (props) => (
       <Animated.View
         {...props}
         style={[props.style, animationStyle]}
       />
     );
+
+    return BottomSheetWrapper;
   }
 
   public setVisible(visible: boolean): Promise<void> {

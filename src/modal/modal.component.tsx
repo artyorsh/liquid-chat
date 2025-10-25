@@ -44,6 +44,8 @@ export const Modal = forwardRef<IModalRef, ModalProps>(({ layoutProvider, onRequ
   );
 });
 
+Modal.displayName = 'Modal';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

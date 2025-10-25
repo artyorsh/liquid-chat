@@ -1,4 +1,4 @@
-import { action, computed, makeAutoObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 import { ISessionService } from '@/auth/session';
 import { IPushNotificationService } from '@/push-notification';
@@ -17,7 +17,7 @@ export class WelcomeHeaderVM implements IWelcomeHeaderVM {
     private sessionService: ISessionService,
     private router: IRouter,
   ) {
-    makeAutoObservable(this);
+    makeObservable(this);
   }
 
   @computed public get userName(): string {

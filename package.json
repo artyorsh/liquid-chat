@@ -71,6 +71,7 @@
     "eslint-config-expo": "^10.0.0",
     "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-lingui": "^0.11.0",
+    "eslint-plugin-mobx": "^0.0.13",
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-react-compiler": "^19.1.0-rc.2",
     "eslint-plugin-simple-import-sort": "^10.0.0",

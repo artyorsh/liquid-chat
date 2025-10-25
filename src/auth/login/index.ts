@@ -1,4 +1,4 @@
-import { createElement, useMemo } from 'react';
+import { createElement, FC, useMemo } from 'react';
 import { ResolutionContext } from 'inversify';
 
 import { AppModule } from '@/di';
@@ -10,12 +10,14 @@ import { LoginVM } from './login.vm';
 
 export type ILoginRoute = '/auth/login';
 
-export const createLoginScreen = (context: ResolutionContext): React.FC => {
-  return () => {
+export const createLoginScreen = (context: ResolutionContext): FC => {
+  const LoginScreenContainer: FC = () => {
     const viewModel: ILoginVM = useMemo(() => createLoginVM(context), []);
 
     return createElement(Login, { vm: viewModel });
   };
+
+  return LoginScreenContainer;
 };
 
 const createLoginVM = (context: ResolutionContext): ILoginVM => {

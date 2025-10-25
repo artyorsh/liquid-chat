@@ -37,6 +37,8 @@ export const Login: React.FC<{ vm: ILoginVM }> = observer(({ vm }) => {
   );
 });
 
+Login.displayName = 'LoginScreen';
+
 const styles = StyleSheet.create((theme, rt) => ({
   container: {
     paddingHorizontal: theme.gap(4),

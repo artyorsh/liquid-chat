@@ -1,4 +1,4 @@
-import { createElement, FC, Profiler, ProfilerOnRenderCallback, ReactElement } from 'react';
+import { createElement, FC, Profiler, ProfilerOnRenderCallback } from 'react';
 import { ILayoutProps } from '../react-navigation/stack-tree-factory';
 
 import { ILogger } from '@/log';
@@ -14,7 +14,7 @@ export interface IPerformanceMonitoringLayoutConfig {
 }
 
 export const createPerformanceMonitoringLayout = (config: IPerformanceMonitoringLayoutConfig): FC<ILayoutProps> => {
-  return ({ routeName, children }): ReactElement => {
+  const PerformanceMonitoringLayout: FC<ILayoutProps> = ({ routeName, children }) => {
     const onRender: ProfilerOnRenderCallback = (_, phase, actualDuration, _baseDuration, _startTime, _commitTime) => {
       if (!config.watchPhases.includes(phase)) {
         return;
@@ -26,4 +26,6 @@ export const createPerformanceMonitoringLayout = (config: IPerformanceMonitoring
 
     return createElement(Profiler, { id: routeName, onRender }, children);
   };
+
+  return PerformanceMonitoringLayout;
 };

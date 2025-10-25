@@ -50,6 +50,8 @@ export const PostList: React.FC<Props> = observer(({ vm }) => {
   );
 });
 
+PostList.displayName = 'PostList';
+
 const styles = StyleSheet.create((theme, rt) => ({
   contentContainer: {
     paddingHorizontal: theme.gap(4),

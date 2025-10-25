@@ -21,6 +21,8 @@ export const Splash: React.FC<{ vm: ISplashVM }> = observer(({ vm }) => {
   );
 });
 
+Splash.displayName = 'SplashScreen';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

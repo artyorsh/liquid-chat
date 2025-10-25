@@ -57,3 +57,5 @@ export const ModalWindow = forwardRef<IModalWindowRef, Props>(({ layoutProvider,
     </WrapperComponent>
   );
 });
+
+ModalWindow.displayName = 'ModalWindow';

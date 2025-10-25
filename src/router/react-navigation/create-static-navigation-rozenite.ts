@@ -11,9 +11,13 @@ type AnyNavigationContainerRefObject = RefObject<AnyNavigationContainerRef>;
 export const createStaticNavigationWithRozenite = (tree: StaticNavigation<any, any, any>): ForwardRefExoticComponent<StaticNavigationContainerProps> => {
   const NavigationContainer = createStaticNavigation(tree);
 
-  return forwardRef<AnyNavigationContainerRef, {}>((props, ref) => {
+  const NavigationContainerWithRozenite = forwardRef<AnyNavigationContainerRef, {}>((props, ref) => {
     useReactNavigationDevTools({ ref: ref as AnyNavigationContainerRefObject });
 
     return createElement(NavigationContainer, { ...props, ref });
   });
+
+  NavigationContainerWithRozenite.displayName = 'NavigationContainerWithRozenite';
+
+  return NavigationContainerWithRozenite;
 };

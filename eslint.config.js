@@ -3,6 +3,7 @@ const expoConfig = require('eslint-config-expo/flat');
 const reactNative = require('@react-native/eslint-plugin');
 const pluginJest = require('eslint-plugin-jest');
 const pluginLingui = require('eslint-plugin-lingui');
+const pluginMobx = require('eslint-plugin-mobx');
 const pluginPromise = require('eslint-plugin-promise');
 const reactCompiler = require('eslint-plugin-react-compiler');
 const simpleImportSort = require('eslint-plugin-simple-import-sort');
@@ -33,6 +34,9 @@ const stylistic = require('@stylistic/eslint-plugin');
  *  - lingui/recommended
  *    @see https://lingui.dev/ref/eslint-plugin#flat-config
  *
+ *  - mobx/recommended
+ *    @see https://github.com/mobxjs/mobx/tree/main/packages/eslint-plugin-mobx
+ *
  *  - simple-import-sort
  *    @see https://github.com/lydell/eslint-plugin-simple-import-sort
  */
@@ -40,6 +44,7 @@ module.exports = defineConfig([
   expoConfig,
   pluginJest.configs['flat/recommended'],
   pluginLingui.configs["flat/recommended"],
+  pluginMobx.flatConfigs.recommended,
   pluginPromise.configs['flat/recommended'],
   reactCompiler.configs.recommended,
   {
@@ -51,7 +56,7 @@ module.exports = defineConfig([
     rules: {
       '@typescript-eslint/no-empty-object-type': 'off',
       'lingui/no-expression-in-message': 'off',
-      'react/display-name': 'off',
+      'mobx/missing-observer': 'off',
 
       '@typescript-eslint/consistent-indexed-object-style': 'error',
       '@typescript-eslint/explicit-function-return-type': [
@@ -287,6 +292,15 @@ module.exports = defineConfig([
         },
       ],
     },
+    settings: {
+      componentWrapperFunctions: [
+        'observer',
+        {
+          property: 'observer',
+          object: 'Mobx'
+        }
+      ]
+    }
   },
   {
     ignores: ['dist/*'],

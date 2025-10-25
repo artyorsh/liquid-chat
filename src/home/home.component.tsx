@@ -31,3 +31,5 @@ export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => {
     </SafeArea>
   );
 });
+
+Home.displayName = 'HomeScreen';

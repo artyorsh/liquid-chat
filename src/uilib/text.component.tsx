@@ -27,6 +27,8 @@ export const Text: React.FC<TextProps> = memo(({ children, type, category = 'par
   );
 });
 
+Text.displayName = 'Text';
+
 const styles = StyleSheet.create((theme, rt) => ({
   text: {
     color: theme.colors.onBackground,

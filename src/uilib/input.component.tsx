@@ -19,6 +19,8 @@ export const Input: React.FC<InputProps> = memo((props) => {
   );
 });
 
+Input.displayName = 'Input';
+
 const styles = StyleSheet.create((theme, rt) => ({
   container: {
     ...theme.typography.control(rt.fontScale),

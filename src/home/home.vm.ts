@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable, runInAction } from 'mobx';
+import { makeObservable, observable, runInAction } from 'mobx';
 
 import { IPostsDatasource, IPostsListFactory } from '@/posts';
 import { IPostListVM } from '@/posts/post-list/post-list.component';
@@ -19,7 +19,7 @@ export class HomeVM implements IHomeVM {
   ) {
     this.welcomeHeader = welcomeHeaderVM;
 
-    makeAutoObservable(this);
+    makeObservable(this);
   }
 
   public onMount = async (): Promise<void> => {

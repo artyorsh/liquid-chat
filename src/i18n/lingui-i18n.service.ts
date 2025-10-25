@@ -33,7 +33,9 @@ export class LinguiI18nService implements II18nService {
   }
 
   public getProviderComponent(): FC {
-    return (props) => createElement(I18nProvider, { ...props, i18n });
+    const LinguiProvider: FC = (props) => createElement(I18nProvider, { ...props, i18n });
+
+    return LinguiProvider;
   }
 
   public getDevMenuItems(): ExpoDevMenuItem[] {

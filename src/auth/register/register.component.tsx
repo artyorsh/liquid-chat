@@ -35,6 +35,8 @@ export const Register: React.FC<{ vm: IRegisterVM }> = observer(({ vm }) => {
   );
 });
 
+Register.displayName = 'RegisterScreen';
+
 const styles = StyleSheet.create((theme, rt) => ({
   container: {
     paddingHorizontal: theme.gap(4),

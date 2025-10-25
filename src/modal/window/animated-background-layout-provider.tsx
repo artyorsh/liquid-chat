@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { Animated, ViewProps, ViewStyle } from 'react-native';
 import { UnistylesTheme } from 'react-native-unistyles';
 
@@ -19,15 +20,17 @@ export class AnimatedBackgroundLayoutProvider implements ILayoutProvider {
 
   constructor(private config: IModalWindowLayoutConfig = DEFAULT_CONFIG) {}
 
-  public getWrapperComponent(theme: UnistylesTheme): React.FC<ViewProps> {
+  public getWrapperComponent(theme: UnistylesTheme): FC<ViewProps> {
     const animationStyle = this.getAnimationStyle(theme.colors.overlay);
 
-    return (props: ViewProps): React.ReactElement => (
+    const ModalBackground: FC<ViewProps> = (props) => (
       <Animated.View
         {...props}
         style={[props.style, animationStyle]}
       />
     );
+
+    return ModalBackground;
   }
 
   public onWindowSizeChange(numberOfActiveModals: number): Promise<void> {

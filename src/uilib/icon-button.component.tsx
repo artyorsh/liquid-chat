@@ -14,6 +14,8 @@ export const IconButton: React.FC<IconButtonProps> = memo((props) => (
   />
 ));
 
+IconButton.displayName = 'IconButton';
+
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'flex-start',

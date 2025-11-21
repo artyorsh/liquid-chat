@@ -17,7 +17,7 @@ LiquidChat - a showcase of on-device AI capabilities using Apple Foundation Mode
 - [![react-native](https://img.shields.io/badge/react--native-0.83-blue)](https://github.com/facebook/react-native/releases)
 - [![react-navigation](https://img.shields.io/badge/react--navigation-7.1-blue)](https://github.com/react-navigation/react-navigation/releases)
 - [![react-native-unistyles](https://img.shields.io/badge/react--native--unistyles-3.2-blue)](https://github.com/vitalets/react-native-unistyles/releases)
-- [![react-native-ai](https://img.shields.io/badge/react--native--ai-0.9-blue)](https://github.com/callstackincubator/ai/releases)
+- [![react-native-ai](https://img.shields.io/badge/react--native--ai-0.11-blue)](https://github.com/callstackincubator/ai/releases)
 - [![mobx-react-lite](https://img.shields.io/badge/mobx--react--lite-4.1-blue)](https://github.com/mobxjs/mobx/releases)
 - [![inversifyjs](https://img.shields.io/badge/inversifyjs-8.1-blue)](https://github.com/inversify/InversifyJS/releases)
 - [![jest](https://img.shields.io/badge/jest-29.7-blue)](https://github.com/jestjs/jest/releases)
@@ -61,16 +61,15 @@ bun run start
 
 ### Android
 
-Pre-built MLC models aren't available for Android making the platform not testable at the moment.
-Follow [callstackincubator/ai](https://github.com/callstackincubator/ai?tab=readme-ov-file#mlc-engine-experimental) for updates.
+Not testable. The library has runtime errors when attempting to load the model after download.
 
 ### iOS
 
 MLC models require a physical device, making them not testable on Simulator.
-As a workaround, it's possible to run on Mac or a physical device.
 
 **Mac / Physical device**:
 - Build Xcode project: `npx expo prebuild` > `open ios/liquidchat.xcworkspace`
+- Select "My Mac (Designed for iPhone)" as running destination
 - Adjust Signing & Capabilities with your Personal Team
 
 **Simulator**:

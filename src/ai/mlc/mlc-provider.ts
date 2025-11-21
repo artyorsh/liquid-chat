@@ -96,8 +96,8 @@ export class MLCAIProvider implements IAIProvider {
   private async downloadModel(modelId: IModelId): Promise<LanguageModelV2> {
     const llm = mlc.languageModel(modelId);
 
-    const download = (): Promise<void> => llm.download(progress => logDownloadProgress(progress.status));
-    const logDownloadProgress = (status: string): void => this.config.logger?.info(`Status: ${status}`);
+    const download = (): Promise<void> => llm.download(progress => logDownloadProgress(progress.percentage));
+    const logDownloadProgress = (progress: number): void => this.config.logger?.info(`Status: ${progress}%`);
 
     const downloadConsentProvider: IDownloadConsentProvider = this.config.downloadConsentProvider;
     const isDownloadAllowed: boolean = await downloadConsentProvider.isAllowed();

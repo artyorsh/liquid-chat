@@ -59,6 +59,8 @@ buck-out/
 
 .eslintcache
 
+src/i18n/locales/*.js
+
 # Expo
 .expo
 dist/

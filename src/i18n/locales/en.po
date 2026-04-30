@@ -23,15 +23,15 @@ msgstr "Hello {0}"
 msgid "home.welcome.unread_notifications {0}"
 msgstr "{0, plural, one {# unread notification} other {# unread notifications}}"
 
-#: src/auth/login/components/login-form.component.tsx:35
+#: src/auth/login/components/login-form.component.tsx:43
 msgid "login.form.email_placeholder"
 msgstr "Email"
 
-#: src/auth/login/components/login-form.component.tsx:44
+#: src/auth/login/components/login-form.component.tsx:52
 msgid "login.form.password_placeholder"
 msgstr "Password"
 
-#: src/auth/login/components/login-form.component.tsx:52
+#: src/auth/login/components/login-form.component.tsx:60
 msgid "login.form.submit_button"
 msgstr "Login"
 
@@ -43,19 +43,19 @@ msgstr "Login"
 msgid "posts.details.remove_button"
 msgstr "Remove from Feed"
 
-#: src/auth/register/components/register-form.component.tsx:45
+#: src/auth/register/components/register-form.component.tsx:57
 msgid "register.form.email_placeholder"
 msgstr "Email"
 
-#: src/auth/register/components/register-form.component.tsx:36
+#: src/auth/register/components/register-form.component.tsx:48
 msgid "register.form.name_placeholder"
 msgstr "Name"
 
-#: src/auth/register/components/register-form.component.tsx:53
+#: src/auth/register/components/register-form.component.tsx:65
 msgid "register.form.password_placeholder"
 msgstr "Password"
 
-#: src/auth/register/components/register-form.component.tsx:61
+#: src/auth/register/components/register-form.component.tsx:73
 msgid "register.form.submit_button"
 msgstr "Register"
 

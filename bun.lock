@@ -30,7 +30,7 @@
         "expo-secure-store": "~55.0.13",
         "expo-splash-screen": "~55.0.19",
         "expo-updates": "~55.0.21",
-        "inversify": "~7.0.0",
+        "inversify": "^8.1.0",
         "mobx": "^6.13.0",
         "mobx-react-lite": "^4.1.1",
         "react": "19.2.0",
@@ -586,15 +586,17 @@
 
     "@humanwhocodes/retry": ["@humanwhocodes/retry@0.4.3", "", {}, "sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ=="],
 
-    "@inversifyjs/common": ["@inversifyjs/common@1.5.0", "", {}, "sha512-Qj5BELk11AfI2rgZEAaLPmOftmQRLLmoCXgAjmaF0IngQN5vHomVT5ML7DZ3+CA5fgGcEVMcGbUDAun+Rz+oNg=="],
+    "@inversifyjs/common": ["@inversifyjs/common@2.0.1", "", {}, "sha512-pJAR4IAcT2jkYfZ9bD9XhtUDBLJRr8QOiSjb+2XyaHru6DLvu0VD2Id2iP7+tVRKkEe3XFUwDUEdKxcYlF699Q=="],
 
-    "@inversifyjs/container": ["@inversifyjs/container@1.5.4", "", { "dependencies": { "@inversifyjs/common": "1.5.0", "@inversifyjs/core": "5.0.0", "@inversifyjs/reflect-metadata-utils": "1.1.0" }, "peerDependencies": { "reflect-metadata": "~0.2.2" } }, "sha512-mHAaWjAQb8m6TJksm5EJXW/kPcZFVEc1UKkWv5OnLbwbU0QvxM2UbEsuXzusGVHcrNY4TQp9Uh2wkRY6TN2WJg=="],
+    "@inversifyjs/container": ["@inversifyjs/container@2.0.1", "", { "dependencies": { "@inversifyjs/common": "2.0.1", "@inversifyjs/core": "10.0.1", "@inversifyjs/plugin": "0.3.1", "@inversifyjs/reflect-metadata-utils": "1.5.0" }, "peerDependencies": { "reflect-metadata": "~0.2.2" } }, "sha512-xoZU4Mha5Vo+U04xWUnD01QbpQMNoIh0nUEFlb965E3rIneUbsYYiXeLUoKl57BjXjErsOL0q8o3mXi1si8rBA=="],
 
-    "@inversifyjs/core": ["@inversifyjs/core@5.0.0", "", { "dependencies": { "@inversifyjs/common": "1.5.0", "@inversifyjs/prototype-utils": "0.1.0", "@inversifyjs/reflect-metadata-utils": "1.1.0" } }, "sha512-axOl+VZFGVA3nAMbs6RuHhQ8HvgO6/tKjlWJk4Nt0rUqed+1ksak4p5yZNtown1Kdm0GV2Oc57qLqqWd943hgA=="],
+    "@inversifyjs/core": ["@inversifyjs/core@10.0.1", "", { "dependencies": { "@inversifyjs/common": "2.0.1", "@inversifyjs/prototype-utils": "0.2.1", "@inversifyjs/reflect-metadata-utils": "1.5.0" } }, "sha512-z+DHdTbHFETivPLPRgowz9wWhHA4FNYqQnKhPyDCz7zX9H/PIDcK4gZIF1YNaf5Uc2bd1nehSlVgfaTzVbb0AA=="],
 
-    "@inversifyjs/prototype-utils": ["@inversifyjs/prototype-utils@0.1.0", "", { "dependencies": { "@inversifyjs/common": "1.5.0" } }, "sha512-lNz1yyajMRDXBHLvJsYYX81FcmeD15e5Qz1zAZ/3zeYTl+u7ZF/GxNRKJzNOloeMPMtuR8BnvzHA1SZxjR+J9w=="],
+    "@inversifyjs/plugin": ["@inversifyjs/plugin@0.3.1", "", {}, "sha512-ByklTw731fydBCTMwMpkmwm+lv0U+JWm9NEqRsz3n5KzAC5Om2XtLjqzEC2w+8Ote3gVC3Qxsx6YmG9XLIZpvg=="],
 
-    "@inversifyjs/reflect-metadata-utils": ["@inversifyjs/reflect-metadata-utils@1.1.0", "", { "peerDependencies": { "reflect-metadata": "0.2.2" } }, "sha512-jmuAuC3eL1GnFAYfJGJOMKRDL9q1mgzOyrban6zxfM8Yg1FUHsj25h27bW2G7p8X1Amvhg3MLkaOuogszkrofA=="],
+    "@inversifyjs/prototype-utils": ["@inversifyjs/prototype-utils@0.2.1", "", { "dependencies": { "@inversifyjs/common": "2.0.1" } }, "sha512-53cVE3cw+RxnSkGlg+jOFNSox2owJF9Fv3HgFKe4f+4aPullscltIiio88QRkx2Sc5yo3VlqPsXQFGw2CVJZnw=="],
+
+    "@inversifyjs/reflect-metadata-utils": ["@inversifyjs/reflect-metadata-utils@1.5.0", "", { "peerDependencies": { "reflect-metadata": "~0.2.2" } }, "sha512-NpJVbRbuQ6Ao2vO+aw96un3oHDFCwXI0+pplsFt0Jh0gyR8DWk4m7ml/GBNMjdbeKVW/QgJ2S6NGXjk042uwqg=="],
 
     "@isaacs/ttlcache": ["@isaacs/ttlcache@1.4.1", "", {}, "sha512-RQgQ4uQ+pLbqXfOmieB91ejmLwvSgv9nLx6sT6sD83s7umBypgg+OIBOBbEUiJXrfpnp9j0mRhYYdzp9uqq3lA=="],
 
@@ -1566,7 +1568,7 @@
 
     "invariant": ["invariant@2.2.4", "", { "dependencies": { "loose-envify": "^1.0.0" } }, "sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA=="],
 
-    "inversify": ["inversify@7.0.2", "", { "dependencies": { "@inversifyjs/common": "1.5.0", "@inversifyjs/container": "1.5.4", "@inversifyjs/core": "5.0.0" }, "peerDependencies": { "reflect-metadata": "~0.2.2" } }, "sha512-Bq81Jx3OQsyqpoamfckqhi9yfFXB6ey6WuOaYEN3b73fevmK5B1JivvUmT6QrNljXKhk7E3izdbZINsP/pNOdA=="],
+    "inversify": ["inversify@8.1.0", "", { "dependencies": { "@inversifyjs/common": "2.0.1", "@inversifyjs/container": "2.0.1", "@inversifyjs/core": "10.0.1" } }, "sha512-LeMjL2MKHM0E8UmKo2ilRvdxG3o0pLZPYFjkaHwcjcFIrhzBGetphNkaWJ6YaM78uC1gK9v45i1R7CkCJDvG4Q=="],
 
     "ipaddr.js": ["ipaddr.js@1.9.1", "", {}, "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g=="],
 

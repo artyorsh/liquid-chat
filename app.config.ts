@@ -16,7 +16,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: process.env.APP_NAME,
   slug: 'rnapp',
-  newArchEnabled: true,
   icon: './assets/images/ic-launcher.png',
   android: {
     ...config.android,
@@ -56,6 +55,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   orientation: 'portrait',
   plugins: [
+    'expo-image',
     [
       'expo-build-properties',
       {

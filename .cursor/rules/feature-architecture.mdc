@@ -1,0 +1,39 @@
+---
+description: >-
+  Apply when building a new feature, screen, or Inversify module: new
+  ContainerModule, tokens/bindings in AppModule, routed screen registration, MobX VMs,
+  or wiring a feature into index.js / global listeners — not ordinary UI or RN edits.
+alwaysApply: false
+---
+
+# Architecture
+
+## Dependency injection
+
+- Tokens and screen IDs: `src/di` → `AppModule` (`Symbol.for(...)`).
+- Features export `XxxModule = new ContainerModule(({ bind }) => { … })`; `index.js` loads them on the root container.
+- Screens are often `React.FC` instances from `toFactory(context => createXScreen(context))` so they receive resolved deps.
+
+## Adding a feature
+
+1. Define symbols in `AppModule` if new services/screens are needed.
+2. Add `ContainerModule` bindings (service + optional `React.FC` factories).
+3. If the screen is routed: register in `src/router/index.ts` `routeMap` and extend `IRoute` / sub-route unions.
+
+## Interfaces over implementations
+
+- **UI → VM**: Screens take **`I*` contracts** from the screen component file (e.g. `Home` + `IHomeVM` in `home.component.tsx`), never concrete `HomeVM`; `observer` props stay typed to the interface.
+- **VM → collaborators**: VMs depend on **interfaces**—from the same feature or other modules resolved in DI (`IPostsDatasource`, `IPostsListFactory`; list UI types like `IPostListVM` from `@/posts`). `home.vm.ts` implements `IHomeVM` but only names those contracts in its constructor fields.
+- **Composition in `index.ts`**: `src/home/index.ts` wires the slice: **`createWelcomeHeaderVM`** instantiates `new WelcomeHeaderVM` with services from `context.get(...)`, **`createHomeViewModel`** resolves `AppModule.POSTS_*` bindings and passes `welcomeHeaderVM` + factories into **`new HomeVM(...)`**. The screen wrapper passes `createElement(Home, { vm })`. That module file sits beside **`HomeScreenModule`** (`bind` / `toFactory`).
+
+Together this is dependency inversion **per vertical slice**: contracts at boundaries, implementations assembled once next to `ContainerModule` (see also splash task/animation/config wiring for the same pattern with different collaborators).
+
+## MobX
+
+- View models: `makeObservable(this)`; use `@observable`, `@computed`, `@action`; wrap async mutation in `runInAction` when updating observables.
+- Prefer explicit VM interfaces consumed by components (`IHomeVM`, list VM types, etc.).
+
+## Logging and side effects
+
+- Resolve `ILogService` / `ILogger` from the container for feature logging.
+- App-level listeners (e.g. process info) are wired in `src/app.tsx` — follow that pattern for global listeners.

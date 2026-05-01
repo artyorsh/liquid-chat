@@ -1,4 +1,8 @@
-import { INavigationLifecycleListener, IRoute, IRouter } from '.';
+import type { INavigationLifecycleListener, IRoute, IRouter } from '.';
+
+jest.mock('@rozenite/react-navigation-plugin', () => ({
+  useReactNavigationDevTools: jest.fn(),
+}));
 
 jest.mock('./react-navigation/react-navigation-router', () => {
   const routerService: IRouter = {

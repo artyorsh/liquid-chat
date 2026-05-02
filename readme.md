@@ -7,16 +7,16 @@ React Native template with built-in modules, automation workflows and customisat
 
 ## Stack
 
-- [![expo](https://img.shields.io/badge/expo-54.0-blue)](https://github.com/expo/expo/blob/main/packages/expo/CHANGELOG.md)
-- [![react-native](https://img.shields.io/badge/react--native-0.81-blue)](https://github.com/facebook/react-native/releases)
-- [![react-navigation](https://img.shields.io/badge/react--navigation-7.0-blue)](https://github.com/react-navigation/react-navigation/releases)
-- [![react-native-unistyles](https://img.shields.io/badge/react--native--unistyles-3.0-blue)](https://github.com/vitalets/react-native-unistyles/releases)
-- [![mobx-react](https://img.shields.io/badge/mobx--react-9.2-blue)](https://github.com/mobxjs/mobx/releases)
-- [![inversifyjs](https://img.shields.io/badge/inversifyjs-7-blue)](https://github.com/inversify/InversifyJS/releases)
+- [![expo](https://img.shields.io/badge/expo-55.0-blue)](https://github.com/expo/expo/blob/main/packages/expo/CHANGELOG.md)
+- [![react-native](https://img.shields.io/badge/react--native-0.83-blue)](https://github.com/facebook/react-native/releases)
+- [![react-navigation](https://img.shields.io/badge/react--navigation-7.1-blue)](https://github.com/react-navigation/react-navigation/releases)
+- [![react-native-unistyles](https://img.shields.io/badge/react--native--unistyles-3.2-blue)](https://github.com/vitalets/react-native-unistyles/releases)
+- [![mobx-react-lite](https://img.shields.io/badge/mobx--react--lite-4.1-blue)](https://github.com/mobxjs/mobx/releases)
+- [![inversifyjs](https://img.shields.io/badge/inversifyjs-8.1-blue)](https://github.com/inversify/InversifyJS/releases)
 - [![jest](https://img.shields.io/badge/jest-29.7-blue)](https://github.com/jestjs/jest/releases)
-- [![react-native-testing-library](https://img.shields.io/badge/testing--library-12.4-blue)](https://github.com/callstack/react-native-testing-library/releases)
+- [![react-native-testing-library](https://img.shields.io/badge/testing--library-13.3-blue)](https://github.com/callstack/react-native-testing-library/releases)
 - [![typescript](https://img.shields.io/badge/typescript-5.9-blue)](https://github.com/microsoft/TypeScript/releases)
-- [![eslint](https://img.shields.io/badge/eslint-9-blue)](https://github.com/eslint/eslint/releases)
+- [![eslint](https://img.shields.io/badge/eslint-9.38-blue)](https://github.com/eslint/eslint/releases)
 
 ## Features
 

@@ -95,7 +95,7 @@ See also `readme.md` and `.env.example`.
 ### React Native Best Practices
 
 - Use the `.cursor/rules/imported/agent-skills/react-native-best-practices.mdc` skill when working on performance-sensitive code. This ensures code respects established best practices from the start, resulting in more consistent code, fewer review iterations, and better resilience against regressions.
-- Use **[`.cursor/skills/`](./.cursor/skills/)** when working with deployments, Expo EAS, building native modules or upgrading Expo.
+- Use [.cursor/skills/](./.cursor/skills/) when working with deployments, Expo EAS, building native modules, upgrading Expo, or rebasing a derived app onto upstream (see [docs/syncing-with-upstream.md](./docs/syncing-with-upstream.md) and the sync-template-upstream skill).
 
 ### Code Quality
 - **TypeScript**: extends Expo base; decorators enabled for MobX.
@@ -117,6 +117,10 @@ See also `readme.md` and `.env.example`.
 - **Theming**: `react-native-unistyles` v3 (`src/uilib`).
 
 ## Documentation Resources
+
+### This template
+
+- Forks / upstream sync: [docs/syncing-with-upstream.md](./docs/syncing-with-upstream.md) (short guide); full procedure in [.cursor/skills/sync-template-upstream/SKILL.md](./.cursor/skills/sync-template-upstream/SKILL.md).
 
 ### Help Documentation
 - **Expo**: https://docs.expo.dev/llms
